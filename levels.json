@@ -1,7 +1,7 @@
 {
   "symbol": "MES",
-  "current_price_at_calc": 7514.25,
+  "current_price_at_calc": 7517.75,
   "support": 7433.89,
-  "resistance": 7538.64,
-  "note": "Auto-calculated from 3mo swing points confirmed against volume profile. Edit by hand if needed."
+  "resistance": 7300.0,
+  "note": "TEST 3 - confirming notification lands now that chat is unmuted. Will be reverted immediately after."
 }
