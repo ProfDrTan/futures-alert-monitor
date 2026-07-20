@@ -1,7 +1,7 @@
 {
   "symbol": "MES",
-  "current_price_at_calc": 7511.50,
+  "current_price_at_calc": 7512.25,
   "support": 7433.89,
-  "resistance": 7511.0,
-  "note": "TEST OVERRIDE - artificially set resistance just below live price to force a real alert test. Will be overwritten by tomorrow's daily job."
+  "resistance": 7300.0,
+  "note": "TEST OVERRIDE 2 - resistance set far below price to rule out the 15min data-delay explanation. Will be overwritten by tomorrow's daily job."
 }
