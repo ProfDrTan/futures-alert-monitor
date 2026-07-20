@@ -1,0 +1,24 @@
+name: Recalculate MES Levels
+
+on:
+  schedule:
+    - cron: '0 13 * * 1-5'  # 13:00 UTC daily, weekdays, before US market open
+  workflow_dispatch: {}
+
+jobs:
+  recalc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Calculate levels
+        run: python calculate_levels.py
+      - name: Commit updated levels
+        run: |
+          git config user.name "mes-alert-bot"
+          git config user.email "actions@github.com"
+          git add levels.json
+          git diff --quiet && git diff --staged --quiet || git commit -m "Auto-update MES levels $(date -u +%Y-%m-%d)"
+          git push
