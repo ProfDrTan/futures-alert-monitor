@@ -18,10 +18,12 @@ jobs:
           python-version: '3.11'
       - name: Calculate levels
         run: python calculate_levels.py
+      - name: Calculate indicators
+        run: python calculate_indicators.py
       - name: Commit updated levels
         run: |
           git config user.name "mes-alert-bot"
           git config user.email "actions@github.com"
-          git add levels.json
-          git diff --quiet && git diff --staged --quiet || git commit -m "Auto-update MES levels $(date -u +%Y-%m-%d)"
+          git add levels.json indicators.json
+          git diff --quiet && git diff --staged --quiet || git commit -m "Auto-update MES levels + indicators $(date -u +%Y-%m-%d)"
           git push
