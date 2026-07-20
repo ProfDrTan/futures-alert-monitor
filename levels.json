@@ -1,7 +1,7 @@
 {
   "symbol": "MES",
-  "current_price_at_calc": 7512.25,
+  "current_price_at_calc": 7514.25,
   "support": 7433.89,
-  "resistance": 7300.0,
-  "note": "TEST OVERRIDE 2 - resistance set far below price to rule out the 15min data-delay explanation. Will be overwritten by tomorrow's daily job."
+  "resistance": 7538.64,
+  "note": "Auto-calculated from 3mo swing points confirmed against volume profile. Edit by hand if needed."
 }
