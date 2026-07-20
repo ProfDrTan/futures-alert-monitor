@@ -5,6 +5,9 @@ on:
     - cron: '0 13 * * 1-5'  # 13:00 UTC daily, weekdays, before US market open
   workflow_dispatch: {}
 
+permissions:
+  contents: write
+
 jobs:
   recalc:
     runs-on: ubuntu-latest
