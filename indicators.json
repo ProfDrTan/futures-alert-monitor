@@ -1,8 +1,8 @@
 {
-  "rsi14": 49.34,
+  "rsi14": 50.59,
   "rsi_read": "neutral",
-  "ema8": 7549.07,
-  "ema21": 7532.77,
+  "ema8": 7538.47,
+  "ema21": 7529.47,
   "ema_cross_state": "bullish_bias",
-  "last_candle_pattern": null
+  "last_candle_pattern": "bullish_engulfing"
 }
