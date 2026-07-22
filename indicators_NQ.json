@@ -1,0 +1,9 @@
+{
+  "symbol": "NQ",
+  "rsi14": 45.84,
+  "rsi_read": "neutral",
+  "ema8": 29251.6,
+  "ema21": 29487.2,
+  "ema_cross_state": "bearish_bias",
+  "last_candle_pattern": null
+}
