@@ -96,12 +96,46 @@ def calc_for_symbol(label, yahoo_symbol):
     if support:
         support = round(nearest_high_volume_price(support, volume_bins, bin_prices), 2)
 
+    # ---- Point of Control (POC) + Value Area (70% of volume around POC) ----
+    total_volume = sum(volume_bins.values())
+    poc_price = vah_price = val_price = None
+    if total_volume > 0:
+        sorted_bins = sorted(volume_bins.items(), key=lambda kv: kv[1], reverse=True)
+        poc_idx = sorted_bins[0][0]
+        poc_price = round(bin_prices[poc_idx], 2)
+
+        all_idxs = sorted(volume_bins.keys())
+        poc_pos = all_idxs.index(poc_idx)
+        lo_pos, hi_pos = poc_pos, poc_pos
+        cum_vol = volume_bins[poc_idx]
+        target = total_volume * 0.70
+
+        while cum_vol < target:
+            next_lo_idx = all_idxs[lo_pos - 1] if lo_pos - 1 >= 0 else None
+            next_hi_idx = all_idxs[hi_pos + 1] if hi_pos + 1 < len(all_idxs) else None
+            vol_lo = volume_bins.get(next_lo_idx, -1) if next_lo_idx is not None else -1
+            vol_hi = volume_bins.get(next_hi_idx, -1) if next_hi_idx is not None else -1
+            if vol_lo < 0 and vol_hi < 0:
+                break
+            if vol_lo >= vol_hi:
+                cum_vol += vol_lo
+                lo_pos -= 1
+            else:
+                cum_vol += vol_hi
+                hi_pos += 1
+
+        val_price = round(bin_prices[all_idxs[lo_pos]], 2)
+        vah_price = round(bin_prices[all_idxs[hi_pos]], 2)
+
     levels = {
         "symbol": label,
         "current_price_at_calc": round(current_price, 2),
         "support": support,
         "resistance": resistance,
-        "note": "Auto-calculated from 3mo swing points confirmed against volume profile. Edit by hand if needed.",
+        "poc": poc_price,
+        "vah": vah_price,
+        "val": val_price,
+        "note": "Auto-calculated from 3mo swing points confirmed against volume profile. POC/VAH/VAL from the same volume profile (70% value area around point of control). Edit by hand if needed.",
     }
     out_file = f"levels_{label}.json"
     with open(out_file, "w") as f:
