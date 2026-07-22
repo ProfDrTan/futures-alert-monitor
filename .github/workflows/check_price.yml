@@ -1,4 +1,4 @@
-name: Check MES Price
+name: Check ES/NQ Price
 
 on:
   schedule:
@@ -16,19 +16,19 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Check price against levels
+      - name: Check price against levels (ES + NQ)
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: python check_mes_price.py
-      - name: Commit state file
+        run: python check_price.py
+      - name: Commit state files
         run: |
-          git config user.name "mes-alert-bot"
+          git config user.name "futures-alert-bot"
           git config user.email "actions@github.com"
-          if [ -f last_alert_state.json ]; then
-            git add last_alert_state.json
+          if ls last_alert_state_*.json >/dev/null 2>&1; then
+            git add last_alert_state_*.json
             git diff --quiet && git diff --staged --quiet || git commit -m "Update alert state"
             git push
           else
-            echo "No state file yet (no alert has fired), nothing to commit."
+            echo "No state files yet (no alert has fired), nothing to commit."
           fi
