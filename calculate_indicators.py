@@ -5,9 +5,29 @@ writes indicators_<SYMBOL>.json.
 """
 import urllib.request
 import json
+import os
 
 SYMBOLS = {"ES": "ES=F", "NQ": "NQ=F"}
 RANGE = "3mo"
+
+TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
+TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
+
+NOTABLE_PATTERNS = {
+    "bullish_engulfing": "bullish",
+    "bearish_engulfing": "bearish",
+    "hammer": "bullish",
+    "shooting_star": "bearish",
+}
+
+def send_telegram(message):
+    if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
+        print("Missing Telegram credentials, skipping send.")
+        return
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+    data = json.dumps({"chat_id": TELEGRAM_CHAT_ID, "text": message}).encode()
+    req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
+    urllib.request.urlopen(req, timeout=10)
 
 def fetch_daily_bars(yahoo_symbol):
     url = f"https://query1.finance.yahoo.com/v8/finance/chart/{yahoo_symbol}?interval=1d&range={RANGE}"
@@ -123,6 +143,26 @@ def calc_for_symbol(label, yahoo_symbol):
     with open(out_file, "w") as f:
         json.dump(indicators, f, indent=2)
     print(json.dumps(indicators, indent=2))
+
+    # Standalone alerts -- fire independent of any price-level touch, since a
+    # cross or a notable candle is a signal in its own right, not just context.
+    alerts = []
+    if cross_state == "golden_cross_just_occurred":
+        alerts.append(f"{label} GOLDEN CROSS: 8-EMA just crossed above 21-EMA (bullish). "
+                       f"RSI {rsi} ({rsi_read}).")
+    elif cross_state == "death_cross_just_occurred":
+        alerts.append(f"{label} DEATH CROSS: 8-EMA just crossed below 21-EMA (bearish). "
+                       f"RSI {rsi} ({rsi_read}).")
+
+    if pattern in NOTABLE_PATTERNS:
+        bias = NOTABLE_PATTERNS[pattern]
+        alerts.append(f"{label} CANDLE: yesterday's daily candle formed a "
+                       f"{pattern.replace('_', ' ')} ({bias}). RSI {rsi} ({rsi_read}), "
+                       f"EMA bias: {cross_state.replace('_', ' ')}.")
+
+    for msg in alerts:
+        print(msg)
+        send_telegram(msg)
 
 def main():
     for label, yahoo_symbol in SYMBOLS.items():
