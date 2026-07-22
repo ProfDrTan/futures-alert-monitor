@@ -3,18 +3,17 @@ import json
 import os
 import sys
 import statistics
+import datetime
 
 SYMBOLS = {"ES": "ES=F", "NQ": "NQ=F"}
 
-# Distance (in points) from a level that counts as "approaching" it —
-# gives an early heads-up before an exact touch, since the checker
-# itself only runs every 5-60 min depending on GitHub's scheduler load.
+# Distance (in points) from a level that counts as "approaching" it.
 APPROACH_DISTANCE = {"ES": 10.0, "NQ": 40.0}
 
-# Minimum volume-vs-average ratio required to treat a touch as a real signal
-# rather than noise. Below this, the touch is suppressed (state still updates
-# so we don't re-alert on the same noisy level repeatedly).
-MIN_VOLUME_RATIO = 0.6
+# US regular session, ET converted to UTC (handles standard offset; DST-aware
+# enough for our purposes since futures trade nearly 24/5 anyway).
+US_MARKET_OPEN_UTC_HOUR = 13.5   # 9:30am ET
+US_MARKET_CLOSE_UTC_HOUR = 20.0  # 4:00pm ET
 
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
@@ -59,9 +58,23 @@ def send_telegram(message):
     req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
     urllib.request.urlopen(req, timeout=10)
 
-def volume_read(ratio):
+def session_label(now_utc=None):
+    now_utc = now_utc or datetime.datetime.utcnow()
+    if now_utc.weekday() >= 5:
+        return "weekend"
+    hour = now_utc.hour + now_utc.minute / 60.0
+    if US_MARKET_OPEN_UTC_HOUR <= hour < US_MARKET_CLOSE_UTC_HOUR:
+        return "regular_session"
+    return "pre_or_after_hours"
+
+def volume_read(ratio, session):
     if ratio is None:
         return "volume data unavailable"
+    if session != "regular_session":
+        # Comparing partial-session volume-so-far against a full regular-day
+        # average is misleading outside regular hours -- don't call it "low
+        # conviction", just say the comparison isn't reliable right now.
+        return f"{ratio}x avg volume (outside regular hours -- this ratio isn't a reliable conviction read right now)"
     if ratio >= 1.3:
         return f"{ratio}x avg volume (high conviction)"
     if ratio <= 0.6:
@@ -82,8 +95,8 @@ def rsi_read_text(rsi, read):
     return f"RSI {rsi} ({read})"
 
 def classify_zone(price, support, resistance, approach_dist):
-    """Returns one of: 'support', 'approaching_support', 'resistance',
-    'approaching_resistance', or None. Exact touch takes priority over approach."""
+    """Returns 'support', 'approaching_support', 'resistance',
+    'approaching_resistance', or None. Exact touch takes priority."""
     if support is not None and price <= support:
         return "support"
     if resistance is not None and price >= resistance:
@@ -99,6 +112,7 @@ def check_symbol(label, yahoo_symbol):
     indicators_file = f"indicators_{label}.json"
     state_file = f"last_alert_state_{label}.json"
     approach_dist = APPROACH_DISTANCE.get(label, 10.0)
+    session = session_label()
 
     levels = load_json(levels_file)
     if not levels:
@@ -109,15 +123,9 @@ def check_symbol(label, yahoo_symbol):
     support = levels.get("support")
     resistance = levels.get("resistance")
 
-    debug_info = {"label": label, "yahoo_symbol": yahoo_symbol}
     try:
         price, today_volume = get_price(yahoo_symbol)
-        debug_info["price"] = price
-        debug_info["today_volume"] = today_volume
-        debug_info["fetch_error"] = None
     except Exception as e:
-        debug_info["fetch_error"] = str(e)
-        save_json(f"debug_{label}.json", debug_info)
         print(f"[{label}] Failed to fetch price: {e}")
         return
 
@@ -128,33 +136,24 @@ def check_symbol(label, yahoo_symbol):
         print(f"[{label}] Could not fetch avg volume: {e}")
 
     vol_ratio = round(today_volume / avg_volume, 2) if avg_volume and today_volume else None
-    debug_info["avg_volume"] = avg_volume
-    debug_info["vol_ratio"] = vol_ratio
-    debug_info["support"] = support
-    debug_info["resistance"] = resistance
 
     zone = classify_zone(price, support, resistance, approach_dist)
-    debug_info["zone"] = zone
-    save_json(f"debug_{label}.json", debug_info)
 
     state = load_json(state_file, default={"last_zone": None, "touch_count": {"support": 0, "resistance": 0}})
     if "touch_count" not in state:
         state["touch_count"] = {"support": 0, "resistance": 0}
 
+    last_zone = state.get("last_zone")
     is_exact_touch = zone in ("support", "resistance")
-    is_approach = zone in ("approaching_support", "approaching_resistance")
 
-    # NOTE: conviction gate removed 22 Jul 2026 -- vol_ratio compares partial-day
-    # volume-so-far against a FULL trading day average, so it reads artificially
-    # low any time before the session is mostly over. It described risk in the
-    # message text; it should never have blocked the send outright.
+    rsi = indicators.get("rsi14")
+    rsi_lbl = indicators.get("rsi_read")
+    cross_state = indicators.get("ema_cross_state")
+    pattern = indicators.get("last_candle_pattern")
+    vol_text = volume_read(vol_ratio, session)
 
-    if zone and zone != state.get("last_zone"):
-        rsi = indicators.get("rsi14")
-        rsi_lbl = indicators.get("rsi_read")
-        cross_state = indicators.get("ema_cross_state")
-        pattern = indicators.get("last_candle_pattern")
-
+    if zone and zone != last_zone:
+        # ---- New touch or new approach ----
         if is_exact_touch:
             state["touch_count"][zone] = state["touch_count"].get(zone, 0) + 1
             touch_n = state["touch_count"][zone]
@@ -166,7 +165,7 @@ def check_symbol(label, yahoo_symbol):
 
             lines = [
                 f"{label} ALERT: price {price} hit {zone.upper()} at {level_val} ({touch_desc}).",
-                volume_read(vol_ratio).capitalize() + ".",
+                vol_text.capitalize() + ".",
                 rsi_read_text(rsi, rsi_lbl) + ". " + ema_cross_read(cross_state) + ".",
             ]
             if pattern:
@@ -176,13 +175,12 @@ def check_symbol(label, yahoo_symbol):
             if touch_n >= 2:
                 lines.append("Repeated test of this level -- worth a closer look now.")
         else:
-            # approaching_support / approaching_resistance -- early heads-up
             base = zone.replace("approaching_", "")
             level_val = support if base == "support" else resistance
             distance = round(abs(price - level_val), 2)
             lines = [
                 f"{label} HEADS-UP: price {price} is {distance}pts from {base.upper()} ({level_val}).",
-                volume_read(vol_ratio).capitalize() + ".",
+                vol_text.capitalize() + ".",
                 rsi_read_text(rsi, rsi_lbl) + ". " + ema_cross_read(cross_state) + ".",
             ]
             if pattern:
@@ -193,13 +191,46 @@ def check_symbol(label, yahoo_symbol):
         send_telegram(msg)
         state["last_zone"] = zone
         save_json(state_file, state)
-    elif zone is None and state.get("last_zone") is not None:
+
+    elif zone != "support" and last_zone == "support":
+        # ---- Price left an exact support touch: reclaim (bullish) ----
+        distance = round(price - support, 2) if support else None
+        lines = [
+            f"{label} RECLAIM (possible LONG setup): price {price} moved back above SUPPORT ({support}), "
+            f"{distance}pts clear.",
+            vol_text.capitalize() + ".",
+            rsi_read_text(rsi, rsi_lbl) + ". " + ema_cross_read(cross_state) + ".",
+            "Still worth confirming with a retest/hold before sizing in -- this alone isn't full confirmation.",
+        ]
+        msg = " ".join(lines)
+        print(msg)
+        send_telegram(msg)
+        state["last_zone"] = zone
+        save_json(state_file, state)
+
+    elif zone != "resistance" and last_zone == "resistance":
+        # ---- Price left an exact resistance touch: rejection (bearish) ----
+        distance = round(resistance - price, 2) if resistance else None
+        lines = [
+            f"{label} REJECTION (possible SHORT setup): price {price} moved back below RESISTANCE ({resistance}), "
+            f"{distance}pts clear.",
+            vol_text.capitalize() + ".",
+            rsi_read_text(rsi, rsi_lbl) + ". " + ema_cross_read(cross_state) + ".",
+            "Still worth confirming with a retest/hold before sizing in -- this alone isn't full confirmation.",
+        ]
+        msg = " ".join(lines)
+        print(msg)
+        send_telegram(msg)
+        state["last_zone"] = zone
+        save_json(state_file, state)
+
+    elif zone is None and last_zone is not None:
+        # Left an approach zone without a real touch -- not alert-worthy, just reset.
         state["last_zone"] = None
         save_json(state_file, state)
-        print(f"[{label}] Price {price} back in mid-range, alert state reset.")
+        print(f"[{label}] Price {price} back in mid-range (no touch had occurred), alert state reset.")
     else:
-        print(f"[{label}] Price {price}, no alert (zone={zone}, last_zone={state.get('last_zone')}).")
-
+        print(f"[{label}] Price {price}, no alert (zone={zone}, last_zone={last_zone}).")
 
 def send_test_alert():
     msg = "TEST ALERT: this is a manual connectivity check from the futures-alert-monitor pipeline. If you're seeing this, Telegram delivery is working correctly."
