@@ -1,1 +1,1 @@
-{"last_zone": "approaching_resistance", "touch_count": {"support": 0, "resistance": 0}, "va_touch_count": {"val": 0, "vah": 0}, "last_poc_zone": "approaching_poc"}
+{"last_zone": "resistance", "touch_count": {"support": 0, "resistance": 1}, "va_touch_count": {"val": 0, "vah": 0}, "last_poc_zone": null}
