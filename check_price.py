@@ -15,6 +15,114 @@ APPROACH_DISTANCE = {"ES": 10.0, "NQ": 40.0}
 US_MARKET_OPEN_UTC_HOUR = 13.5   # 9:30am ET
 US_MARKET_CLOSE_UTC_HOUR = 20.0  # 4:00pm ET
 
+INTRADAY_INTERVAL = "5m"
+INTRADAY_RANGE = "1d"
+
+def fetch_intraday_bars(yahoo_symbol):
+    url = (f"https://query1.finance.yahoo.com/v8/finance/chart/{yahoo_symbol}"
+           f"?interval={INTRADAY_INTERVAL}&range={INTRADAY_RANGE}")
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(req, timeout=10) as resp:
+        data = json.loads(resp.read().decode())
+    result = data["chart"]["result"][0]
+    timestamps = result["timestamp"]
+    q = result["indicators"]["quote"][0]
+    bars = []
+    for i in range(len(timestamps)):
+        if q["close"][i] is None:
+            continue
+        bars.append({"ts": timestamps[i], "open": q["open"][i], "high": q["high"][i],
+                     "low": q["low"][i], "close": q["close"][i]})
+    return bars
+
+def ema_series(closes, period):
+    k = 2 / (period + 1)
+    ema = [closes[0]]
+    for price in closes[1:]:
+        ema.append(price * k + ema[-1] * (1 - k))
+    return ema
+
+def detect_cross(ema_fast, ema_slow):
+    prev_diff = ema_fast[-2] - ema_slow[-2]
+    curr_diff = ema_fast[-1] - ema_slow[-1]
+    if prev_diff <= 0 and curr_diff > 0:
+        return "golden_cross_just_occurred"
+    if prev_diff >= 0 and curr_diff < 0:
+        return "death_cross_just_occurred"
+    return "bullish_bias" if curr_diff > 0 else "bearish_bias"
+
+NOTABLE_INTRADAY_PATTERNS = {
+    "bullish_engulfing": "bullish",
+    "bearish_engulfing": "bearish",
+    "hammer": "bullish",
+    "shooting_star": "bearish",
+}
+
+def detect_candle_pattern(bars):
+    if len(bars) < 2:
+        return None
+    prev, last = bars[-2], bars[-1]
+    body = abs(last["close"] - last["open"])
+    range_ = last["high"] - last["low"]
+    prev_body = abs(prev["close"] - prev["open"])
+    if (prev["close"] < prev["open"] and last["close"] > last["open"]
+            and last["close"] >= prev["open"] and last["open"] <= prev["close"]
+            and body > prev_body):
+        return "bullish_engulfing"
+    if (prev["close"] > prev["open"] and last["close"] < last["open"]
+            and last["open"] >= prev["close"] and last["close"] <= prev["open"]
+            and body > prev_body):
+        return "bearish_engulfing"
+    if range_ > 0:
+        upper_wick = last["high"] - max(last["open"], last["close"])
+        lower_wick = min(last["open"], last["close"]) - last["low"]
+        if lower_wick > body * 2 and upper_wick < body and body > 0:
+            return "hammer"
+        if upper_wick > body * 2 and lower_wick < body and body > 0:
+            return "shooting_star"
+    if range_ > 0 and body / range_ < 0.1:
+        return "doji"
+    return None
+
+def check_intraday_signals(label, yahoo_symbol, state, session):
+    """5-min-bar EMA cross + candle pattern check, deduped by bar timestamp
+    so the same event doesn't re-alert on every subsequent poll."""
+    try:
+        bars = fetch_intraday_bars(yahoo_symbol)
+    except Exception as e:
+        print(f"[{label}] intraday fetch failed: {e}")
+        return
+    if len(bars) < 22:
+        print(f"[{label}] not enough intraday bars yet ({len(bars)}).")
+        return
+
+    closes = [b["close"] for b in bars]
+    ema8 = ema_series(closes, 8)
+    ema21 = ema_series(closes, 21)
+    cross_state = detect_cross(ema8, ema21)
+    pattern = detect_candle_pattern(bars)
+    latest_ts = bars[-1]["ts"]
+
+    already_alerted_cross = state.get("intraday_cross_alert_ts") == latest_ts
+    already_alerted_pattern = state.get("intraday_pattern_alert_ts") == latest_ts
+
+    if cross_state in ("golden_cross_just_occurred", "death_cross_just_occurred") and not already_alerted_cross:
+        direction = "bullish" if "golden" in cross_state else "bearish"
+        msg = (f"{label} INTRADAY {cross_state.replace('_just_occurred', '').replace('_', ' ').upper()}: "
+               f"8/21 EMA cross on the 5-min chart just flipped {direction} at {bars[-1]['close']}.")
+        print(msg)
+        send_telegram(msg)
+        state["intraday_cross_alert_ts"] = latest_ts
+
+    if pattern in NOTABLE_INTRADAY_PATTERNS and not already_alerted_pattern:
+        bias = NOTABLE_INTRADAY_PATTERNS[pattern]
+        msg = (f"{label} INTRADAY CANDLE: 5-min {pattern.replace('_', ' ')} ({bias}) just formed "
+               f"at {bars[-1]['close']}.")
+        print(msg)
+        send_telegram(msg)
+        state["intraday_pattern_alert_ts"] = latest_ts
+
+
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
 
@@ -142,6 +250,9 @@ def check_symbol(label, yahoo_symbol):
     state = load_json(state_file, default={"last_zone": None, "touch_count": {"support": 0, "resistance": 0}})
     if "touch_count" not in state:
         state["touch_count"] = {"support": 0, "resistance": 0}
+
+    check_intraday_signals(label, yahoo_symbol, state, session)
+    save_json(state_file, state)
 
     last_zone = state.get("last_zone")
     is_exact_touch = zone in ("support", "resistance")
