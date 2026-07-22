@@ -28,22 +28,38 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TEST_ALERT: ${{ inputs.test_alert == true && '1' || '0' }}
         run: python check_price.py
-      - name: Commit state files
+      - name: Commit state files (debug mode)
         run: |
+          set +e
           git config user.name "futures-alert-bot"
           git config user.email "actions@github.com"
           {
             echo "--- git status ---"
             git status
             echo "--- git add ---"
-            git add last_alert_state_*.json 2>&1 || true
-            echo "--- git diff --staged ---"
-            git diff --staged --stat || true
-          } > /tmp/commit_debug.log 2>&1
-          git diff --quiet && git diff --staged --quiet || git commit -m "Update alert state" >> /tmp/commit_debug.log 2>&1
-          git push >> /tmp/commit_debug.log 2>&1
-          echo "exit_code_of_push=$?" >> /tmp/commit_debug.log
-          cp /tmp/commit_debug.log commit_debug.log
+            git add last_alert_state_*.json
+            echo "add_exit=$?"
+            echo "--- git diff --staged --stat ---"
+            git diff --staged --stat
+          } > commit_debug.log 2>&1
+
+          git diff --quiet
+          unstaged=$?
+          git diff --staged --quiet
+          staged=$?
+          echo "unstaged_diff_exit=$unstaged staged_diff_exit=$staged" >> commit_debug.log
+
+          if [ "$unstaged" -ne 0 ] || [ "$staged" -ne 0 ]; then
+            git commit -m "Update alert state" >> commit_debug.log 2>&1
+            echo "commit_exit=$?" >> commit_debug.log
+          else
+            echo "no changes, skip commit" >> commit_debug.log
+          fi
+
+          git push >> commit_debug.log 2>&1
+          echo "push_exit=$?" >> commit_debug.log
+
           git add commit_debug.log
-          git commit -m "debug log" --allow-empty
-          git push
+          git commit -m "debug log" --allow-empty >> commit_debug.log 2>&1
+          git push >> commit_debug.log 2>&1
+          exit 0
