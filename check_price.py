@@ -109,9 +109,15 @@ def check_symbol(label, yahoo_symbol):
     support = levels.get("support")
     resistance = levels.get("resistance")
 
+    debug_info = {"label": label, "yahoo_symbol": yahoo_symbol}
     try:
         price, today_volume = get_price(yahoo_symbol)
+        debug_info["price"] = price
+        debug_info["today_volume"] = today_volume
+        debug_info["fetch_error"] = None
     except Exception as e:
+        debug_info["fetch_error"] = str(e)
+        save_json(f"debug_{label}.json", debug_info)
         print(f"[{label}] Failed to fetch price: {e}")
         return
 
@@ -122,8 +128,14 @@ def check_symbol(label, yahoo_symbol):
         print(f"[{label}] Could not fetch avg volume: {e}")
 
     vol_ratio = round(today_volume / avg_volume, 2) if avg_volume and today_volume else None
+    debug_info["avg_volume"] = avg_volume
+    debug_info["vol_ratio"] = vol_ratio
+    debug_info["support"] = support
+    debug_info["resistance"] = resistance
 
     zone = classify_zone(price, support, resistance, approach_dist)
+    debug_info["zone"] = zone
+    save_json(f"debug_{label}.json", debug_info)
 
     state = load_json(state_file, default={"last_zone": None, "touch_count": {"support": 0, "resistance": 0}})
     if "touch_count" not in state:
