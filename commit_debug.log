@@ -1,0 +1,29 @@
+--- git status ---
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   last_alert_state_NQ.json
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	commit_debug.log
+	last_alert_state_ES.json
+
+no changes added to commit (use "git add" and/or "git commit -a")
+--- git add ---
+add_exit=0
+--- git diff --staged --stat ---
+ last_alert_state_ES.json | 1 +
+ last_alert_state_NQ.json | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+unstaged_diff_exit=0 staged_diff_exit=1
+[main 9449452] Update alert state
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+ create mode 100644 last_alert_state_ES.json
+commit_exit=0
+To https://github.com/ProfDrTan/futures-alert-monitor
+   357a4ac..9449452  main -> main
+push_exit=0
