@@ -28,14 +28,10 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TEST_ALERT: ${{ inputs.test_alert == true && '1' || '0' }}
         run: python check_price.py
-      - name: Commit state files
+      - name: Commit state and debug files
         run: |
           git config user.name "futures-alert-bot"
           git config user.email "actions@github.com"
-          if ls last_alert_state_*.json >/dev/null 2>&1; then
-            git add last_alert_state_*.json
-            git diff --quiet && git diff --staged --quiet || git commit -m "Update alert state"
-            git push
-          else
-            echo "No state files yet (no alert has fired), nothing to commit."
-          fi
+          git add last_alert_state_*.json debug_*.json 2>/dev/null || true
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update alert state / debug snapshot"
+          git push
