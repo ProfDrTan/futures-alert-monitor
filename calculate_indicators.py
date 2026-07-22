@@ -1,16 +1,16 @@
 """
 Daily job: computes RSI(14), 8/21 EMA cross state, and last-candle pattern
-from daily bars. Runs alongside calculate_levels.py, writes indicators.json.
+from daily bars for ES and NQ. Runs alongside calculate_levels.py,
+writes indicators_<SYMBOL>.json.
 """
 import urllib.request
 import json
 
-SYMBOL = "MES=F"
+SYMBOLS = {"ES": "ES=F", "NQ": "NQ=F"}
 RANGE = "3mo"
-OUT_FILE = "indicators.json"
 
-def fetch_daily_bars():
-    url = f"https://query1.finance.yahoo.com/v8/finance/chart/{SYMBOL}?interval=1d&range={RANGE}"
+def fetch_daily_bars(yahoo_symbol):
+    url = f"https://query1.finance.yahoo.com/v8/finance/chart/{yahoo_symbol}?interval=1d&range={RANGE}"
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
     with urllib.request.urlopen(req, timeout=15) as resp:
         data = json.loads(resp.read().decode())
@@ -91,8 +91,8 @@ def detect_candle_pattern(bars):
         return "doji"
     return None
 
-def main():
-    bars = fetch_daily_bars()
+def calc_for_symbol(label, yahoo_symbol):
+    bars = fetch_daily_bars(yahoo_symbol)
     closes = [b["close"] for b in bars]
 
     rsi = rsi14(closes)
@@ -111,6 +111,7 @@ def main():
             rsi_read = "neutral"
 
     indicators = {
+        "symbol": label,
         "rsi14": rsi,
         "rsi_read": rsi_read,
         "ema8": round(ema8[-1], 2),
@@ -118,9 +119,14 @@ def main():
         "ema_cross_state": cross_state,
         "last_candle_pattern": pattern,
     }
-    with open(OUT_FILE, "w") as f:
+    out_file = f"indicators_{label}.json"
+    with open(out_file, "w") as f:
         json.dump(indicators, f, indent=2)
     print(json.dumps(indicators, indent=2))
+
+def main():
+    for label, yahoo_symbol in SYMBOLS.items():
+        calc_for_symbol(label, yahoo_symbol)
 
 if __name__ == "__main__":
     main()
