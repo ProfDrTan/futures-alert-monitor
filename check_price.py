@@ -6,6 +6,11 @@ import statistics
 
 SYMBOLS = {"ES": "ES=F", "NQ": "NQ=F"}
 
+# Distance (in points) from a level that counts as "approaching" it —
+# gives an early heads-up before an exact touch, since the checker
+# itself only runs every 5-60 min depending on GitHub's scheduler load.
+APPROACH_DISTANCE = {"ES": 10.0, "NQ": 40.0}
+
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
 
@@ -71,10 +76,24 @@ def rsi_read_text(rsi, read):
         return "RSI unavailable"
     return f"RSI {rsi} ({read})"
 
+def classify_zone(price, support, resistance, approach_dist):
+    """Returns one of: 'support', 'approaching_support', 'resistance',
+    'approaching_resistance', or None. Exact touch takes priority over approach."""
+    if support is not None and price <= support:
+        return "support"
+    if resistance is not None and price >= resistance:
+        return "resistance"
+    if support is not None and price <= support + approach_dist:
+        return "approaching_support"
+    if resistance is not None and price >= resistance - approach_dist:
+        return "approaching_resistance"
+    return None
+
 def check_symbol(label, yahoo_symbol):
     levels_file = f"levels_{label}.json"
     indicators_file = f"indicators_{label}.json"
     state_file = f"last_alert_state_{label}.json"
+    approach_dist = APPROACH_DISTANCE.get(label, 10.0)
 
     levels = load_json(levels_file)
     if not levels:
@@ -99,41 +118,53 @@ def check_symbol(label, yahoo_symbol):
 
     vol_ratio = round(today_volume / avg_volume, 2) if avg_volume and today_volume else None
 
-    zone = None
-    if support is not None and price <= support:
-        zone = "support"
-    elif resistance is not None and price >= resistance:
-        zone = "resistance"
+    zone = classify_zone(price, support, resistance, approach_dist)
 
     state = load_json(state_file, default={"last_zone": None, "touch_count": {"support": 0, "resistance": 0}})
     if "touch_count" not in state:
         state["touch_count"] = {"support": 0, "resistance": 0}
 
+    is_exact_touch = zone in ("support", "resistance")
+    is_approach = zone in ("approaching_support", "approaching_resistance")
+
     if zone and zone != state.get("last_zone"):
-        state["touch_count"][zone] = state["touch_count"].get(zone, 0) + 1
-        touch_n = state["touch_count"][zone]
-        touch_desc = "1st touch" if touch_n == 1 else ("2nd retest" if touch_n == 2 else f"{touch_n}th retest")
-
-        level_val = support if zone == "support" else resistance
-        other_level = resistance if zone == "support" else support
-        distance_to_other = round(abs(other_level - price), 2) if other_level else None
-
         rsi = indicators.get("rsi14")
         rsi_lbl = indicators.get("rsi_read")
         cross_state = indicators.get("ema_cross_state")
         pattern = indicators.get("last_candle_pattern")
 
-        lines = [
-            f"{label} ALERT: price {price} hit {zone.upper()} at {level_val} ({touch_desc}).",
-            volume_read(vol_ratio).capitalize() + ".",
-            rsi_read_text(rsi, rsi_lbl) + ". " + ema_cross_read(cross_state) + ".",
-        ]
-        if pattern:
-            lines.append(f"Last daily candle: {pattern.replace('_', ' ')}.")
-        if distance_to_other:
-            lines.append(f"{distance_to_other}pts to the opposite level ({other_level}).")
-        if touch_n >= 2:
-            lines.append("Repeated test of this level -- worth a closer look now.")
+        if is_exact_touch:
+            state["touch_count"][zone] = state["touch_count"].get(zone, 0) + 1
+            touch_n = state["touch_count"][zone]
+            touch_desc = "1st touch" if touch_n == 1 else ("2nd retest" if touch_n == 2 else f"{touch_n}th retest")
+
+            level_val = support if zone == "support" else resistance
+            other_level = resistance if zone == "support" else support
+            distance_to_other = round(abs(other_level - price), 2) if other_level else None
+
+            lines = [
+                f"{label} ALERT: price {price} hit {zone.upper()} at {level_val} ({touch_desc}).",
+                volume_read(vol_ratio).capitalize() + ".",
+                rsi_read_text(rsi, rsi_lbl) + ". " + ema_cross_read(cross_state) + ".",
+            ]
+            if pattern:
+                lines.append(f"Last daily candle: {pattern.replace('_', ' ')}.")
+            if distance_to_other:
+                lines.append(f"{distance_to_other}pts to the opposite level ({other_level}).")
+            if touch_n >= 2:
+                lines.append("Repeated test of this level -- worth a closer look now.")
+        else:
+            # approaching_support / approaching_resistance -- early heads-up
+            base = zone.replace("approaching_", "")
+            level_val = support if base == "support" else resistance
+            distance = round(abs(price - level_val), 2)
+            lines = [
+                f"{label} HEADS-UP: price {price} is {distance}pts from {base.upper()} ({level_val}).",
+                volume_read(vol_ratio).capitalize() + ".",
+                rsi_read_text(rsi, rsi_lbl) + ". " + ema_cross_read(cross_state) + ".",
+            ]
+            if pattern:
+                lines.append(f"Last daily candle: {pattern.replace('_', ' ')}.")
 
         msg = " ".join(lines)
         print(msg)
