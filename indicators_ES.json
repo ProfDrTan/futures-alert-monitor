@@ -1,9 +1,9 @@
 {
   "symbol": "ES",
-  "rsi14": 50.29,
+  "rsi14": 50.27,
   "rsi_read": "neutral",
-  "ema8": 7538.89,
-  "ema21": 7530.91,
+  "ema8": 7538.84,
+  "ema21": 7530.89,
   "ema_cross_state": "bullish_bias",
   "last_candle_pattern": null
 }
