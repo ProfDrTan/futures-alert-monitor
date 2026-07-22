@@ -3,7 +3,13 @@ name: Check ES/NQ Price
 on:
   schedule:
     - cron: '*/5 * * * *'
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      test_alert:
+        description: 'Send a one-off test Telegram message (bypasses price logic)'
+        required: false
+        default: 'false'
+        type: boolean
 
 permissions:
   contents: write
@@ -20,6 +26,7 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TEST_ALERT: ${{ inputs.test_alert == true && '1' || '0' }}
         run: python check_price.py
       - name: Commit state files
         run: |
