@@ -178,7 +178,16 @@ def check_symbol(label, yahoo_symbol):
     else:
         print(f"[{label}] Price {price}, no alert (zone={zone}, last_zone={state.get('last_zone')}).")
 
+
+def send_test_alert():
+    msg = "TEST ALERT: this is a manual connectivity check from the futures-alert-monitor pipeline. If you're seeing this, Telegram delivery is working correctly."
+    print(msg)
+    send_telegram(msg)
+
 def main():
+    if os.environ.get("TEST_ALERT") == "1":
+        send_test_alert()
+        return
     for label, yahoo_symbol in SYMBOLS.items():
         check_symbol(label, yahoo_symbol)
 
