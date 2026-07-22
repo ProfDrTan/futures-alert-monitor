@@ -19,6 +19,9 @@ jobs:
       - name: Calculate levels
         run: python calculate_levels.py
       - name: Calculate indicators
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python calculate_indicators.py
       - name: Commit updated levels
         run: |
