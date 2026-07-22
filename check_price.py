@@ -215,6 +215,94 @@ def classify_zone(price, support, resistance, approach_dist):
         return "approaching_resistance"
     return None
 
+def classify_pair_zone(price, lower, upper, approach_dist, lower_name, upper_name):
+    """Generic version of classify_zone for any lower/upper level pair (e.g. VAL/VAH)."""
+    if lower is not None and price <= lower:
+        return lower_name
+    if upper is not None and price >= upper:
+        return upper_name
+    if lower is not None and price <= lower + approach_dist:
+        return f"approaching_{lower_name}"
+    if upper is not None and price >= upper - approach_dist:
+        return f"approaching_{upper_name}"
+    return None
+
+def classify_poc_zone(price, poc, approach_dist):
+    """POC is a single magnet level, not a pair. 'at_poc' uses a tighter band
+    than the general approach distance since POC is a precise price, not a zone."""
+    if poc is None:
+        return None
+    tight = approach_dist * 0.3
+    if abs(price - poc) <= tight:
+        return "at_poc"
+    if abs(price - poc) <= approach_dist:
+        return "approaching_poc"
+    return None
+
+def check_value_area_and_poc(label, price, levels, approach_dist, state, vol_text, rsi, rsi_lbl, cross_state, pattern):
+    poc = levels.get("poc")
+    vah = levels.get("vah")
+    val = levels.get("val")
+
+    # ---- Value Area (VAL/VAH pair) -- same touch/approach/reclaim pattern as support/resistance ----
+    va_zone = classify_pair_zone(price, val, vah, approach_dist, "val", "vah")
+    last_va_zone = state.get("last_va_zone")
+    if "va_touch_count" not in state:
+        state["va_touch_count"] = {"val": 0, "vah": 0}
+
+    if va_zone and va_zone != last_va_zone:
+        is_touch = va_zone in ("val", "vah")
+        if is_touch:
+            state["va_touch_count"][va_zone] = state["va_touch_count"].get(va_zone, 0) + 1
+            touch_n = state["va_touch_count"][va_zone]
+            touch_desc = "1st touch" if touch_n == 1 else ("2nd retest" if touch_n == 2 else f"{touch_n}th retest")
+            level_val = val if va_zone == "val" else vah
+            label_name = "VALUE AREA LOW" if va_zone == "val" else "VALUE AREA HIGH"
+            msg = (f"{label} ALERT: price {price} hit {label_name} at {level_val} ({touch_desc}). "
+                   f"{vol_text.capitalize()}. {rsi_read_text(rsi, rsi_lbl)}. {ema_cross_read(cross_state)}.")
+        else:
+            base = va_zone.replace("approaching_", "")
+            level_val = val if base == "val" else vah
+            label_name = "VALUE AREA LOW" if base == "val" else "VALUE AREA HIGH"
+            distance = round(abs(price - level_val), 2)
+            msg = (f"{label} HEADS-UP: price {price} is {distance}pts from {label_name} ({level_val}). "
+                   f"{vol_text.capitalize()}. {rsi_read_text(rsi, rsi_lbl)}. {ema_cross_read(cross_state)}.")
+        print(msg)
+        send_telegram(msg)
+        state["last_va_zone"] = va_zone
+    elif va_zone != "val" and last_va_zone == "val":
+        msg = (f"{label} RECLAIM: price {price} moved back above VALUE AREA LOW ({val}) -- "
+               f"back inside fair value from below. {vol_text.capitalize()}. {rsi_read_text(rsi, rsi_lbl)}.")
+        print(msg)
+        send_telegram(msg)
+        state["last_va_zone"] = va_zone
+    elif va_zone != "vah" and last_va_zone == "vah":
+        msg = (f"{label} REJECTION: price {price} moved back below VALUE AREA HIGH ({vah}) -- "
+               f"back inside fair value from above. {vol_text.capitalize()}. {rsi_read_text(rsi, rsi_lbl)}.")
+        print(msg)
+        send_telegram(msg)
+        state["last_va_zone"] = va_zone
+    elif va_zone is None and last_va_zone is not None:
+        state["last_va_zone"] = None
+
+    # ---- POC (single magnet level) -- touch + approach only ----
+    poc_zone = classify_poc_zone(price, poc, approach_dist)
+    last_poc_zone = state.get("last_poc_zone")
+    if poc_zone and poc_zone != last_poc_zone:
+        if poc_zone == "at_poc":
+            msg = (f"{label} AT POC: price {price} is at the Point of Control ({poc}) -- "
+                   f"the price level with the most traded volume. {vol_text.capitalize()}. "
+                   f"{rsi_read_text(rsi, rsi_lbl)}. {ema_cross_read(cross_state)}.")
+        else:
+            distance = round(abs(price - poc), 2)
+            msg = (f"{label} APPROACHING POC: price {price} is {distance}pts from POC ({poc}). "
+                   f"{vol_text.capitalize()}. {rsi_read_text(rsi, rsi_lbl)}.")
+        print(msg)
+        send_telegram(msg)
+        state["last_poc_zone"] = poc_zone
+    elif poc_zone is None and last_poc_zone is not None:
+        state["last_poc_zone"] = None
+
 def check_symbol(label, yahoo_symbol):
     levels_file = f"levels_{label}.json"
     indicators_file = f"indicators_{label}.json"
@@ -251,9 +339,6 @@ def check_symbol(label, yahoo_symbol):
     if "touch_count" not in state:
         state["touch_count"] = {"support": 0, "resistance": 0}
 
-    check_intraday_signals(label, yahoo_symbol, state, session)
-    save_json(state_file, state)
-
     last_zone = state.get("last_zone")
     is_exact_touch = zone in ("support", "resistance")
 
@@ -262,6 +347,9 @@ def check_symbol(label, yahoo_symbol):
     cross_state = indicators.get("ema_cross_state")
     pattern = indicators.get("last_candle_pattern")
     vol_text = volume_read(vol_ratio, session)
+
+    check_intraday_signals(label, yahoo_symbol, state, session)
+    check_value_area_and_poc(label, price, levels, approach_dist, state, vol_text, rsi, rsi_lbl, cross_state, pattern)
 
     if zone and zone != last_zone:
         # ---- New touch or new approach ----
@@ -338,10 +426,13 @@ def check_symbol(label, yahoo_symbol):
     elif zone is None and last_zone is not None:
         # Left an approach zone without a real touch -- not alert-worthy, just reset.
         state["last_zone"] = None
-        save_json(state_file, state)
         print(f"[{label}] Price {price} back in mid-range (no touch had occurred), alert state reset.")
     else:
         print(f"[{label}] Price {price}, no alert (zone={zone}, last_zone={last_zone}).")
+
+    # Unconditional save -- covers VA/POC/intraday state changes even on paths
+    # above that don't already save (e.g. the final 'no alert' branch).
+    save_json(state_file, state)
 
 def send_test_alert():
     msg = "TEST ALERT: this is a manual connectivity check from the futures-alert-monitor pipeline. If you're seeing this, Telegram delivery is working correctly."
