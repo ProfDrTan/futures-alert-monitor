@@ -1,19 +1,21 @@
 """
-Daily job: recalculates MES support/resistance using swing points + volume profile.
-Run once per day before market open. Writes levels.json for the 15-min checker to read.
+Daily job: recalculates ES and NQ support/resistance using swing points + volume profile.
+Run once per day before market open. Writes levels_<SYMBOL>.json for the 15-min checker to read.
 """
 import urllib.request
 import json
 import statistics
 
-SYMBOL = "MES=F"
+SYMBOLS = {"ES": "ES=F", "NQ": "NQ=F"}
 LOOKBACK_RANGE = "3mo"
-LEVELS_FILE = "levels.json"
 NUM_VOLUME_BINS = 40
 SWING_WINDOW = 3  # bars on each side to confirm a swing high/low
 
-def fetch_daily_bars():
-    url = f"https://query1.finance.yahoo.com/v8/finance/chart/{SYMBOL}?interval=1d&range={LOOKBACK_RANGE}"
+# Cluster tolerance scales with each instrument's typical point size
+CLUSTER_TOLERANCE = {"ES": 15.0, "NQ": 60.0}
+
+def fetch_daily_bars(yahoo_symbol):
+    url = f"https://query1.finance.yahoo.com/v8/finance/chart/{yahoo_symbol}?interval=1d&range={LOOKBACK_RANGE}"
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
     with urllib.request.urlopen(req, timeout=15) as resp:
         data = json.loads(resp.read().decode())
@@ -71,12 +73,13 @@ def nearest_high_volume_price(target, bins, bin_prices, top_n=8):
     top_prices = [bin_prices[idx] for idx, _ in top_bins]
     return min(top_prices, key=lambda p: abs(p - target)) if top_prices else target
 
-def main():
-    bars = fetch_daily_bars()
+def calc_for_symbol(label, yahoo_symbol):
+    bars = fetch_daily_bars(yahoo_symbol)
     current_price = bars[-1]["close"]
+    tolerance = CLUSTER_TOLERANCE.get(label, 15.0)
     swing_highs, swing_lows = find_swing_points(bars)
-    resistance_clusters = cluster(swing_highs)
-    support_clusters = cluster(swing_lows)
+    resistance_clusters = cluster(swing_highs, tolerance)
+    support_clusters = cluster(swing_lows, tolerance)
     volume_bins, bin_prices = build_volume_profile(bars)
 
     # confirmed levels = swing cluster that also sits near a high-volume node
@@ -94,15 +97,20 @@ def main():
         support = round(nearest_high_volume_price(support, volume_bins, bin_prices), 2)
 
     levels = {
-        "symbol": "MES",
+        "symbol": label,
         "current_price_at_calc": round(current_price, 2),
         "support": support,
         "resistance": resistance,
         "note": "Auto-calculated from 3mo swing points confirmed against volume profile. Edit by hand if needed.",
     }
-    with open(LEVELS_FILE, "w") as f:
+    out_file = f"levels_{label}.json"
+    with open(out_file, "w") as f:
         json.dump(levels, f, indent=2)
     print(json.dumps(levels, indent=2))
+
+def main():
+    for label, yahoo_symbol in SYMBOLS.items():
+        calc_for_symbol(label, yahoo_symbol)
 
 if __name__ == "__main__":
     main()
