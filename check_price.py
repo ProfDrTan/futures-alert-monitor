@@ -11,6 +11,11 @@ SYMBOLS = {"ES": "ES=F", "NQ": "NQ=F"}
 # itself only runs every 5-60 min depending on GitHub's scheduler load.
 APPROACH_DISTANCE = {"ES": 10.0, "NQ": 40.0}
 
+# Minimum volume-vs-average ratio required to treat a touch as a real signal
+# rather than noise. Below this, the touch is suppressed (state still updates
+# so we don't re-alert on the same noisy level repeatedly).
+MIN_VOLUME_RATIO = 0.6
+
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
 
@@ -127,7 +132,15 @@ def check_symbol(label, yahoo_symbol):
     is_exact_touch = zone in ("support", "resistance")
     is_approach = zone in ("approaching_support", "approaching_resistance")
 
-    if zone and zone != state.get("last_zone"):
+    # Conviction gate: a touch/approach on abnormally low volume is likely noise,
+    # not a real move. Update state to avoid re-alerting on it, but don't send.
+    is_low_conviction = vol_ratio is not None and vol_ratio <= MIN_VOLUME_RATIO
+
+    if zone and zone != state.get("last_zone") and is_low_conviction:
+        print(f"[{label}] {zone} touch at {price} suppressed - low conviction ({vol_ratio}x avg volume).")
+        state["last_zone"] = zone
+        save_json(state_file, state)
+    elif zone and zone != state.get("last_zone"):
         rsi = indicators.get("rsi14")
         rsi_lbl = indicators.get("rsi_read")
         cross_state = indicators.get("ema_cross_state")
