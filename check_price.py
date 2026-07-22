@@ -144,15 +144,12 @@ def check_symbol(label, yahoo_symbol):
     is_exact_touch = zone in ("support", "resistance")
     is_approach = zone in ("approaching_support", "approaching_resistance")
 
-    # Conviction gate: a touch/approach on abnormally low volume is likely noise,
-    # not a real move. Update state to avoid re-alerting on it, but don't send.
-    is_low_conviction = vol_ratio is not None and vol_ratio <= MIN_VOLUME_RATIO
+    # NOTE: conviction gate removed 22 Jul 2026 -- vol_ratio compares partial-day
+    # volume-so-far against a FULL trading day average, so it reads artificially
+    # low any time before the session is mostly over. It described risk in the
+    # message text; it should never have blocked the send outright.
 
-    if zone and zone != state.get("last_zone") and is_low_conviction:
-        print(f"[{label}] {zone} touch at {price} suppressed - low conviction ({vol_ratio}x avg volume).")
-        state["last_zone"] = zone
-        save_json(state_file, state)
-    elif zone and zone != state.get("last_zone"):
+    if zone and zone != state.get("last_zone"):
         rsi = indicators.get("rsi14")
         rsi_lbl = indicators.get("rsi_read")
         cross_state = indicators.get("ema_cross_state")
