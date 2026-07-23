@@ -339,6 +339,36 @@ def check_symbol(label, yahoo_symbol):
     if "touch_count" not in state:
         state["touch_count"] = {"support": 0, "resistance": 0}
 
+    # ---- Staleness check: is the feed actually updating? ----
+    # If the exact same price repeats across enough checks, that's either a
+    # genuinely frozen market (rare) or a stale data feed (the real risk this
+    # protects against) -- either way, silence should never be mistaken for
+    # "nothing's happening." A warning is sent once per stale episode, not
+    # every single check, to avoid spamming the same warning repeatedly.
+    STALE_THRESHOLD_CHECKS = 4  # consecutive identical prices before flagging
+    now_ts = datetime.datetime.utcnow().isoformat()
+    last_price = state.get("last_seen_price")
+    if last_price == price:
+        state["same_price_count"] = state.get("same_price_count", 0) + 1
+    else:
+        state["same_price_count"] = 0
+        state["stale_warning_sent"] = False
+    state["last_seen_price"] = price
+    state["last_seen_price_ts"] = now_ts
+
+    if state["same_price_count"] >= STALE_THRESHOLD_CHECKS and not state.get("stale_warning_sent"):
+        first_seen = state.get("stale_since_ts", now_ts)
+        state.setdefault("stale_since_ts", now_ts)
+        msg = (f"{label} DATA WARNING: price has shown {price} unchanged for "
+               f"{state['same_price_count']} consecutive checks (since ~{state.get('stale_since_ts')}). "
+               f"This may mean the feed is stale, not that the market is quiet -- "
+               f"check your own broker screen directly rather than trusting silence right now.")
+        print(msg)
+        send_telegram(msg)
+        state["stale_warning_sent"] = True
+    elif state["same_price_count"] == 0:
+        state["stale_since_ts"] = None
+
     last_zone = state.get("last_zone")
     is_exact_touch = zone in ("support", "resistance")
 
