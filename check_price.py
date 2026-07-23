@@ -397,28 +397,36 @@ def check_symbol(label, yahoo_symbol):
         # Without this, a level breaks once, alerts once, then goes silent while
         # the move keeps accelerating. Re-alert every time price pushes another
         # full approach_dist further past the last-alerted extreme.
-        extreme = state.get("zone_extreme_price", price)
-        if zone == "support":
-            extended = extreme - price  # more negative price = further breakdown
-        else:
-            extended = price - extreme  # further above = further breakout
-        if extended >= approach_dist:
-            level_val = support if zone == "support" else resistance
-            direction = "below" if zone == "support" else "above"
-            verb = "breaking down further" if zone == "support" else "breaking out further"
-            lines = [
-                f"{label} EXTENDING: price {price} is now {round(abs(price - level_val), 2)}pts {direction} "
-                f"{zone.upper()} ({level_val}) -- {verb}, {round(extended, 2)}pts past the last alert.",
-                vol_text.capitalize() + ".",
-                rsi_read_text(rsi, rsi_lbl) + ". " + ema_cross_read(cross_state) + ".",
-            ]
-            msg = " ".join(lines)
-            print(msg)
-            send_telegram(msg)
+        if "zone_extreme_price" not in state or state.get("zone_extreme_price") is None:
+            # No baseline yet (e.g. this touch predates this feature, or state
+            # was just reset) -- establish one now so future checks have something
+            # real to measure against, instead of silently comparing price to itself.
             state["zone_extreme_price"] = price
             save_json(state_file, state)
+            print(f"[{label}] Established zone_extreme_price baseline at {price} for ongoing {zone} episode.")
         else:
-            print(f"[{label}] Still in {zone}, price {price}, only {round(extended,2)}pts past last alert -- no re-alert yet.")
+            extreme = state["zone_extreme_price"]
+            if zone == "support":
+                extended = extreme - price  # more negative price = further breakdown
+            else:
+                extended = price - extreme  # further above = further breakout
+            if extended >= approach_dist:
+                level_val = support if zone == "support" else resistance
+                direction = "below" if zone == "support" else "above"
+                verb = "breaking down further" if zone == "support" else "breaking out further"
+                lines = [
+                    f"{label} EXTENDING: price {price} is now {round(abs(price - level_val), 2)}pts {direction} "
+                    f"{zone.upper()} ({level_val}) -- {verb}, {round(extended, 2)}pts past the last alert.",
+                    vol_text.capitalize() + ".",
+                    rsi_read_text(rsi, rsi_lbl) + ". " + ema_cross_read(cross_state) + ".",
+                ]
+                msg = " ".join(lines)
+                print(msg)
+                send_telegram(msg)
+                state["zone_extreme_price"] = price
+                save_json(state_file, state)
+            else:
+                print(f"[{label}] Still in {zone}, price {price}, only {round(extended,2)}pts past last alert -- no re-alert yet.")
 
     elif zone != "support" and last_zone == "support":
         # ---- Price left an exact support touch: reclaim (bullish) ----
