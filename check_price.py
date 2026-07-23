@@ -389,7 +389,36 @@ def check_symbol(label, yahoo_symbol):
         print(msg)
         send_telegram(msg)
         state["last_zone"] = zone
+        state["zone_extreme_price"] = price
         save_json(state_file, state)
+
+    elif zone and zone == last_zone and is_exact_touch:
+        # ---- Same broken zone as last check -- has price extended further? ----
+        # Without this, a level breaks once, alerts once, then goes silent while
+        # the move keeps accelerating. Re-alert every time price pushes another
+        # full approach_dist further past the last-alerted extreme.
+        extreme = state.get("zone_extreme_price", price)
+        if zone == "support":
+            extended = extreme - price  # more negative price = further breakdown
+        else:
+            extended = price - extreme  # further above = further breakout
+        if extended >= approach_dist:
+            level_val = support if zone == "support" else resistance
+            direction = "below" if zone == "support" else "above"
+            verb = "breaking down further" if zone == "support" else "breaking out further"
+            lines = [
+                f"{label} EXTENDING: price {price} is now {round(abs(price - level_val), 2)}pts {direction} "
+                f"{zone.upper()} ({level_val}) -- {verb}, {round(extended, 2)}pts past the last alert.",
+                vol_text.capitalize() + ".",
+                rsi_read_text(rsi, rsi_lbl) + ". " + ema_cross_read(cross_state) + ".",
+            ]
+            msg = " ".join(lines)
+            print(msg)
+            send_telegram(msg)
+            state["zone_extreme_price"] = price
+            save_json(state_file, state)
+        else:
+            print(f"[{label}] Still in {zone}, price {price}, only {round(extended,2)}pts past last alert -- no re-alert yet.")
 
     elif zone != "support" and last_zone == "support":
         # ---- Price left an exact support touch: reclaim (bullish) ----
@@ -405,6 +434,7 @@ def check_symbol(label, yahoo_symbol):
         print(msg)
         send_telegram(msg)
         state["last_zone"] = zone
+        state["zone_extreme_price"] = None
         save_json(state_file, state)
 
     elif zone != "resistance" and last_zone == "resistance":
@@ -421,11 +451,13 @@ def check_symbol(label, yahoo_symbol):
         print(msg)
         send_telegram(msg)
         state["last_zone"] = zone
+        state["zone_extreme_price"] = None
         save_json(state_file, state)
 
     elif zone is None and last_zone is not None:
         # Left an approach zone without a real touch -- not alert-worthy, just reset.
         state["last_zone"] = None
+        state["zone_extreme_price"] = None
         print(f"[{label}] Price {price} back in mid-range (no touch had occurred), alert state reset.")
     else:
         print(f"[{label}] Price {price}, no alert (zone={zone}, last_zone={last_zone}).")
