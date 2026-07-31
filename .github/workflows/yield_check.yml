@@ -1,0 +1,37 @@
+name: Check Treasury Yields (10Y/5Y)
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+    inputs:
+      test_alert:
+        description: 'Send a one-off test Telegram message (bypasses yield logic)'
+        required: false
+        default: 'false'
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check 10Y/5Y Treasury yields
+        env:
+          YIELD_TELEGRAM_BOT_TOKEN: ${{ secrets.YIELD_TELEGRAM_BOT_TOKEN }}
+          YIELD_TELEGRAM_CHAT_ID: ${{ secrets.YIELD_TELEGRAM_CHAT_ID }}
+          TEST_ALERT: ${{ inputs.test_alert == true && '1' || '0' }}
+        run: python yield_check.py
+      - name: Commit state file
+        run: |
+          git config user.name "yield-alert-bot"
+          git config user.email "actions@github.com"
+          git add last_yield_state.json
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update yield alert state"
+          git push
