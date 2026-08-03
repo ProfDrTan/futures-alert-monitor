@@ -1,10 +1,10 @@
 {
   "symbol": "NQ",
-  "current_price_at_calc": 28286.25,
-  "support": 28226.82,
+  "current_price_at_calc": 28789.5,
+  "support": 28648.17,
   "resistance": 29659.39,
   "poc": 29490.85,
-  "vah": 30080.73,
+  "vah": 29912.2,
   "val": 28226.82,
   "note": "Auto-calculated from 3mo swing points confirmed against volume profile. POC/VAH/VAL from the same volume profile (70% value area around point of control). Edit by hand if needed."
 }
