@@ -2,7 +2,7 @@ name: Recalculate ES/NQ Levels
 
 on:
   schedule:
-    - cron: '0 13 * * 1-5'  # 13:00 UTC daily, weekdays, before US market open
+    - cron: '7 13 * * 1-5'  # 13:00 UTC daily, weekdays, before US market open
   workflow_dispatch: {}
 
 permissions:
