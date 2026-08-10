@@ -1,0 +1,33 @@
+name: Squeeze Alert — NQ/ES (5-min)
+
+on:
+  schedule:
+    # Runs every 5 minutes, offset by 2 mins from check_price.yml (which runs at 3,8,13...)
+    - cron: '2,7,12,17,22,27,32,37,42,47,52,57 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  squeeze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Check TTM Squeeze state (NQ + ES, 5-min bars)
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID:   ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python squeeze_check.py
+
+      - name: Commit squeeze state files
+        run: |
+          git config user.name  "futures-alert-bot"
+          git config user.email "actions@github.com"
+          git add last_squeeze_state_*.json
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update squeeze state [skip ci]"
+          git push
