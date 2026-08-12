@@ -1,10 +1,10 @@
 {
   "symbol": "ES",
-  "current_price_at_calc": 7782.5,
-  "support": 7448.6,
-  "resistance": 7587.2,
-  "poc": 7398.2,
-  "vah": 7549.4,
-  "val": 7284.8,
+  "current_price_at_calc": 7767.0,
+  "support": 7447.67,
+  "resistance": 7585.52,
+  "poc": 7397.55,
+  "vah": 7547.92,
+  "val": 7284.77,
   "note": "Auto-calculated from 3mo swing points confirmed against volume profile. POC/VAH/VAL from the same volume profile (70% value area around point of control). Edit by hand if needed."
 }
