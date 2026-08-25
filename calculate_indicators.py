@@ -8,7 +8,7 @@ import json
 import os
 from yahoo_session import yahoo_json
 
-SYMBOLS = {"ES": "ES=F", "NQ": "NQ=F"}
+SYMBOLS = {"ES": "ES=F", "NQ": "NQ=F", "GC": "GC=F"}
 RANGE = "3mo"
 
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
