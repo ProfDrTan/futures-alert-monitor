@@ -5,6 +5,7 @@ Run once per day before market open. Writes levels_<SYMBOL>.json for the 15-min 
 import urllib.request
 import json
 import statistics
+from yahoo_session import yahoo_json
 
 SYMBOLS = {"ES": "ES=F", "NQ": "NQ=F"}
 LOOKBACK_RANGE = "3mo"
@@ -16,9 +17,7 @@ CLUSTER_TOLERANCE = {"ES": 15.0, "NQ": 60.0}
 
 def fetch_daily_bars(yahoo_symbol):
     url = f"https://query1.finance.yahoo.com/v8/finance/chart/{yahoo_symbol}?interval=1d&range={LOOKBACK_RANGE}"
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-    with urllib.request.urlopen(req, timeout=15) as resp:
-        data = json.loads(resp.read().decode())
+    data = yahoo_json(url)
     result = data["chart"]["result"][0]
     quote = result["indicators"]["quote"][0]
     bars = []
@@ -148,3 +147,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
