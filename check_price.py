@@ -6,10 +6,10 @@ import statistics
 import datetime
 from yahoo_session import yahoo_json
 
-SYMBOLS = {"ES": "ES=F", "NQ": "NQ=F"}
+SYMBOLS = {"ES": "ES=F", "NQ": "NQ=F", "GC": "GC=F"}
 
 # Distance (in points) from a level that counts as "approaching" it.
-APPROACH_DISTANCE = {"ES": 10.0, "NQ": 40.0}
+APPROACH_DISTANCE = {"ES": 10.0, "NQ": 40.0, "GC": 5.0}
 
 # US regular session, ET converted to UTC (handles standard offset; DST-aware
 # enough for our purposes since futures trade nearly 24/5 anyway).
