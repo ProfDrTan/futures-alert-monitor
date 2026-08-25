@@ -18,6 +18,7 @@ import json
 import os
 import math
 import datetime
+from yahoo_session import yahoo_json
 
 # ── Symbols ──────────────────────────────────────────────────────────────────
 SYMBOLS = {"NQ": "NQ=F", "ES": "ES=F"}
@@ -42,9 +43,7 @@ TELEGRAM_CHAT_ID   = os.environ.get("TELEGRAM_CHAT_ID")
 def fetch_bars(yahoo_symbol):
     url = (f"https://query1.finance.yahoo.com/v8/finance/chart/{yahoo_symbol}"
            f"?interval={INTERVAL}&range={RANGE}")
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-    with urllib.request.urlopen(req, timeout=10) as resp:
-        data = json.loads(resp.read().decode())
+    data = yahoo_json(url)
     result = data["chart"]["result"][0]
     timestamps = result["timestamp"]
     q = result["indicators"]["quote"][0]
@@ -250,3 +249,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
