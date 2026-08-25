@@ -7,13 +7,13 @@ import json
 import statistics
 from yahoo_session import yahoo_json
 
-SYMBOLS = {"ES": "ES=F", "NQ": "NQ=F"}
+SYMBOLS = {"ES": "ES=F", "NQ": "NQ=F", "GC": "GC=F"}
 LOOKBACK_RANGE = "3mo"
 NUM_VOLUME_BINS = 40
 SWING_WINDOW = 3  # bars on each side to confirm a swing high/low
 
 # Cluster tolerance scales with each instrument's typical point size
-CLUSTER_TOLERANCE = {"ES": 15.0, "NQ": 60.0}
+CLUSTER_TOLERANCE = {"ES": 15.0, "NQ": 60.0, "GC": 20.0}
 
 def fetch_daily_bars(yahoo_symbol):
     url = f"https://query1.finance.yahoo.com/v8/finance/chart/{yahoo_symbol}?interval=1d&range={LOOKBACK_RANGE}"
