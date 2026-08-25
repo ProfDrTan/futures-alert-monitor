@@ -6,6 +6,7 @@ writes indicators_<SYMBOL>.json.
 import urllib.request
 import json
 import os
+from yahoo_session import yahoo_json
 
 SYMBOLS = {"ES": "ES=F", "NQ": "NQ=F"}
 RANGE = "3mo"
@@ -31,9 +32,7 @@ def send_telegram(message):
 
 def fetch_daily_bars(yahoo_symbol):
     url = f"https://query1.finance.yahoo.com/v8/finance/chart/{yahoo_symbol}?interval=1d&range={RANGE}"
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-    with urllib.request.urlopen(req, timeout=15) as resp:
-        data = json.loads(resp.read().decode())
+    data = yahoo_json(url)
     result = data["chart"]["result"][0]
     q = result["indicators"]["quote"][0]
     bars = []
@@ -170,3 +169,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
