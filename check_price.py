@@ -4,6 +4,7 @@ import os
 import sys
 import statistics
 import datetime
+from yahoo_session import yahoo_json
 
 SYMBOLS = {"ES": "ES=F", "NQ": "NQ=F"}
 
@@ -21,9 +22,7 @@ INTRADAY_RANGE = "1d"
 def fetch_intraday_bars(yahoo_symbol):
     url = (f"https://query1.finance.yahoo.com/v8/finance/chart/{yahoo_symbol}"
            f"?interval={INTRADAY_INTERVAL}&range={INTRADAY_RANGE}")
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-    with urllib.request.urlopen(req, timeout=10) as resp:
-        data = json.loads(resp.read().decode())
+    data = yahoo_json(url)
     result = data["chart"]["result"][0]
     timestamps = result["timestamp"]
     q = result["indicators"]["quote"][0]
@@ -138,9 +137,7 @@ def save_json(path, data):
 
 def get_price(yahoo_symbol):
     url = f"https://query1.finance.yahoo.com/v8/finance/chart/{yahoo_symbol}?interval=1m&range=1d"
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-    with urllib.request.urlopen(req, timeout=10) as resp:
-        data = json.loads(resp.read().decode())
+    data = yahoo_json(url)
     result = data["chart"]["result"][0]
     price = result["meta"]["regularMarketPrice"]
     quote = result["indicators"]["quote"][0]
@@ -150,9 +147,7 @@ def get_price(yahoo_symbol):
 
 def get_avg_daily_volume(yahoo_symbol):
     url = f"https://query1.finance.yahoo.com/v8/finance/chart/{yahoo_symbol}?interval=1d&range=1mo"
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-    with urllib.request.urlopen(req, timeout=10) as resp:
-        data = json.loads(resp.read().decode())
+    data = yahoo_json(url)
     result = data["chart"]["result"][0]
     volumes = [v for v in result["indicators"]["quote"][0]["volume"] if v]
     return statistics.mean(volumes) if volumes else None
@@ -536,3 +531,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
