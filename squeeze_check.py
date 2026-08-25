@@ -21,7 +21,7 @@ import datetime
 from yahoo_session import yahoo_json
 
 # ── Symbols ──────────────────────────────────────────────────────────────────
-SYMBOLS = {"NQ": "NQ=F", "ES": "ES=F"}
+SYMBOLS = {"NQ": "NQ=F", "ES": "ES=F", "GC": "GC=F"}
 
 # ── Squeeze parameters (matches TOS TTM_Squeeze defaults) ────────────────────
 BB_LENGTH = 20
