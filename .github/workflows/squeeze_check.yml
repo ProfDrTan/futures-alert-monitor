@@ -3,7 +3,7 @@ name: Squeeze Alert — NQ/ES (5-min)
 on:
   schedule:
     # Runs every 5 minutes, offset by 2 mins from check_price.yml (which runs at 3,8,13...)
-    - cron: '2,7,12,17,22,27,32,37,42,47,52,57 * * * *'
+    - cron: '2,17,32,47 * * * *'
   workflow_dispatch:
 
 permissions:
