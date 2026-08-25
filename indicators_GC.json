@@ -1,0 +1,9 @@
+{
+  "symbol": "GC",
+  "rsi14": 75.84,
+  "rsi_read": "overbought",
+  "ema8": 4540.59,
+  "ema21": 4384.77,
+  "ema_cross_state": "bullish_bias",
+  "last_candle_pattern": null
+}
