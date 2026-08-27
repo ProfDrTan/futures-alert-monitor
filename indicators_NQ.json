@@ -1,9 +1,9 @@
 {
   "symbol": "NQ",
-  "rsi14": 48.11,
+  "rsi14": 53.07,
   "rsi_read": "neutral",
-  "ema8": 29396.83,
-  "ema21": 29411.74,
-  "ema_cross_state": "death_cross_just_occurred",
+  "ema8": 29450.26,
+  "ema21": 29432.22,
+  "ema_cross_state": "golden_cross_just_occurred",
   "last_candle_pattern": "doji"
 }
