@@ -76,13 +76,30 @@ def fetch_intraday_bars(yahoo_symbol):
     result = data["chart"]["result"][0]
     timestamps = result["timestamp"]
     q = result["indicators"]["quote"][0]
+    volumes = q.get("volume", [None] * len(timestamps))
     bars = []
     for i in range(len(timestamps)):
         if q["high"][i] is None or q["low"][i] is None:
             continue
         bars.append({"ts": timestamps[i], "high": q["high"][i], "low": q["low"][i],
-                     "close": q["close"][i]})
+                     "close": q["close"][i], "volume": volumes[i] or 0})
     return bars
+
+
+def session_vwap(bars):
+    """Volume-weighted average price over the session's bars so far, using
+    each bar's typical price (H+L+C)/3. Falls back to a simple average of
+    typical price if volume data is missing/zero for the session (this can
+    happen for some futures on Yahoo, especially overnight) -- an
+    unweighted average is still a far better reference than nothing, it's
+    just flagged as such in the message.
+    """
+    total_vol = sum(b["volume"] for b in bars)
+    if total_vol > 0:
+        weighted_sum = sum(((b["high"] + b["low"] + b["close"]) / 3) * b["volume"] for b in bars)
+        return round(weighted_sum / total_vol, 2), True
+    typical_prices = [(b["high"] + b["low"] + b["close"]) / 3 for b in bars]
+    return round(sum(typical_prices) / len(typical_prices), 2), False
 
 
 def fmt_ts(ts):
@@ -106,6 +123,11 @@ def check_symbol(label, yahoo_symbol):
     session_low = min(b["low"] for b in bars)
     latest_price = bars[-1]["close"]
     latest_ts = bars[-1]["ts"]
+    vwap, vwap_is_volume_weighted = session_vwap(bars)
+    vwap_distance = round(latest_price - vwap, 2)
+    vwap_side = "above" if vwap_distance > 0 else ("below" if vwap_distance < 0 else "at")
+    vwap_note = "" if vwap_is_volume_weighted else " (volume data unavailable -- unweighted avg used instead)"
+    vwap_line = f"VWAP: {vwap}{vwap_note} | price is {abs(vwap_distance)} pts {vwap_side} VWAP"
 
     state = load_json(state_file, default={})
 
@@ -125,6 +147,7 @@ def check_symbol(label, yahoo_symbol):
         msg = (
             f"\U0001F53A NEW HIGH -- {label} {session_high}\n"
             f"(previous session high: {running_high})\n"
+            f"{vwap_line}\n"
             f"Last price: {latest_price} | {fmt_ts(latest_ts)}\n"
             f"Session covers regular + extended/overnight hours."
         )
@@ -135,6 +158,7 @@ def check_symbol(label, yahoo_symbol):
         msg = (
             f"\U0001F53B NEW LOW -- {label} {session_low}\n"
             f"(previous session low: {running_low})\n"
+            f"{vwap_line}\n"
             f"Last price: {latest_price} | {fmt_ts(latest_ts)}\n"
             f"Session covers regular + extended/overnight hours."
         )
