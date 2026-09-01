@@ -51,6 +51,12 @@ INTRADAY_RANGE = "1d"
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
 
+SGT = datetime.timezone(datetime.timedelta(hours=8))
+
+
+def to_sgt(ts):
+    return datetime.datetime.fromtimestamp(ts, tz=datetime.timezone.utc).astimezone(SGT)
+
 
 def load_json(path, default=None):
     if not os.path.exists(path):
@@ -93,7 +99,7 @@ def make_chart(label, bars, vwap, session_high, session_low):
     number you have to parse. High/low points are marked directly on the
     line since those are the other two numbers being tracked.
     """
-    times = [datetime.datetime.utcfromtimestamp(b["ts"]) for b in bars]
+    times = [to_sgt(b["ts"]) for b in bars]
     closes = [b["close"] for b in bars]
 
     fig, ax = plt.subplots(figsize=(7, 3.5), dpi=130)
@@ -110,7 +116,8 @@ def make_chart(label, bars, vwap, session_high, session_low):
     ax.scatter([times[closes.index(max(closes))]], [session_high], color="#2ca02c", zorder=4, s=30)
     ax.scatter([times[closes.index(min(closes))]], [session_low], color="#d62728", zorder=4, s=30)
 
-    ax.set_title(f"{label} -- session price vs VWAP", fontsize=11)
+    ax.set_title(f"{label} -- session price vs VWAP (times in SGT)", fontsize=11)
+    ax.set_xlabel("Time (SGT, UTC+8)", fontsize=8)
     ax.legend(loc="upper left", fontsize=8, frameon=False)
     ax.tick_params(axis="x", rotation=30, labelsize=7)
     ax.tick_params(axis="y", labelsize=8)
@@ -172,7 +179,7 @@ def session_vwap(bars):
 
 
 def fmt_ts(ts):
-    return datetime.datetime.utcfromtimestamp(ts).strftime("%Y-%m-%d %H:%M UTC")
+    return to_sgt(ts).strftime("%Y-%m-%d %H:%M SGT")
 
 
 def check_symbol(label, yahoo_symbol, force_snapshot=False):
