@@ -10,6 +10,11 @@ on:
         required: false
         default: 'false'
         type: boolean
+      send_snapshot:
+        description: 'Send current high/low/VWAP for all symbols right now, regardless of new-extreme status'
+        required: false
+        default: 'false'
+        type: boolean
 
 permissions:
   contents: write
@@ -27,11 +32,18 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TEST_ALERT: ${{ inputs.test_alert == true && '1' || '0' }}
+          SEND_SNAPSHOT: ${{ inputs.send_snapshot == true && '1' || '0' }}
         run: python new_high_low_check.py
       - name: Commit session state files
         run: |
           git config user.name "futures-alert-bot"
           git config user.email "actions@github.com"
-          git add session_state_*.json
-          git diff --quiet && git diff --staged --quiet || git commit -m "Update new-high/new-low session state"
-          git push
+          shopt -s nullglob
+          files=(session_state_*.json)
+          if [ ${#files[@]} -gt 0 ]; then
+            git add "${files[@]}"
+            git diff --quiet && git diff --staged --quiet || git commit -m "Update new-high/new-low session state"
+            git push
+          else
+            echo "No session_state_*.json files yet (likely a test-only run) -- nothing to commit."
+          fi
