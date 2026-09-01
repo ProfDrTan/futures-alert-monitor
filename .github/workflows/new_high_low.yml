@@ -3,6 +3,8 @@ name: New High/Low Alert (ES/NQ/RTY/YM/GC/BTC)
 on:
   schedule:
     - cron: '1,6,11,16,21,26,31,36,41,46,51,56 * * * *'
+  repository_dispatch:
+    types: [new_high_low_check]
   workflow_dispatch:
     inputs:
       test_alert:
