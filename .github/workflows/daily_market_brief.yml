@@ -1,0 +1,36 @@
+name: Daily Market Brief
+
+on:
+  schedule:
+    # 07:10 SGT = 23:10 UTC previous day, Mon-Fri SGT mornings.
+    # (SGT has no DST, so this offset is fixed year-round.)
+    - cron: '10 23 * * 0-4'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  brief:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install requests
+      - name: Generate and send daily market brief
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python daily_market_brief.py
+      - name: Commit journal update
+        run: |
+          git config user.name "futures-alert-bot"
+          git config user.email "actions@github.com"
+          git add docs/index.md
+          git diff --quiet && git diff --staged --quiet || git commit -m "Daily market brief: $(date -u +%Y-%m-%d)"
+          git pull --rebase
+          git push
