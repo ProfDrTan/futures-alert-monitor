@@ -27,8 +27,13 @@ traded off directly.
 
 import json
 import os
+import io
 import urllib.request
 import datetime
+import requests
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 from yahoo_session import yahoo_json
 
 SYMBOLS = {
@@ -67,6 +72,70 @@ def send_telegram(message):
     data = json.dumps({"chat_id": TELEGRAM_CHAT_ID, "text": message}).encode()
     req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
     urllib.request.urlopen(req, timeout=10)
+
+
+def vwap_arrow(distance):
+    """Color-coded arrow for at-a-glance above/below VWAP reading.
+    Two intensity levels so a big move away from VWAP visually stands out
+    from a small one, since that's the whole point of glancing at this.
+    """
+    if distance > 0:
+        return "\U0001F7E2\u2B06\uFE0F\u2B06\uFE0F" if distance > 20 else "\U0001F7E2\u2B06\uFE0F"
+    if distance < 0:
+        return "\U0001F534\u2B07\uFE0F\u2B07\uFE0F" if distance < -20 else "\U0001F534\u2B07\uFE0F"
+    return "\u26AA"
+
+
+def make_chart(label, bars, vwap, session_high, session_low):
+    """Renders a small PNG: session price line, VWAP as a dashed reference
+    line, and the area between them shaded green when price is above VWAP
+    and red when below -- so "how far off VWAP" is a visual read, not a
+    number you have to parse. High/low points are marked directly on the
+    line since those are the other two numbers being tracked.
+    """
+    times = [datetime.datetime.utcfromtimestamp(b["ts"]) for b in bars]
+    closes = [b["close"] for b in bars]
+
+    fig, ax = plt.subplots(figsize=(7, 3.5), dpi=130)
+    ax.plot(times, closes, color="#1f77b4", linewidth=1.6, zorder=3)
+    ax.axhline(vwap, color="#888888", linestyle="--", linewidth=1.2, label=f"VWAP {vwap}")
+
+    above = [c if c >= vwap else vwap for c in closes]
+    below = [c if c <= vwap else vwap for c in closes]
+    ax.fill_between(times, closes, vwap, where=[c >= vwap for c in closes],
+                     color="#2ca02c", alpha=0.25, interpolate=True)
+    ax.fill_between(times, closes, vwap, where=[c <= vwap for c in closes],
+                     color="#d62728", alpha=0.25, interpolate=True)
+
+    ax.scatter([times[closes.index(max(closes))]], [session_high], color="#2ca02c", zorder=4, s=30)
+    ax.scatter([times[closes.index(min(closes))]], [session_low], color="#d62728", zorder=4, s=30)
+
+    ax.set_title(f"{label} -- session price vs VWAP", fontsize=11)
+    ax.legend(loc="upper left", fontsize=8, frameon=False)
+    ax.tick_params(axis="x", rotation=30, labelsize=7)
+    ax.tick_params(axis="y", labelsize=8)
+    fig.tight_layout()
+
+    buf = io.BytesIO()
+    fig.savefig(buf, format="png")
+    plt.close(fig)
+    buf.seek(0)
+    return buf
+
+
+def send_telegram_photo(photo_buf, caption):
+    if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
+        print("Missing Telegram credentials, skipping send.")
+        return
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendPhoto"
+    files = {"photo": ("chart.png", photo_buf, "image/png")}
+    data = {"chat_id": TELEGRAM_CHAT_ID, "caption": caption}
+    resp = requests.post(url, data=data, files=files, timeout=20)
+    if not resp.ok:
+        print(f"sendPhoto failed ({resp.status_code}): {resp.text}")
+        # Fall back to a plain text message so the alert still gets through
+        # even if the image upload itself has a problem.
+        send_telegram(caption)
 
 
 def fetch_intraday_bars(yahoo_symbol):
@@ -127,7 +196,8 @@ def check_symbol(label, yahoo_symbol, force_snapshot=False):
     vwap_distance = round(latest_price - vwap, 2)
     vwap_side = "above" if vwap_distance > 0 else ("below" if vwap_distance < 0 else "at")
     vwap_note = "" if vwap_is_volume_weighted else " (volume data unavailable -- unweighted avg used instead)"
-    vwap_line = f"VWAP: {vwap}{vwap_note} | price is {abs(vwap_distance)} pts {vwap_side} VWAP"
+    arrow = vwap_arrow(vwap_distance)
+    vwap_line = f"{arrow} VWAP: {vwap}{vwap_note} | price is {abs(vwap_distance)} pts {vwap_side} VWAP"
 
     state = load_json(state_file, default={})
 
@@ -152,7 +222,8 @@ def check_symbol(label, yahoo_symbol, force_snapshot=False):
             f"Session covers regular + extended/overnight hours."
         )
         print(msg)
-        send_telegram(msg)
+        chart = make_chart(label, bars, vwap, session_high, session_low)
+        send_telegram_photo(chart, msg)
 
     if new_low and running_low is not None:
         msg = (
@@ -163,7 +234,8 @@ def check_symbol(label, yahoo_symbol, force_snapshot=False):
             f"Session covers regular + extended/overnight hours."
         )
         print(msg)
-        send_telegram(msg)
+        chart = make_chart(label, bars, vwap, session_high, session_low)
+        send_telegram_photo(chart, msg)
 
     if running_high is None and running_low is None:
         # First run of a fresh session -- establish the baseline silently,
@@ -179,7 +251,8 @@ def check_symbol(label, yahoo_symbol, force_snapshot=False):
             f"Session covers regular + extended/overnight hours."
         )
         print(msg)
-        send_telegram(msg)
+        chart = make_chart(label, bars, vwap, session_high, session_low)
+        send_telegram_photo(chart, msg)
 
     state["running_high"] = session_high
     state["running_low"] = session_low
