@@ -113,8 +113,10 @@ def make_chart(label, bars, vwap, session_high, session_low):
     ax.fill_between(times, closes, vwap, where=[c <= vwap for c in closes],
                      color="#d62728", alpha=0.25, interpolate=True)
 
-    ax.scatter([times[closes.index(max(closes))]], [session_high], color="#2ca02c", zorder=4, s=30)
-    ax.scatter([times[closes.index(min(closes))]], [session_low], color="#d62728", zorder=4, s=30)
+    high_bar = max(bars, key=lambda b: b["high"])
+    low_bar = min(bars, key=lambda b: b["low"])
+    ax.scatter([to_sgt(high_bar["ts"])], [high_bar["high"]], color="#2ca02c", zorder=4, s=30)
+    ax.scatter([to_sgt(low_bar["ts"])], [low_bar["low"]], color="#d62728", zorder=4, s=30)
 
     ax.set_title(f"{label} -- session price vs VWAP (times in SGT)", fontsize=11)
     ax.set_xlabel("Time (SGT, UTC+8)", fontsize=8)
