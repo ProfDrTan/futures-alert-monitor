@@ -106,7 +106,7 @@ def fmt_ts(ts):
     return datetime.datetime.utcfromtimestamp(ts).strftime("%Y-%m-%d %H:%M UTC")
 
 
-def check_symbol(label, yahoo_symbol):
+def check_symbol(label, yahoo_symbol, force_snapshot=False):
     state_file = f"session_state_{label}.json"
 
     try:
@@ -170,6 +170,17 @@ def check_symbol(label, yahoo_symbol):
         # nothing to alert on yet since there's no "previous" extreme.
         print(f"[{label}] Establishing session baseline: high={session_high}, low={session_low}.")
 
+    if force_snapshot:
+        msg = (
+            f"\U0001F4CA SNAPSHOT -- {label}\n"
+            f"Session high: {session_high} | Session low: {session_low}\n"
+            f"{vwap_line}\n"
+            f"Last price: {latest_price} | {fmt_ts(latest_ts)}\n"
+            f"Session covers regular + extended/overnight hours."
+        )
+        print(msg)
+        send_telegram(msg)
+
     state["running_high"] = session_high
     state["running_low"] = session_low
     save_json(state_file, state)
@@ -186,8 +197,9 @@ def main():
     if os.environ.get("TEST_ALERT") == "1":
         send_test_alert()
         return
+    force_snapshot = os.environ.get("SEND_SNAPSHOT") == "1"
     for label, yahoo_symbol in SYMBOLS.items():
-        check_symbol(label, yahoo_symbol)
+        check_symbol(label, yahoo_symbol, force_snapshot=force_snapshot)
 
 
 if __name__ == "__main__":
