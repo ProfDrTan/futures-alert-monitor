@@ -20,6 +20,11 @@ on:
         required: false
         default: 'false'
         type: boolean
+      start_loop:
+        description: 'Start the multi-hour polling loop immediately (same as a scheduled restart, for kicking it off manually without waiting)'
+        required: false
+        default: 'false'
+        type: boolean
 
 permissions:
   contents: write
@@ -45,7 +50,7 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TEST_ALERT: ${{ inputs.test_alert == true && '1' || '0' }}
           SEND_SNAPSHOT: ${{ inputs.send_snapshot == true && '1' || '0' }}
-          CONTINUOUS_LOOP: ${{ github.event_name == 'schedule' && '1' || '0' }}
+          CONTINUOUS_LOOP: ${{ (github.event_name == 'schedule' || inputs.start_loop == true) && '1' || '0' }}
           LOOP_BUDGET_SECONDS: '17400'
         run: python new_high_low_check.py
       - name: Commit session state files
@@ -63,3 +68,4 @@ jobs:
           else
             echo "No session_state_*.json files yet -- nothing to commit."
           fi
+
