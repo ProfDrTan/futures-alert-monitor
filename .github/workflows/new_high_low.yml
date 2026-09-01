@@ -1,0 +1,37 @@
+name: New High/Low Alert (ES/NQ/RTY/YM/GC/BTC)
+
+on:
+  schedule:
+    - cron: '1,6,11,16,21,26,31,36,41,46,51,56 * * * *'
+  workflow_dispatch:
+    inputs:
+      test_alert:
+        description: 'Send a one-off test Telegram message (bypasses price logic)'
+        required: false
+        default: 'false'
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check for new session high/low (ES, NQ, RTY, YM, GC, BTC)
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TEST_ALERT: ${{ inputs.test_alert == true && '1' || '0' }}
+        run: python new_high_low_check.py
+      - name: Commit session state files
+        run: |
+          git config user.name "futures-alert-bot"
+          git config user.email "actions@github.com"
+          git add session_state_*.json
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update new-high/new-low session state"
+          git push
