@@ -28,6 +28,7 @@ traded off directly.
 import json
 import os
 import io
+import time
 import urllib.request
 import datetime
 import requests
@@ -275,13 +276,58 @@ def send_test_alert():
     send_telegram(msg)
 
 
+def run_all_symbols(force_snapshot=False):
+    for label, yahoo_symbol in SYMBOLS.items():
+        check_symbol(label, yahoo_symbol, force_snapshot=force_snapshot)
+
+
 def main():
     if os.environ.get("TEST_ALERT") == "1":
         send_test_alert()
         return
+
     force_snapshot = os.environ.get("SEND_SNAPSHOT") == "1"
-    for label, yahoo_symbol in SYMBOLS.items():
-        check_symbol(label, yahoo_symbol, force_snapshot=force_snapshot)
+
+    if os.environ.get("CONTINUOUS_LOOP") != "1":
+        # Manual/dispatch runs (test, snapshot, or a one-off check) just do a
+        # single pass and exit -- no reason to make a quick manual test wait
+        # around inside a multi-hour loop.
+        run_all_symbols(force_snapshot=force_snapshot)
+        return
+
+    # Scheduled runs: GitHub's native cron trigger has proven unreliable at
+    # 5-minute granularity (it can go silent for hours under load, which is
+    # exactly what happened and caused a real missed alert). Rather than
+    # depending on GitHub firing this workflow every 5 minutes, the
+    # scheduled trigger instead starts ONE long-lived job that polls every
+    # 5 minutes internally via a sleep loop, for as long as the runner's
+    # time budget allows. This needs GitHub's scheduler to fire reliably
+    # only once every ~5 hours to restart the loop -- a far easier bar for
+    # it to clear than every 5 minutes, since the failure mode we hit was
+    # specific to short-interval scheduling.
+    loop_budget_seconds = int(os.environ.get("LOOP_BUDGET_SECONDS", 290 * 60))
+    poll_interval_seconds = 300
+    start = time.time()
+    iteration = 0
+
+    while time.time() - start < loop_budget_seconds:
+        iteration += 1
+        print(f"--- poll iteration {iteration} at {datetime.datetime.utcnow().isoformat()} UTC ---")
+        try:
+            run_all_symbols(force_snapshot=False)
+        except Exception as e:
+            # A single bad iteration (e.g. a transient Yahoo fetch error)
+            # should not kill hours of remaining coverage -- log and
+            # continue polling.
+            print(f"Iteration {iteration} failed: {e}")
+
+        elapsed = time.time() - start
+        remaining = loop_budget_seconds - elapsed
+        if remaining <= 0:
+            break
+        time.sleep(min(poll_interval_seconds, remaining))
+
+    print(f"Loop budget exhausted after {iteration} iterations, exiting cleanly for restart.")
 
 
 if __name__ == "__main__":
