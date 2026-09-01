@@ -1,0 +1,57 @@
+name: Live Market News Watch (CNBC)
+
+on:
+  schedule:
+    - cron: '13 */5 * * *'
+  repository_dispatch:
+    types: [market_news_check]
+  workflow_dispatch:
+    inputs:
+      start_loop:
+        description: 'Start the multi-hour polling loop immediately'
+        required: false
+        default: 'false'
+        type: boolean
+
+permissions:
+  contents: write
+
+concurrency:
+  group: market-news-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install requests
+      - name: Watch CNBC feeds for new headlines
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          CONTINUOUS_LOOP: ${{ (github.event_name == 'schedule' || inputs.start_loop == true) && '1' || '0' }}
+          LOOP_BUDGET_SECONDS: '17400'
+        run: python market_news_watch.py
+      - name: Commit state and journal
+        if: always()
+        run: |
+          git config user.name "futures-alert-bot"
+          git config user.email "actions@github.com"
+          shopt -s nullglob
+          files=(seen_news_state.json docs/news-feed.md)
+          existing=()
+          for f in "${files[@]}"; do [ -f "$f" ] && existing+=("$f"); done
+          if [ ${#existing[@]} -gt 0 ]; then
+            git add "${existing[@]}"
+            git diff --quiet && git diff --staged --quiet || git commit -m "Update news feed state"
+            git pull --rebase
+            git push
+          else
+            echo "Nothing to commit."
+          fi
