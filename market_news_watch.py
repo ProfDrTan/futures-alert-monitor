@@ -27,8 +27,9 @@ TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
 
 FEEDS = {
-    "CNBC Markets": "https://www.cnbc.com/id/20910258/device/rss/rss.html",
-    "CNBC Top News": "https://www.cnbc.com/id/100003114/device/rss/rss.html",
+    "CNBC Markets": "https://www.cnbc.com/id/20409666/device/rss/rss.html",
+    "CNBC Economy": "https://www.cnbc.com/id/20910258/device/rss/rss.html",
+    "CNBC Finance": "https://www.cnbc.com/id/10000664/device/rss/rss.html",
 }
 
 STATE_FILE = "seen_news_state.json"
