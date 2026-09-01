@@ -2,7 +2,10 @@ name: New High/Low Alert (ES/NQ/RTY/YM/GC/BTC)
 
 on:
   schedule:
-    - cron: '1,6,11,16,21,26,31,36,41,46,51,56 * * * *'
+    # Restarts the polling loop every ~5 hours. This only needs GitHub's
+    # scheduler to fire reliably at a long interval, not every 5 minutes --
+    # the actual 5-min polling happens inside the job itself (see script).
+    - cron: '3 */5 * * *'
   repository_dispatch:
     types: [new_high_low_check]
   workflow_dispatch:
@@ -21,9 +24,14 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: new-high-low-monitor
+  cancel-in-progress: false
+
 jobs:
   check:
     runs-on: ubuntu-latest
+    timeout-minutes: 330
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -31,14 +39,17 @@ jobs:
           python-version: '3.11'
       - name: Install dependencies
         run: pip install matplotlib requests
-      - name: Check for new session high/low (ES, NQ, RTY, YM, GC, BTC)
+      - name: Run new high/low monitor
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TEST_ALERT: ${{ inputs.test_alert == true && '1' || '0' }}
           SEND_SNAPSHOT: ${{ inputs.send_snapshot == true && '1' || '0' }}
+          CONTINUOUS_LOOP: ${{ github.event_name == 'schedule' && '1' || '0' }}
+          LOOP_BUDGET_SECONDS: '17400'
         run: python new_high_low_check.py
       - name: Commit session state files
+        if: always()
         run: |
           git config user.name "futures-alert-bot"
           git config user.email "actions@github.com"
@@ -47,7 +58,8 @@ jobs:
           if [ ${#files[@]} -gt 0 ]; then
             git add "${files[@]}"
             git diff --quiet && git diff --staged --quiet || git commit -m "Update new-high/new-low session state"
+            git pull --rebase
             git push
           else
-            echo "No session_state_*.json files yet (likely a test-only run) -- nothing to commit."
+            echo "No session_state_*.json files yet -- nothing to commit."
           fi
