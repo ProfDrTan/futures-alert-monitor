@@ -30,6 +30,9 @@ FEEDS = {
     "CNBC Markets": "https://www.cnbc.com/id/20409666/device/rss/rss.html",
     "CNBC Economy": "https://www.cnbc.com/id/20910258/device/rss/rss.html",
     "CNBC Finance": "https://www.cnbc.com/id/10000664/device/rss/rss.html",
+    "Fed Press Releases": "https://www.federalreserve.gov/feeds/press_all.xml",
+    "MarketWatch": "https://feeds.content.dowjones.io/public/rss/mw_topstories",
+    "EIA Today in Energy": "https://www.eia.gov/rss/todayinenergy.xml",
 }
 
 STATE_FILE = "seen_news_state.json"
@@ -93,9 +96,9 @@ def fetch_feed_items(url):
 
 def check_feeds():
     state = load_state()
-    is_first_run = not state
 
     for source, url in FEEDS.items():
+        source_is_new = source not in state
         seen = set(state.get(source, []))
         try:
             items = fetch_feed_items(url)
@@ -108,8 +111,8 @@ def check_feeds():
         # Telegram message order matches chronological order.
         new_items.reverse()
 
-        if is_first_run:
-            print(f"[{source}] First run -- baselining {len(items)} existing items, no alerts.")
+        if source_is_new:
+            print(f"[{source}] First run for this feed -- baselining {len(items)} existing items, no alerts.")
         else:
             for item in new_items:
                 msg = f"\U0001F4F0 {source}\n{item['title']}\n{item['link']}"
