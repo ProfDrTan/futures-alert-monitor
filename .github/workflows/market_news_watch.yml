@@ -22,7 +22,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: market-news-watch
+  group: ${{ (github.event_name == 'workflow_dispatch' && inputs.send_sample == true) && format('sample-push-{0}', github.run_id) || 'market-news-watch' }}
   cancel-in-progress: false
 
 jobs:
@@ -45,7 +45,7 @@ jobs:
           LOOP_BUDGET_SECONDS: '17400'
         run: python market_news_watch.py
       - name: Commit state and journal
-        if: always()
+        if: always() && inputs.send_sample != true
         run: |
           git config user.name "futures-alert-bot"
           git config user.email "actions@github.com"
