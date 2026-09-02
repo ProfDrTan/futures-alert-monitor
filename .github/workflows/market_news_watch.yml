@@ -12,6 +12,11 @@ on:
         required: false
         default: 'false'
         type: boolean
+      send_sample:
+        description: 'Send one sample real headline per feed for verification (no state change)'
+        required: false
+        default: 'false'
+        type: boolean
 
 permissions:
   contents: write
@@ -36,6 +41,7 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           CONTINUOUS_LOOP: ${{ (github.event_name == 'schedule' || inputs.start_loop == true) && '1' || '0' }}
+          SEND_SAMPLE: ${{ inputs.send_sample == true && '1' || '0' }}
           LOOP_BUDGET_SECONDS: '17400'
         run: python market_news_watch.py
       - name: Commit state and journal
