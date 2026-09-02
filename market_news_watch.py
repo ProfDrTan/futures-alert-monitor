@@ -124,7 +124,30 @@ def check_feeds():
     save_state(state)
 
 
+def send_sample():
+    """Sends the single latest real headline from each feed, exactly as a
+    live alert would look -- for verification purposes only. Doesn't
+    touch seen-state, so it has no effect on what counts as "new" later.
+    """
+    for source, url in FEEDS.items():
+        try:
+            items = fetch_feed_items(url)
+        except Exception as e:
+            print(f"[{source}] fetch failed: {e}")
+            continue
+        if not items:
+            continue
+        latest = items[0]
+        msg = f"\U0001F4F0 {source} (SAMPLE)\n{latest['title']}\n{latest['link']}"
+        print(msg)
+        send_telegram(msg)
+
+
 def main():
+    if os.environ.get("SEND_SAMPLE") == "1":
+        send_sample()
+        return
+
     if os.environ.get("CONTINUOUS_LOOP") != "1":
         check_feeds()
         return
