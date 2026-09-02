@@ -31,7 +31,6 @@ FEEDS = {
     "CNBC Economy": "https://www.cnbc.com/id/20910258/device/rss/rss.html",
     "CNBC Finance": "https://www.cnbc.com/id/10000664/device/rss/rss.html",
     "Fed Press Releases": "https://www.federalreserve.gov/feeds/press_all.xml",
-    "MarketWatch": "https://feeds.content.dowjones.io/public/rss/mw_topstories",
     "EIA Today in Energy": "https://www.eia.gov/rss/todayinenergy.xml",
 }
 
