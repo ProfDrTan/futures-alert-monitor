@@ -1,9 +1,6 @@
-# Market Journal
+# Prof Tan's Market Site
 
-Daily research-backed market briefs, newest first. Generated automatically
-every weekday morning (SGT) -- covers what happened in US markets overnight
-and why, with a focus on indices, oil, gold, yields, and the Iran/Middle
-East conflict where relevant.
-
----
-
+- [**Market Narrative Log**](narrative.md) -- curated causal narratives:
+  the *why* behind market moves, in Prof Tan's own read.
+- **Macro Dashboard** -- coming soon: 10Y/30Y/2Y Treasury yields, VIX,
+  dollar index, and oil/gold trend charts, updated daily.
