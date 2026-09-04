@@ -1,9 +1,9 @@
 {
   "symbol": "GC",
-  "rsi14": 59.06,
+  "rsi14": 56.07,
   "rsi_read": "neutral",
-  "ema8": 4472.45,
-  "ema21": 4424.45,
+  "ema8": 4467.52,
+  "ema21": 4426.34,
   "ema_cross_state": "bullish_bias",
   "last_candle_pattern": null
 }
