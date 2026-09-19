@@ -7,15 +7,34 @@ alerts: the goal here is a running record of the *reasoning*, so a
 move like the Sept 1-2 NASDAQ swing doesn't happen without a clear
 account of what drove it.
 
-## 2026-09-18
+## 2026-09-18 (Friday) -- worst week since March
 
-Reversal from the prior day's rally: Dow fell Friday, closing out its worst
-week since March, as Treasury yields rose again. [Figures/causal detail not
-confirmed -- CNBC blocked the automated fetch and no verified numbers were
-found; paste the specifics when you have them and this entry can be filled
-in properly.]
+Prof Tan's read, via secondary AI summary -- NOT independently verified against a
+primary source; the source's day-of-week labeling (Wed/Thu/Fri) conflicts with
+the calendar and with figures already logged here for 2026-09-17, so treat the
+specific numbers below with caution until confirmed.
 
-Source: [CNBC, Dow falls Friday and posts worst week since March as Treasury yields rise](https://www.cnbc.com/2026/09/17/stock-market-today-live-updates.html)
+Dow fell Friday (~95-122 pts, -0.2%) for a third straight red week, down
+1.5-1.9% on the week -- its worst week since March 2026. S&P 500 edged up 0.2%
+Friday but was roughly flat/-0.1% on the week. Nasdaq rose 0.4% Friday and
+finished the week +0.7%, led by AI chips (PHLX Semi +2.8%).
+
+Bond market driving the tape: 10-year Treasury cited at ~4.995-5.004% (first
+time above 5% since 2007, per this source); 2-year at 4.741% (highest close
+since July 2024); 30-year touched 5.333% earlier in the week.
+
+Cited drivers: (1) Fed hiked 25bps -- Chair Warsh said inflation "too high and
+has been for too long"; (2) oil shock after Iran struck a tanker in the Strait
+of Hormuz -- WTI ~$102-103, Brent ~$104-110, US diesel a record $6.44/gal;
+(3) traders reportedly pricing 47% odds of another hike and 42% odds of 50bps
+more by December. Backdrop: September seasonal weakness, midterms, triple-
+witching expiry. Bulls still point to earnings + AI adoption as support.
+
+Note: MYR govt securities (MGS) yields (3.985%) reportedly tracking this US
+move upward.
+
+Source: user-relayed AI summary of a CNBC live blog, unconfirmed; original
+CNBC link: https://www.cnbc.com/2026/09/17/stock-market-today-live-updates.html
 
 ---
 
