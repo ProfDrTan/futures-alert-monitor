@@ -7,6 +7,18 @@ alerts: the goal here is a running record of the *reasoning*, so a
 move like the Sept 1-2 NASDAQ swing doesn't happen without a clear
 account of what drove it.
 
+## 2026-09-18
+
+Reversal from the prior day's rally: Dow fell Friday, closing out its worst
+week since March, as Treasury yields rose again. [Figures/causal detail not
+confirmed -- CNBC blocked the automated fetch and no verified numbers were
+found; paste the specifics when you have them and this entry can be filled
+in properly.]
+
+Source: [CNBC, Dow falls Friday and posts worst week since March as Treasury yields rise](https://www.cnbc.com/2026/09/17/stock-market-today-live-updates.html)
+
+---
+
 ## 2026-09-17
 
 Markets snapped back sharply the day after the Fed's Wednesday rate
