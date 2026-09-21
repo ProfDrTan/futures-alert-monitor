@@ -7,6 +7,28 @@ alerts: the goal here is a running record of the *reasoning*, so a
 move like the Sept 1-2 NASDAQ swing doesn't happen without a clear
 account of what drove it.
 
+## 2026-09-21 (Monday) -- Nasdaq record close, +2.2%, against the seasonal grain
+
+AI stocks surged back after last week's AI-bubble warnings faded, with
+investors refocusing on continued AI infrastructure spend. Meta led
+at +11-12% (best day since April 2025) on a Wells Fargo price-target
+hike to $796 citing Meta's AI agent/coding tools ahead of its Sept
+23-24 Connect event; Intel and AMD also jumped ~10-12%, AMD briefly
+touching a $1T market cap. Oil dropped 5%+ (worst day in a month) on
+signs of Middle East de-escalation, pulling Treasury yields down with
+it -- removing the inflation-fear headwind that had been pressuring
+stocks.
+
+**Seasonality context:** this happened *against* the historical grain
+-- September is the weakest month for US equities on average, and the
+futures-alert-monitor system's own NQ data shows NQ has closed lower
+in 6 of the last 16 Septembers (avg -1.11% for the month). A 2%+ up
+day overriding that seasonal pattern is a stronger signal than the
+same move in a seasonally favorable month. Also in play: Q3-end
+"window dressing" -- fund managers rotating into winners like AI names
+ahead of quarterly reports, a mechanical effect that can unwind just
+as fast once the quarter turns.
+
 ## 2026-09-18 (Friday) -- worst week since March
 
 Prof Tan's read, via secondary AI summary -- NOT independently verified against a
