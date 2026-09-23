@@ -7,6 +7,29 @@ alerts: the goal here is a running record of the *reasoning*, so a
 move like the Sept 1-2 NASDAQ swing doesn't happen without a clear
 account of what drove it.
 
+## 2026-09-22 (Tuesday) -- Nasdaq's 2nd straight record, Dow/tech divergence, oil's 5th down day
+
+Nasdaq +0.4-0.5% to a fresh record (~27,244); S&P 500 flat (~7,761);
+Dow -185 to -263 pts (-0.4-0.5%). The split: financials dragged the
+Dow -- JPMorgan -3.4%, Wells Fargo -3.4%, Morgan Stanley -2.9%,
+Cisco -4.5% -- on a yield rebound and lingering credit-quality worries
+(XLF worst sector, -1.9%). AI names kept carrying the Nasdaq instead:
+Meta's new "Muse" AI agent got a strong reception; AI-power/memory
+names extended Monday's move (Monolithic Power +7.5%, Rambus +7.4%,
+Micron +3.4%, Astera Labs +7.3%). Defensives (staples, materials,
+healthcare) also caught a bid on rotation out of financials.
+
+Oil fell for a **5th straight day** -- longest losing streak since
+last August -- on continued Middle East de-escalation hope, capping
+long-dated Treasury yields. Trump said he'd support banning diesel
+exports given record-high domestic diesel prices. Backdrop: the
+10-year yield touched its highest level since 2007 this stretch --
+tech is shrugging it off since AI infrastructure spend is contracted
+years forward, while cyclical/refinancing-exposed sectors (financials,
+industrials) absorb the damage -- exactly the Dow/Nasdaq split seen
+today. The US-China summit (Trump-Xi, including AI safety talks) is
+this week -- a potential catalyst either direction.
+
 ## 2026-09-21 (Monday) -- Nasdaq record close, +2.2%, against the seasonal grain
 
 AI stocks surged back after last week's AI-bubble warnings faded, with
