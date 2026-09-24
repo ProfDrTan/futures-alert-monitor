@@ -7,6 +7,34 @@ alerts: the goal here is a running record of the *reasoning*, so a
 move like the Sept 1-2 NASDAQ swing doesn't happen without a clear
 account of what drove it.
 
+## 2026-09-24 (Thursday) -- 10Y at a 19-year high: talking points for Monday's class
+
+10-year Treasury yield ~5.11-5.12%, near its highest level since
+**2007**, having briefly touched 5% for the first time since then
+before a slight pullback. Drivers, in order of weight:
+
+1. **Strong US data** -- S&P Global PMI showed private-sector activity
+   expanding at its fastest pace in 5+ years (services + manufacturing
+   both improving), employment growing at its fastest pace since 2022.
+2. **Rate-hike repricing** -- traders now price ~60% odds of another
+   25bp Fed hike next month, up from under 10% a month ago.
+3. **Iran conflict** -- hawkish remarks from Iranian leaders dimmed
+   near-term diplomacy hopes, keeping energy prices elevated and
+   adding inflation pressure.
+4. **Weak Treasury auction demand** -- the latest 5-year note auction
+   tailed 3.1bps above its 6-auction average, soft indirect (foreign)
+   bidder participation; heavy AI-related corporate debt issuance
+   ($1.5T+ this year) is competing for the same buyer pool.
+
+**Market read-through:** this yield pressure is the same force behind
+the Dow/Nasdaq divergence seen Sept 22-23 -- cyclical/refinancing-
+exposed sectors (financials, industrials) absorb the damage, while
+AI-heavy tech shrugs it off since that capex is contracted years
+forward and largely rate-insensitive. Also the headwind on gold.
+Some commentary (Fortune) is drawing 1970s-stagflation comparisons
+given the yield's 2007-level breach -- worth presenting as a live
+debate to students, not a settled call.
+
 ## 2026-09-22 (Tuesday) -- Nasdaq's 2nd straight record, Dow/tech divergence, oil's 5th down day
 
 Nasdaq +0.4-0.5% to a fresh record (~27,244); S&P 500 flat (~7,761);
