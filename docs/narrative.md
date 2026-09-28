@@ -7,6 +7,46 @@ alerts: the goal here is a running record of the *reasoning*, so a
 move like the Sept 1-2 NASDAQ swing doesn't happen without a clear
 account of what drove it.
 
+## 2026-09-28 (Monday) -- AI debt costs rise as Treasury yields spike (CNBC, Sept 27)
+
+The second-order effect of the yield story: the AI buildout is still
+going, but it now costs more to finance. With the 10-year near
+**5.17%** (up ~1 percentage point since the start of the year, and
+the highest since 2007), anyone issuing debt has to offer investors a
+richer return. JPMorgan estimated in June that **$4.1 trillion** of
+AI-related debt will be issued through 2030, so the cost of that
+borrowing matters at scale.
+
+**Winners and losers this week (same yield backdrop, different
+reactions):**
+- **CoreWeave** (debt-heavy neocloud): held up, up almost 8% on the
+  week.
+- **Oracle** (has leaned on the debt market for its AI expansion):
+  down 7% on the week and about 30% for the year.
+- **SoftBank** (a principal provider of capital for AI projects):
+  raised $11.1 billion in a junk-bond sale, with yields as high as
+  **9.75%** on the 7-year tranche. A quoted analyst (Siebert
+  Financial's Mark Malek) read this as SoftBank being "price
+  insensitive" -- a price taker willing to pay whatever the market
+  demands.
+
+**Teaching angle:** this links the two halves of the market's current
+split. Yesterday's talking point was that AI-heavy tech shrugs off
+high yields because capex is contracted years forward. The counter-
+argument is that the *financing* of that capex is not rate-proof: the
+cash-rich hyperscalers are relatively insulated, but debt-dependent
+builders are price takers in a market where the risk-free rate just
+jumped a full point. Worth putting to students as an open question --
+does the AI trade get repriced from the bottom of the capital
+structure up? Market is "not in panic mode, at least not yet"
+(CNBC).
+
+*Source note:* summary based on CNBC's Sept 27 article and syndicated
+copies of it. Several low-quality aggregator sites in the same search
+results made stronger claims (projects "quietly delayed," yields
+"not seen since 2019") that CNBC's version does not support and that
+I have left out as unverified.
+
 ## 2026-09-24 (Thursday) -- 10Y at a 19-year high: talking points for Monday's class
 
 10-year Treasury yield ~5.11-5.12%, near its highest level since
