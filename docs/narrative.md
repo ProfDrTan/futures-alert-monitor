@@ -7,6 +7,28 @@ alerts: the goal here is a running record of the *reasoning*, so a
 move like the Sept 1-2 NASDAQ swing doesn't happen without a clear
 account of what drove it.
 
+## 2026-09-28 (Monday) -- AMD acquires Fei-Fei Li's World Labs for $8.2B
+
+AMD agreed to acquire World Labs, the "world model" AI lab founded by
+Stanford professor and ImageNet creator Fei-Fei Li, in an **all-stock
+deal worth $8.2 billion** -- AMD's second-largest acquisition ever,
+after Xilinx ($50B, 2022). World Labs builds AI that understands 3D
+physical space (its product, Marble, generates 3D scenes from a few
+images); founded 2024, raised ~$1B, last valued ~$5B in a Feb round
+that included AMD, Nvidia, Autodesk, Fidelity, and Sea. Li becomes
+AMD's EVP and Chief Scientist, reporting to Lisa Su. AMD had already
+invested in and partnered with World Labs on inference optimization;
+World Labs stays operationally separate until the deal closes
+(expected year-end, pending regulatory approval).
+
+**Why it matters:** AMD frames this as informing its AI chip roadmap
+by getting closer to frontier-workload research -- the same logic as
+Nvidia's $33B combined spend on Groq + Hugging Face, and OpenAI's
+$6.4B purchase of Jony Ive's io. Fits the broader pattern of chipmakers
+buying research talent/IP rather than just building compute capacity.
+AMD shares were roughly flat after-hours -- market treated it as
+strategic, not a surprise re-rating catalyst.
+
 ## 2026-09-28 (Monday) -- AI debt costs rise as Treasury yields spike (CNBC, Sept 27)
 
 The second-order effect of the yield story: the AI buildout is still
