@@ -7,6 +7,24 @@ alerts: the goal here is a running record of the *reasoning*, so a
 move like the Sept 1-2 NASDAQ swing doesn't happen without a clear
 account of what drove it.
 
+## 2026-09-29 (Tuesday) -- 30Y yield mechanism: it's term premium, not Fed hike odds
+
+Deeper dive on the same day's yield story: **30-year yield touched
+5.6%+ intraday (highest since June 2002, when it hit 5.644%),
+settling ~5.585%** -- sixth straight day of gains. 10-year ~5.25%,
+highest since 2007. The tell: the **2-year yield actually fell** ~3bps
+to 4.891% the same day.
+
+That short-end/long-end split is the whole story. Per JoAnne Bianco
+(BondBloxx Investment Management), this is not the market pricing a
+near-term Fed hike -- it's investors demanding more **term premium**
+(extra compensation for holding long-dated debt) over fiscal deficit
+concerns and heavy Treasury issuance, layered on top of ordinary
+inflation worry. Confirms the read from the earlier Sept 29 entry:
+structural/long-end move, not a Fed-policy repricing. Useful
+distinction for class -- students should learn to check the 2yr/30yr
+spread before assuming "yields up" always means "Fed more hawkish."
+
 ## 2026-09-29 (Tuesday) -- Dow's 2nd straight loss as 30Y yield hits highest since 2002
 
 Second consecutive down day for all three indexes, though all closed
