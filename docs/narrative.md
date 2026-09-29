@@ -7,6 +7,35 @@ alerts: the goal here is a running record of the *reasoning*, so a
 move like the Sept 1-2 NASDAQ swing doesn't happen without a clear
 account of what drove it.
 
+## 2026-09-29 (Tuesday) -- Dow's 2nd straight loss as 30Y yield hits highest since 2002
+
+Second consecutive down day for all three indexes, though all closed
+off their session lows. **Dow -131.59 (-0.26%) to 51,349.92; S&P 500
+-0.16% to 7,670.84; Nasdaq -0.09% to 26,797.54.** Monday's drop:
+Dow -0.67%, S&P -0.77%, Nasdaq -0.92%.
+
+**The real story is the long end of the curve, not the Fed.** 30-year
+Treasury yield topped **5.6% intraday -- highest since June 2002.**
+10-year topped 5.29% at its session high. NY Fed President John
+Williams said after the September meeting "there is no need for
+urgency" on further policy moves -- so this is reading as a long-end
+term-premium/supply move (inflation expectations further out,
+Treasury issuance concerns), not a near-term Fed-hike repricing. Worth
+distinguishing from the short-end-driven yield stories earlier this
+month for students.
+
+**Sector damage is concentrated in financials, not broad-based:**
+JPMorgan, Morgan Stanley, Bank of America all declined; financials are
+the worst S&P sector in September (-6.3%), on pace for their first
+monthly decline in four months and worst month since March 2023.
+Blackstone -21% in September, BlackRock -8%. This is the flip side of
+the yield-driven Dow/Nasdaq split noted Sept 22-23 -- refinancing/
+credit-exposed names keep absorbing the damage while tech is largely
+shrugging it off.
+
+Oil pulled back on signs of better Middle East oil flows -- a partial
+offset, not enough to turn the tape positive.
+
 ## 2026-09-28 (Monday) -- AMD acquires Fei-Fei Li's World Labs for $8.2B
 
 AMD agreed to acquire World Labs, the "world model" AI lab founded by
