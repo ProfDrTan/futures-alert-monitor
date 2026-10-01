@@ -7,6 +7,28 @@ alerts: the goal here is a running record of the *reasoning*, so a
 move like the Sept 1-2 NASDAQ swing doesn't happen without a clear
 account of what drove it.
 
+## 2026-09-30 (Wednesday) -- Kashkari dismisses soft PCE; market disagrees with him
+
+August core PCE (Fed's preferred inflation gauge) came in cooler than
+expected: **3% annual vs. 3.3% forecast**, monthly +0.2% vs. +0.3%
+forecast. Minneapolis Fed President Neel Kashkari (2026 voter) called
+inflation **"still too high"** regardless, at a CFR event -- called
+the data "a snapshot in time" that "didn't really change that story."
+He's penciled in **one more hike this year, another in 2027**, says
+the neutral rate may be higher than thought, calls the economy
+"resilient."
+
+**The teaching point is the market's reaction, not Kashkari's
+words:** futures traders actually *cut* October hike odds by about a
+third on data that, read literally, supported the hawkish case. The
+Dow lost more than 8x the S&P's September decline and broke below a
+51,100 floor that had held on three prior tests. Gold slipped too --
+higher yields/oil outweighed the softer PCE print. Good example for
+class: a single Fed voter's hawkish framing is a temperature check on
+the committee's center of gravity, not new information the market
+necessarily takes at face value -- traders priced their own read of
+the data over his.
+
 ## 2026-09-29 (Tuesday) -- 30Y yield mechanism: it's term premium, not Fed hike odds
 
 Deeper dive on the same day's yield story: **30-year yield touched
