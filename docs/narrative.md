@@ -7,6 +7,31 @@ alerts: the goal here is a running record of the *reasoning*, so a
 move like the Sept 1-2 NASDAQ swing doesn't happen without a clear
 account of what drove it.
 
+## 2026-10-01 (Thursday) -- First trading day of October: yields retreat from 24-year highs; September wrap
+
+**Close:** S&P 500 +0.19-0.2% (~7,677); Nasdaq +0.3-0.4%; Dow flat
+(+0.04%). All three clawed back from earlier losses as 10Y and 30Y
+yields eased ~5-6bps off their highs into the close.
+
+**What they retreated from:** 10-year yield hit **5.344% intraday --
+a 24-year high** -- 30-year also hit its highest in 24 years, before
+both pulled back as the selloff lost steam (described as "unwinding
+of crowded positions").
+
+**September wrap, now that the month's closed:** S&P 500 and Nasdaq
+both finished the month in the green; **Dow finished September down
+~3.5%** -- a striking divergence on the same backdrop. Also notable:
+September was reportedly a *historically bad month for the S&P 500
+equal-weight index* specifically -- the cap-weighted S&P's green
+close masks real underperformance in the median stock, consistent
+with the mega-cap-AI-shrugs-it-off / everything-else-absorbs-the-
+damage pattern running through the last several entries.
+
+*Flagged with appropriate skepticism:* economist Peter Schiff called
+this "the biggest bond bear market in history" after yields resumed
+climbing post the softer PCE print -- a strong claim from a known
+permabear, noted here as commentary, not established fact.
+
 ## 2026-09-30 (Wednesday) -- Kashkari dismisses soft PCE; market disagrees with him
 
 August core PCE (Fed's preferred inflation gauge) came in cooler than
