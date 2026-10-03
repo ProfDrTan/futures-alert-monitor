@@ -7,6 +7,33 @@ alerts: the goal here is a running record of the *reasoning*, so a
 move like the Sept 1-2 NASDAQ swing doesn't happen without a clear
 account of what drove it.
 
+## 2026-10-02 (Friday) -- Weak jobs report, Nvidia hits $5.7T on record buyback
+
+**Close:** Dow +0.5%; S&P 500 +0.75%; Nasdaq Composite +1.19% to
+27,190.86 (intraday all-time high 27,353.68, closed just under its
+Sept 22 record close of 27,244.28); Nasdaq 100 +1.0% to a genuine
+record close (30,807.93).
+
+**Driver:** September jobs report came in weak -- only **29,000 jobs
+added**, with a downward revision -- cementing expectations the Fed
+holds at the October meeting. This directly reverses the hawkish
+repricing from Kashkari's Sept 30 comments (two trading days earlier)
+-- good illustration for class of how fast the rate-path narrative
+can flip on one data print. Lower oil added to the risk-on mood.
+
+**Nvidia was the center of it:** fresh intraday all-time high of
+$237.87-237.88, market cap past **$5.7 trillion** -- driven by AI-
+spend optimism *plus* a record share buyback authorization (a
+company-specific catalyst stacked on the macro one). Philly semi
+index +3%, Tesla +5%, SpaceX +6.2%.
+
+**Worth flagging for the classroom:** Treasury yields initially fell
+on the soft jobs print as expected, but **reversed higher into the
+close**, and both Nvidia and the Nasdaq Composite pulled back from
+their intraday records to finish below them. The headline "good news"
+didn't fully hold through the close -- useful case for distinguishing
+intraday euphoria from the more modest final tape.
+
 ## 2026-10-01 (Thursday) -- First trading day of October: yields retreat from 24-year highs; September wrap
 
 **Close:** S&P 500 +0.19-0.2% (~7,677); Nasdaq +0.3-0.4%; Dow flat
