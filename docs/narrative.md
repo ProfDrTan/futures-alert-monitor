@@ -7,6 +7,32 @@ alerts: the goal here is a running record of the *reasoning*, so a
 move like the Sept 1-2 NASDAQ swing doesn't happen without a clear
 account of what drove it.
 
+## 2026-10-05 (Monday) -- Daily pre-market brief: quiet, modestly bid open; tech leads again
+
+*Daily brief: overnight tape, levels in play, today's events. IBKR data, first ~90 minutes of the Globex session (6:00-7:30 am SGT). Levels to plan around, not trade recommendations. Full structure: see the 2026-10-04 weekly report below.*
+
+**Overnight tape (vs Friday close)**
+
+| | Last | Change | Overnight range | Read |
+|---|---|---|---|---|
+| ES Dec | 7,787.75 | +10.5 (+0.14%) | 7,780.75-7,789.25 | Tight 8.5-pt range, holding above the 7,737-7,750 MA cluster |
+| NQ Dec | 31,148.25 | +86.5 (+0.28%) | 31,059-31,169 | Bid, but still below Friday's 31,282.5 contract high |
+| GC Dec | 4,172.5 | +10.2 (+0.25%) | 4,160.0-4,176.6 | Small bounce; the low held 17 pts above the 4,143 floor |
+
+**Read:** a calm, thin-volume open with no key level tested. Tech is leading again, NQ up about twice as much as ES, so the concentration story from the weekly report is intact. Gold is bouncing off its floor, but nothing has repaired the downtrend until 4,259 is reclaimed.
+
+**Levels in play today**
+
+- **ES:** resistance 7,848, then 7,904. Pivot **7,737-7,750**; a daily close below confirms the breadth breakdown.
+- **NQ:** resistance 31,282.5 (contract high). Support 30,713-30,760, then **30,351**.
+- **GC:** resistance **4,259**, then 4,314-4,338. Support **4,143**, then 4,015-4,035.
+
+**Today's event (SGT)**
+
+- **10:00 pm -- ISM Services PMI (September).** The prices-paid component feeds straight into the yield story. A hot print pushes yields up, which weighs on gold and the rate-sensitive sectors; a soft print does the opposite.
+
+**IBKR alerts armed (email + Desktop):** GC 4,143 and 4,259, ES 7,737, NQ 30,351.
+
 ## 2026-10-04 (Sunday) -- Weekly Market Structure Report: tech carries the index, gold breaks down
 
 *Weekly structure report (breadth / sectors / macro / levels / week ahead), modeled on Peter Reznicek's ShadowTrader format. Levels computed from IBKR daily data, Friday Oct 2 close. Levels to plan around, not trade recommendations.*
