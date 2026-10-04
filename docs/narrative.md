@@ -7,6 +7,46 @@ alerts: the goal here is a running record of the *reasoning*, so a
 move like the Sept 1-2 NASDAQ swing doesn't happen without a clear
 account of what drove it.
 
+## 2026-10-04 (Sunday) -- Weekly Market Structure Report: tech carries the index, gold breaks down
+
+*Weekly structure report (breadth / sectors / macro / levels / week ahead), modeled on Peter Reznicek's ShadowTrader format. Levels computed from IBKR daily data, Friday Oct 2 close. Levels to plan around, not trade recommendations.*
+
+**The thesis (ShadowTrader):** the S&P 500 looks stable only because mega-cap tech and AI names (~40% of the index weight) are holding it up. Per Reznicek, 10 of 11 sectors are breaking down, making lower lows, or failing at resistance. Rate-sensitive sectors (utilities, REITs, staples, healthcare) are hit hardest by rising Treasury yields, and small caps show the weakness most clearly. If tech pulls back even mildly, there is no broad support underneath.
+
+**Does the data agree? Yes, on the core point.** Over the past month QQQ is **+5.7%** while SPY is only **+0.6%**. Tech is breaking out to new highs while the cap-weighted index goes nowhere, which means the rest of the market is losing ground underneath it. This matches the Oct 1 entry: September was a historically bad month for the equal-weight S&P even as the cap-weighted index closed green.
+
+**Where the video is out of date:** it frames macro as a repricing of Fed *cuts*. The current tape is about *hikes*. Kashkari has penciled in another hike (Sept 30 entry), the 10Y hit a 24-year high of 5.344% (Oct 1), and the weak jobs print only cemented a *hold* (Oct 2). Rising yields are the right headwind; the rate-path framing is not.
+
+### Key levels (Dec futures; MNQ/MGC trade at the same prices)
+
+| | ES (S&P) | NQ (Nasdaq-100) | GC (Gold) |
+|---|---|---|---|
+| Fri close | 7,777.25 | 31,061.75 | 4,162.3 |
+| Trend | Flat, coiled on its MAs | Breakout, contract high | Downtrend, below all MAs |
+| Resistance | 7,848 (late-Sept double top); 7,904 (contract high) | 31,282.5 (Fri contract high) | 4,259 (this week's high); 4,314-4,338 (breakdown zone + 21 EMA/20-day); 4,362-4,372 (100/50-day) |
+| Support | **7,737-7,750** (8/21 EMA + 20/50-day, 13-pt band); 7,673; 7,575 | 30,713-30,760 (8 EMA / Fri low); 30,627 (Aug high, old resistance); **30,351-30,370** (21 EMA + swing lows); 29,900-30,000 (Sept 21 breakout gap); 29,811 (50-day) | **4,143** (Sept 23 low, tested 4x this week); 4,015-4,035 (July-Aug base) |
+| 14-day ATR | ~82 pts | ~480 pts | ~89 pts |
+
+**ETF cross-check:** SPY 769.64 sits less than 1% above an MA cluster of 763.7-766.3, and about 1.2% below its mid-August high of 779.37. QQQ 749.58 printed a new 6-month high (754.54) and sits 2-4% above its key averages. The fragile index is the S&P, not the Nasdaq.
+
+### Gold focus
+
+GC is down **3.7% on the week and 5.7% on the month**, with a series of lower highs since the early-September peak of 4,755. It closed Friday only 19 points above the 4,143 floor after four tests of the 4,143-4,154 zone this week. Repeated tests tend to weaken support, not strengthen it. A daily close below 4,143 opens 4,015-4,035. Reclaiming 4,259, and then the 4,314-4,338 zone, is needed to neutralise the breakdown. Consistent with the yield story: the Sept 30 entry already noted higher yields outweighing a softer PCE print for gold.
+
+### What confirms or invalidates the thesis
+
+- **Confirms:** an ES daily close below 7,737, which breaks all four MAs at once. An NQ close below 30,351 would remove the last pillar Reznicek describes.
+- **Invalidates:** ES clears 7,848 and then 7,904 with broader participation, i.e. the equal-weight index stops lagging.
+- **Gold:** a close below 4,143 extends the downtrend; above 4,259 is the first sign of repair.
+
+### Week ahead (times in SGT)
+
+- **Mon Oct 5, 10:00 pm** -- ISM Services PMI (September)
+- **Thu Oct 8, 2:00 am** -- FOMC minutes (Sept 15-16 meeting; released Wed 2:00 pm ET)
+- **Tue Oct 13, ~7:00 pm** -- JPMorgan Q3 earnings; bank earnings kick off. Note: the video flags these as "this week," but they fall the *following* week.
+- **Wed Oct 14, 8:30 pm** -- CPI (September)
+- **Thu Oct 29, 2:00 am** -- FOMC rate decision (released Wed Oct 28, 2:00 pm ET)
+
 ## 2026-10-02 (Friday) -- Weak jobs report, Nvidia hits $5.7T on record buyback
 
 **Close:** Dow +0.5%; S&P 500 +0.75%; Nasdaq Composite +1.19% to
