@@ -13,6 +13,32 @@ account of what drove it.
 
 **Overnight tape (vs Friday close)**
 
+## 2026-10-05 (Monday) -- SpaceX +7.6% returns Musk to trillionaire status
+
+**SpaceX (SPCX):** +7.6-7.7% to **$171.09** -- highest close since
+mid-June, up ~58% from its early-August bottom, though still well
+below its June 16 post-IPO record close ($201.80). Driver: Morgan
+Stanley's Adam Jonas issued a bullish note ("SPCX $159: Cheap and
+Getting Cheaper"), reiterating Outperform with a **$300 price
+target**, arguing investors have "only a few weeks" before two
+catalysts -- the next Starship test flight (a possible upper-stage
+"catch" demonstrating reusability, which Jonas called potentially
+"the biggest positive catalyst since the IPO") and Q3 earnings due
+late October.
+
+**Musk's net worth:** back to **$1.03 trillion** per Forbes --
+second time crossing the threshold this year, having lost it when
+SpaceX fell ~50% from its IPO-week peak by late July. Monday's move
+alone added **$58.7B** to his net worth (SpaceX +7.6%, Tesla +2.2%)
+-- by far the largest single-day billionaire gain that day (next
+closest: Zuckerberg, +$4.9B).
+
+**Business-mix note:** SpaceX's Q2 revenue was $7.8B total --
+Connectivity (Starlink) $4.29B, **AI $2.56B**, Space $962M. AI is now
+SpaceX's second-largest revenue line, not just a rocket company
+anymore -- relevant to the AI-infrastructure thread running through
+earlier entries.
+
 | | Last | Change | Overnight range | Read |
 |---|---|---|---|---|
 | ES Dec | 7,787.75 | +10.5 (+0.14%) | 7,780.75-7,789.25 | Tight 8.5-pt range, holding above the 7,737-7,750 MA cluster |
