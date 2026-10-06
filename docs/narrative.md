@@ -13,6 +13,32 @@ account of what drove it.
 
 **Overnight tape (vs Friday close)**
 
+## 2026-10-05 (Monday) -- 10Y yield spikes to fresh 2002 high; stocks shrug it off
+
+**10-year yield: 5.307-5.31%** (+3bps), intraday spike to **5.349% --
+highest since April 3, 2002.** Curve: 2yr 4.831% (-0.2bps, still
+flat/down -- same term-premium pattern as Sept 29); 30yr 5.677%.
+
+**Synthesizing the week:** last week's "term premium, not Fed hike"
+read still holds structurally, but the hawkish repricing from
+Kashkari's Sept 30 comments has resurfaced rather than staying
+reversed by Friday's weak jobs print -- Reuters reports traders now
+expect **at least 3 more Fed hikes before mid-2027**, with OIS
+markets **fully pricing a hike by year-end**. AI infrastructure debt
+issuance is now explicitly named as a yield driver (ties to the
+Sept 28 "AI debt costs" entry) -- corporate AI borrowing competing
+with Treasuries for the same capital.
+
+**Real-world spillover, good for class:** 30-year mortgage rate
+**above 7% for the first time since early 2025.**
+
+**The interesting divergence:** stocks didn't flinch -- Nasdaq and
+Nvidia both posted fresh records the *same Monday*, "tech strength
+outshining bond weakness." Continues the pattern from recent entries:
+equities (esp. AI names) decoupling from the yield pressure hitting
+everything else. This week's catalyst to watch: Wednesday's FOMC
+September meeting minutes.
+
 ## 2026-10-05 (Monday) -- SpaceX +7.6% returns Musk to trillionaire status
 
 **SpaceX (SPCX):** +7.6-7.7% to **$171.09** -- highest close since
