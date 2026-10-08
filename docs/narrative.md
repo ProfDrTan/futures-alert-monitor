@@ -7,6 +7,30 @@ alerts: the goal here is a running record of the *reasoning*, so a
 move like the Sept 1-2 NASDAQ swing doesn't happen without a clear
 account of what drove it.
 
+## 2026-10-07 (Wednesday) -- Tharman: "thank the bond markets" -- political economy angle on the yield spike
+
+Singapore President Tharman Shanmugaratnam, at a fireside chat with
+IMF Managing Director Kristalina Georgieva and NUS economist Danny
+Quah (Lee Kuan Yew School of Public Policy, Oct 7): **"The bond
+markets are literally the only discipline we have now."** Argument:
+in polarized, fragmented democracies, leaders won't volunteer the
+hard fiscal truth to voters until forced to -- the bond market is now
+the external disciplinary mechanism domestic politics has stopped
+providing. Called it "a blessing in disguise": "thank the bond
+markets." Tharman chaired the IMF's International Monetary and
+Financial Committee 2011-2014, so this isn't armchair commentary.
+
+**Why it matters here:** every recent entry has covered the
+*mechanics* of the yield spike (term premium, AI debt issuance, Fed
+repricing). This is the first piece making the *political economy*
+argument -- that the spike itself is a corrective force on fiscal
+irresponsibility, not just a symptom of it. Pairs directly with the
+Sept 29 "term premium, not Fed hikes" entry: Tharman is effectively
+confirming the market is pricing exactly the fiscal-deficit concern
+BondBloxx's Bianco flagged as the driving mechanism. Good discussion
+anchor for class: is the bond market a problem, or the solution to a
+different problem (political paralysis)?
+
 ## 2026-10-05 (Monday) -- Daily pre-market brief: quiet, modestly bid open; tech leads again
 
 *Daily brief: overnight tape, levels in play, today's events. IBKR data, first ~90 minutes of the Globex session (6:00-7:30 am SGT). Levels to plan around, not trade recommendations. Full structure: see the 2026-10-04 weekly report below.*
