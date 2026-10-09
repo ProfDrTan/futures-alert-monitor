@@ -7,6 +7,33 @@ alerts: the goal here is a running record of the *reasoning*, so a
 move like the Sept 1-2 NASDAQ swing doesn't happen without a clear
 account of what drove it.
 
+## 2026-10-07 (Wednesday) -- Pullback from Tuesday's records: 10Y hits 2002 high, oil +4% on Hormuz attacks
+
+**Close:** Nasdaq Composite -0.22% to 27,538.69; S&P 500 retreated from
+Tuesday's record (closed above 7,800 for the first time that day).
+Bank stocks dropped specifically on fears higher rates hurt lending.
+
+**Yields:** 10-year hit **5.365-5.4% intraday -- highest since April
+2002.** 30-year added ~5bps to 5.688-5.698%. Both eased off session
+highs into the close (after the 1pm ET 10-year auction), helping
+stocks pare losses.
+
+**Oil (the 4% move):** crude jumped on **attacks on shipping in the
+Gulf and the Strait of Hormuz**, plus the US cutting output as a
+hurricane threatened offshore production -- both supply shocks, not
+demand-driven. WTI pushed toward $90/bbl. Reignites the Iran-conflict/
+oil thread from the Sept 1 and Sept 30 entries.
+
+**Direct line to the SpaceX/AI-debt thread:** a reported **$40
+billion SpaceX financing to buy Nvidia chips** was specifically named
+as a factor adding pressure to bonds -- extends the Oct 5 SpaceX
+entry and the Sept 28 "AI debt costs" entry into a concrete number.
+
+**Other assets reacting to the same yield move:** gold fell ~2% to
+~$4,098 (firming dollar + yields outweighed China's central bank
+extending gold purchases for a 23rd straight month); Bitcoin -2.4%;
+dollar index to ~102.5.
+
 ## 2026-10-07 (Wednesday) -- Tharman: "thank the bond markets" -- political economy angle on the yield spike
 
 Singapore President Tharman Shanmugaratnam, at a fireside chat with
