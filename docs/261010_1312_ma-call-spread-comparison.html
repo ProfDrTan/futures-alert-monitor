@@ -1,0 +1,103 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MA 590/600 Call Spreads — Butterfly vs Reverse Mullet vs Vertical (10 Oct 2026)</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1f;--mut:#5f6368;--card:#fff;--bd:#e3e0d8;--acc:#0b6e4f;--hl:#ffe58a;--c1:#2563eb;--c2:#d97706;--c3:#059669;--neg:#b91c1c}
+@media (prefers-color-scheme:dark){:root{--bg:#141517;--fg:#ececec;--mut:#a0a4a8;--card:#1e2023;--bd:#33363a;--acc:#4ade80;--hl:#7a5c00;--c1:#60a5fa;--c2:#fbbf24;--c3:#34d399;--neg:#f87171}}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font:17px/1.6 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
+main{max-width:860px;margin:0 auto;padding:16px 18px 90px}
+h1{font-size:1.55rem;line-height:1.25;margin:.4em 0}h2{font-size:1.2rem;margin:1.6em 0 .4em;border-bottom:2px solid var(--bd);padding-bottom:.2em}h3{font-size:1.05rem;margin:1.1em 0 .3em}
+.meta{color:var(--mut);font-size:.9rem}.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px 16px;margin:12px 0}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.93rem}th,td{border:1px solid var(--bd);padding:6px 8px;text-align:center}th{background:var(--bd)}td.l,th.l{text-align:left}
+.neg{color:var(--neg)}.pos{color:var(--c3)}
+svg{width:100%;height:auto;font-size:12px;fill:var(--mut)}svg .g{stroke:var(--bd)}svg .z{stroke:var(--mut);stroke-width:1.5}svg .spot{stroke:var(--mut);stroke-dasharray:4 4}svg .sl{fill:var(--fg)}
+svg polyline{fill:none;stroke-width:3;stroke-linejoin:round}.l1{stroke:var(--c1)}.l2{stroke:var(--c2)}.l3{stroke:var(--c3)}
+.key span{display:inline-block;margin-right:14px;font-size:.9rem}.key i{display:inline-block;width:18px;height:4px;vertical-align:middle;margin-right:5px}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--bd);padding:8px 12px calc(8px + env(safe-area-inset-bottom,0));display:flex;gap:8px;justify-content:center;z-index:9}
+button{font:inherit;font-size:.92rem;border:1px solid var(--acc);background:transparent;color:var(--fg);border-radius:8px;padding:7px 12px;cursor:pointer}button.p{background:var(--acc);color:#fff}
+.w.on{background:var(--hl);border-radius:3px}.note{font-size:.9rem;color:var(--mut)}
+</style></head><body><main>
+<p class="meta">Saved 10 Oct 2026, 13:12 SGT · Source idea: ShadowTrader video "Gold Revaluation on the Table?" (segment from 17:26) · Prices: IBKR, Friday 9 Oct close (frozen weekend data)</p>
+<h1>Three ways to play MA up to $600 by 16 Oct: butterfly vs reverse mullet vs vertical</h1>
+
+<h2>1. The setup</h2>
+<p>Underlying is Mastercard (MA), last traded at about $589. All three trades use calls expiring Friday 16 October 2026, which was six days away when this page was saved. Each trade is a bet that MA rises towards $600 by expiry. Prices are per share; one contract is 100 shares.</p>
+<div class="tw"><table>
+<tr><th class="l">Trade</th><th class="l">Legs</th><th>Debit (cost)</th><th>Breakeven</th><th>Best case</th><th>Worst case</th></tr>
+<tr><td class="l">Butterfly</td><td class="l">Buy 1 590 call, sell 2 600 calls, buy 1 610 call</td><td>2.63</td><td>592.63 to 607.37</td><td class="pos">+7.37 at exactly 600</td><td class="neg">−2.63</td></tr>
+<tr><td class="l">Reverse mullet</td><td class="l">Buy 1 590 call, sell 2 600 calls, buy 1 602.5 call</td><td>3.68</td><td>593.68 and above</td><td class="pos">+6.32 at 600; +3.82 above 602.5</td><td class="neg">−3.68</td></tr>
+<tr><td class="l">Vertical</td><td class="l">Buy 1 590 call, sell 1 600 call</td><td>4.25</td><td>594.25 and above</td><td class="pos">+5.75 at 600 or higher</td><td class="neg">−4.25</td></tr>
+</table></div>
+<p class="note">Price check: at Friday's mid-prices the butterfly came to 2.63 and the vertical to 4.25, matching the video exactly. The 602.5 call quote was stale and too wide to trust, so the reverse mullet uses the video's 3.68.</p>
+
+<h2>2. Payoff at expiry</h2>
+<div class="card"><svg viewBox="0 0 640 320" role="img" aria-label="Payoff at expiry for the three trades">
+<line x1="50" x2="610" y1="260" y2="260" class="g"/><text x="44" y="264" text-anchor="end">-4</text><line x1="50" x2="610" y1="220" y2="220" class="g"/><text x="44" y="224" text-anchor="end">-2</text><line x1="50" x2="610" y1="180" y2="180" class="g"/><text x="44" y="184" text-anchor="end">+0</text><line x1="50" x2="610" y1="140" y2="140" class="g"/><text x="44" y="144" text-anchor="end">+2</text><line x1="50" x2="610" y1="100" y2="100" class="g"/><text x="44" y="104" text-anchor="end">+4</text><line x1="50" x2="610" y1="60" y2="60" class="g"/><text x="44" y="64" text-anchor="end">+6</text><line x1="50" x2="610" y1="20" y2="20" class="g"/><text x="44" y="24" text-anchor="end">+8</text><text x="50" y="300" text-anchor="middle">580</text><text x="190" y="300" text-anchor="middle">590</text><text x="330" y="300" text-anchor="middle">600</text><text x="470" y="300" text-anchor="middle">610</text><text x="610" y="300" text-anchor="middle">620</text><line x1="50" x2="610" y1="180" y2="180" class="z"/>
+<line x1="176" x2="176" y1="20" y2="280" class="spot"/><text x="172" y="16" text-anchor="end" class="sl">MA 589</text>
+<polyline points="50.0,232.6 190.0,232.6 330.0,32.6 470.0,232.6 610.0,232.6" class="l1"/><polyline points="50.0,253.6 190.0,253.6 330.0,53.6 365.0,103.6 610.0,103.6" class="l2"/><polyline points="50.0,265.0 190.0,265.0 330.0,65.0 610.0,65.0" class="l3"/>
+<text x="330" y="316" text-anchor="middle">MA price at 16 Oct expiry</text></svg>
+<div class="key"><span><i style="background:var(--c1)"></i>Butterfly</span><span><i style="background:var(--c2)"></i>Reverse mullet</span><span><i style="background:var(--c3)"></i>Vertical</span></div></div>
+<h3>Profit or loss per share at selected MA prices</h3>
+<div class="tw"><table>
+<tr><th class="l">MA at expiry</th><th>590 or below</th><th>595</th><th>600</th><th>605</th><th>610 or above</th></tr>
+<tr><td class="l">Butterfly</td><td class="neg">−2.63</td><td class="pos">+2.37</td><td class="pos">+7.37</td><td class="pos">+2.37</td><td class="neg">−2.63</td></tr>
+<tr><td class="l">Reverse mullet</td><td class="neg">−3.68</td><td class="pos">+1.32</td><td class="pos">+6.32</td><td class="pos">+3.82</td><td class="pos">+3.82</td></tr>
+<tr><td class="l">Vertical</td><td class="neg">−4.25</td><td class="pos">+0.75</td><td class="pos">+5.75</td><td class="pos">+5.75</td><td class="pos">+5.75</td></tr>
+</table></div>
+<p>All three need MA to rise roughly 0.6 to 0.9 percent just to break even. If MA finishes at or below 590, each trade loses its whole debit.</p>
+
+<h2>3. Pros and cons</h2>
+<div class="tw"><table>
+<tr><th class="l">Trade</th><th class="l">Pros</th><th class="l">Cons</th></tr>
+<tr><td class="l">Butterfly</td><td class="l">Lowest cost spread. Best reward to risk, about 2.8 to 1.</td><td class="l">Weak if the middle strike is reached quickly. Loses everything again if MA overshoots to 610 or above.</td></tr>
+<tr><td class="l">Reverse mullet</td><td class="l">Profitable through all strikes above breakeven. Can be disassembled.</td><td class="l">Higher cost at entry than the butterfly. Reward to risk about 1.7 to 1 at 600, roughly 1 to 1 above 602.5.</td></tr>
+<tr><td class="l">Vertical</td><td class="l">Highest payout above 600. Starts gaining as soon as MA moves; no need to pin a strike.</td><td class="l">Highest cost. Can't be disassembled. Reward to risk about 1.35 to 1.</td></tr>
+</table></div>
+
+<h3>What the pros and cons actually mean</h3>
+<p><b>Butterfly, "weak if midstrike reached quickly".</b> A butterfly earns most of its value from time decay in the last day or two before expiry. If MA hits 600 on Monday, the butterfly is still worth only a fraction of its 10-point maximum, because the two short 600 calls still have time value. It pays best when MA drifts to 600 and sits there into Friday.</p>
+<p><b>Reverse mullet, "can be disassembled".</b> This trade is really two spreads stacked together: a 590/600 bull call spread (the vertical) plus a short 600/602.5 call spread. If MA rallies hard, you can buy back the short 600/602.5 piece and be left holding the plain vertical, which pays the full 10-point width above 600. The asymmetric upper wing is what keeps the trade profitable on an overshoot, unlike the normal butterfly.</p>
+<p><b>Vertical, "can't be disassembled".</b> With only two legs there is nothing to peel off. You either hold the spread or close it. It is the simplest of the three and the most expensive.</p>
+<p><b>How to choose.</b> Use the butterfly when you have a precise target and expect a slow drift. Use the reverse mullet when you expect a move to the target but want protection if it overshoots. Use the vertical when you are confident of direction but not of the exact landing point.</p>
+
+<h2>4. Caveats</h2>
+<p>These are payoffs at expiry only. Values during the week depend on implied volatility and time, and were not modelled here. Prices were frozen Friday-close data and will differ at Monday's open. "Reverse mullet" appears to be ShadowTrader's own name for this asymmetric butterfly; it may not be a standard industry term. This page is analysis for study, not a trade recommendation.</p>
+
+<h2>5. Outcome review after expiry</h2>
+<p>Fill this in after the 16 October close to compare the forecast with what happened.</p>
+<div class="tw"><table>
+<tr><th class="l">Item</th><th>Value</th></tr>
+<tr><td class="l">MA close on 16 Oct 2026</td><td>to be filled in</td></tr>
+<tr><td class="l">Butterfly result</td><td>to be filled in</td></tr>
+<tr><td class="l">Reverse mullet result</td><td>to be filled in</td></tr>
+<tr><td class="l">Vertical result</td><td>to be filled in</td></tr>
+<tr><td class="l">Which one won, and why</td><td>to be filled in</td></tr>
+</table></div>
+</main>
+<div class="bar"><button class="p" id="all">▶ Read to the end</button><button id="pause">❚❚ Pause</button><button id="stop">■ Stop</button></div>
+<script>
+(function(){
+var S=window.speechSynthesis;if(!S){document.querySelector('.bar').style.display='none';return;}
+var blocks=[].slice.call(document.querySelectorAll('main h1,main h2,main h3,main p,main td,main th'));
+blocks.forEach(function(b){
+  var w=document.createTreeWalker(b,NodeFilter.SHOW_TEXT,null),n,list=[];while(n=w.nextNode())list.push(n);
+  list.forEach(function(t){var f=document.createDocumentFragment();t.nodeValue.split(/(\s+)/).forEach(function(p){if(!p)return;if(/^\s+$/.test(p))f.appendChild(document.createTextNode(p));else{var s=document.createElement('span');s.className='w';s.textContent=p;f.appendChild(s);}});t.parentNode.replaceChild(f,t);});
+});
+var i=0,cur=null,stopped=true;
+function clear(){if(cur)cur.classList.remove('on');cur=null;}
+function speak(){
+  if(stopped||i>=blocks.length){clear();stopped=true;return;}
+  var b=blocks[i],ws=[].slice.call(b.querySelectorAll('.w'));if(!ws.length){i++;return speak();}
+  var txt='',offs=[];ws.forEach(function(s){offs.push(txt.length);txt+=s.textContent+' ';});
+  var u=new SpeechSynthesisUtterance(txt);u.rate=1;
+  u.onboundary=function(e){if(e.name&&e.name!=='word')return;var k=0;while(k+1<offs.length&&offs[k+1]<=e.charIndex)k++;clear();cur=ws[k];cur.classList.add('on');cur.scrollIntoView({block:'center',behavior:'smooth'});};
+  u.onend=function(){clear();i++;speak();};
+  S.speak(u);
+}
+document.getElementById('all').onclick=function(){S.cancel();if(S.paused)S.resume();stopped=false;i=0;speak();};
+document.getElementById('pause').onclick=function(){if(S.paused){S.resume();this.textContent='❚❚ Pause';}else{S.pause();this.textContent='▶ Resume';}};
+document.getElementById('stop').onclick=function(){stopped=true;S.cancel();clear();};
+blocks.forEach(function(b,ix){b.addEventListener('dblclick',function(){S.cancel();stopped=false;i=ix;speak();});});
+})();
+</script></body></html>
