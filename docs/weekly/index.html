@@ -1,0 +1,17 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Weekly Market Review — all weeks</title><link rel="stylesheet" href="../assets/weekly.css"></head><body><main id="m"><p class="meta">Loading…</p></main>
+<div class="bar" id="ra-bar"><button class="p" id="ra-all">▶ Read to the end</button><button id="ra-pause">❚❚ Pause</button><button id="ra-stop">■ Stop</button></div>
+<script src="../assets/readaloud.js"></script><script>
+function fmt(p){if(p==null)return '';var c=p>0?'pos':p<0?'neg':'';return '<span class="'+c+'">'+(p>0?'+':p<0?'−':'')+Math.abs(p).toFixed(2)+'%</span>';}
+function dshort(d){return new Date(d+'T12:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'2-digit'});}
+fetch('weeks.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(W){
+ W.sort(function(a,b){return b.week_ending.localeCompare(a.week_ending);});
+ var h='<p class="meta"><a href="../">← Market Journal home</a></p><h1>Weekly Market Review</h1><p>Each week has its own page with the ruling reasons and how every index, sector and macro instrument moved. The table below lines the weeks up side by side, newest on the left.</p>';
+ h+='<h2>Weeks</h2><ul>'+W.map(function(w){return '<li><a href="week.html?w='+w.week_ending+'">Week ending '+dshort(w.week_ending)+'</a></li>';}).join('')+'</ul>';
+ h+='<h2>Week-by-week comparison</h2><div class="tw"><table><tr><th class="l">Instrument</th>'+W.map(function(w){return '<th>'+dshort(w.week_ending)+'</th>';}).join('')+'</tr>';
+ var names=[];W.forEach(function(w){w.instruments.forEach(function(x){if(names.indexOf(x.name)<0)names.push(x.name);});});
+ names.forEach(function(n){h+='<tr><td class="l">'+n+'</td>'+W.map(function(w){var x=w.instruments.filter(function(i){return i.name===n;})[0];return '<td>'+(x?fmt(x.pct):'')+'</td>';}).join('')+'</tr>';});
+ h+='</table></div>';
+ document.getElementById('m').innerHTML=h;ReadAloud.init();
+});
+</script></body></html>
