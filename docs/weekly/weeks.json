@@ -1,0 +1,32 @@
+[
+ {"week_ending":"2026-10-09","source":"ShadowTrader weekly video (screenshots saved 10 Oct 2026)",
+  "ruling_reasons":[
+   {"day":"Mon","text":"Iran increased attacks on ships just when Strait traffic reached pre-war levels"},
+   {"day":"Wed","text":"Jump in Treasury yields; 10-year hits 5.34%"},
+   {"day":"Thu","text":"POTUS says no Iran attacks before midterms"},
+   {"day":"Thu","text":"OpenAI annualized revenue running ~$20B (FT) — slide shows \"-20B\", most likely meant \"~\""},
+   {"day":"Fri","text":"OpenAI annualized revenue still expected to meet or exceed $70B (Bloomberg)"}
+  ],
+  "instruments":[
+   {"group":"Indices","name":"S&P 500","level":"7,811.54","pct":1.04},
+   {"group":"Indices","name":"Nasdaq 100","level":"30,883.15","pct":0.23},
+   {"group":"Indices","name":"Russell 2000","level":"2,806.98","pct":-0.96},
+   {"group":"Sectors","name":"Technology","pct":-0.74},
+   {"group":"Sectors","name":"Financials","pct":2.30},
+   {"group":"Sectors","name":"Healthcare","pct":2.90},
+   {"group":"Sectors","name":"Discretionary","pct":2.81},
+   {"group":"Sectors","name":"Industrials","pct":-0.23},
+   {"group":"Sectors","name":"Communications","pct":0.15},
+   {"group":"Sectors","name":"Staples","pct":3.63},
+   {"group":"Sectors","name":"Energy","pct":3.71},
+   {"group":"Sectors","name":"Utilities","pct":3.86},
+   {"group":"Sectors","name":"Materials","pct":1.23},
+   {"group":"Sectors","name":"Real Estate","pct":2.06},
+   {"group":"Macro","name":"Bonds","level":"77.98","pct":1.06},
+   {"group":"Macro","name":"10-year yield","level":"5.24%","pct":-0.57},
+   {"group":"Macro","name":"VIX","level":"14.77","pct":-9.05},
+   {"group":"Macro","name":"Gold","level":"4,220.80","pct":1.23},
+   {"group":"Macro","name":"Oil","level":"91.61","pct":-0.17},
+   {"group":"Macro","name":"Bitcoin","level":"82,540","pct":-4.04}
+  ]}
+]
