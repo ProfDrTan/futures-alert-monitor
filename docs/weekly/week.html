@@ -1,0 +1,22 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Weekly Market Review</title><link rel="stylesheet" href="../assets/weekly.css"></head><body><main id="m"><p class="meta">Loading…</p></main>
+<div class="bar" id="ra-bar"><button class="p" id="ra-all">▶ Read to the end</button><button id="ra-pause">❚❚ Pause</button><button id="ra-stop">■ Stop</button></div>
+<script src="../assets/readaloud.js"></script><script>
+function fmt(p){var c=p>0?'pos':p<0?'neg':'';return '<span class="'+c+'">'+(p>0?'+':p<0?'−':'')+Math.abs(p).toFixed(2)+'%</span>';}
+function dlong(d){return new Date(d+'T12:00:00').toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'long',year:'numeric'});}
+fetch('weeks.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(W){
+ W.sort(function(a,b){return b.week_ending.localeCompare(a.week_ending);});
+ var q=new URLSearchParams(location.search).get('w'),w=W.filter(function(x){return x.week_ending===q;})[0]||W[0];
+ var idx=W.indexOf(w),prev=W[idx+1],next=W[idx-1];
+ var h='<p class="meta"><a href="./">← All weeks</a>'+(prev?' · <a href="?w='+prev.week_ending+'">Previous week</a>':'')+(next?' · <a href="?w='+next.week_ending+'">Next week</a>':'')+'</p>';
+ h+='<h1>Week ending '+dlong(w.week_ending)+'</h1><p class="meta">Source: '+w.source+'</p>';
+ h+='<h2>Ruling reasons</h2><ul class="rr">'+w.ruling_reasons.map(function(r){return '<li><b>'+r.day+'</b> '+r.text+'</li>';}).join('')+'</ul>';
+ h+='<h2>The week in review</h2>';
+ ['Indices','Sectors','Macro'].forEach(function(g){
+  var rows=w.instruments.filter(function(x){return x.group===g;});if(g==='Sectors')rows.sort(function(a,b){return b.pct-a.pct;});
+  var lv=rows.some(function(x){return x.level;});
+  h+='<h3>'+(g==='Sectors'?'S&amp;P sectors, best to worst':g==='Macro'?'Bonds, yields, volatility, commodities, crypto':g)+'</h3><div class="tw"><table><tr><th class="l">Instrument</th>'+(lv?'<th>Close</th>':'')+'<th>Week change</th></tr>'+
+   rows.map(function(x){return '<tr><td class="l">'+x.name+'</td>'+(lv?'<td>'+(x.level||'')+'</td>':'')+'<td>'+fmt(x.pct)+'</td></tr>';}).join('')+'</table></div>';});
+ document.getElementById('m').innerHTML=h;document.title='Week ending '+w.week_ending+' — Weekly Market Review';ReadAloud.init();
+});
+</script></body></html>
