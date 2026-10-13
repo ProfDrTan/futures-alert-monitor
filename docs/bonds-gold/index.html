@@ -1,0 +1,80 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bonds → Gold — Market Journal</title>
+<link rel="stylesheet" href="../assets/weekly.css">
+<style>
+.pill{display:inline-block;padding:1px 8px;border-radius:999px;font-size:.82rem;font-weight:600;white-space:nowrap}
+.v-supportive{background:#d1fae5;color:#065f46}.v-headwind{background:#fee2e2;color:#991b1b}.v-neutral{background:#e5e7eb;color:#374151}.v-context{background:transparent;color:var(--mut);border:1px solid var(--bd)}
+@media (prefers-color-scheme:dark){.v-supportive{background:#064e3b;color:#a7f3d0}.v-headwind{background:#7f1d1d;color:#fecaca}.v-neutral{background:#374151;color:#e5e7eb}}
+.sum{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px 16px;margin:12px 0}
+.sum .big{font-size:1.25rem;font-weight:700}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}
+.kpis div{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:8px 10px}.kpis small{display:block;color:var(--mut);font-size:.8rem}.kpis b{font-size:1.1rem}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;margin:12px 0}
+svg{width:100%;height:auto;font-size:11px}svg text{fill:var(--mut)}svg .g{stroke:var(--bd)}
+.key span{display:inline-block;margin-right:12px;font-size:.85rem}.key i{display:inline-block;width:16px;height:3px;vertical-align:middle;margin-right:4px}
+.note{font-size:.88rem;color:var(--mut)}td.n{font-variant-numeric:tabular-nums}
+.f{font-family:ui-monospace,Menlo,Consolas,monospace;background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:6px 10px;display:inline-block;margin:4px 0}
+dl.k{margin:4px 0 10px;font-size:.92rem}dl.k dt{font-weight:600;display:inline}dl.k dd{display:inline;margin:0}dl.k dd:after{content:"";display:block;margin-bottom:2px}
+</style></head><body><main id="m"><p class="meta">Loading…</p></main>
+<div class="bar" id="ra-bar"><button class="p" id="ra-all">▶ Read to the end</button><button id="ra-pause">❚❚ Pause</button><button id="ra-stop">■ Stop</button></div>
+<script src="../assets/readaloud.js"></script>
+<script>
+const C={gold:"#d4a017",real:"#2563eb",n10:"#7c3aed",n2:"#0891b2",be:"#ea580c",usd:"#059669",tp:"#be185d"};
+const f2=(x,d=2)=>x==null?"–":Number(x).toFixed(d);
+const sg=(x,d=2,u="")=>x==null?"–":(x>0?"+":x<0?"−":"")+Math.abs(x).toFixed(d)+u;
+const dLong=d=>new Date(d+"T12:00:00Z").toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"});
+function chart(lines,o){ // lines: [{pts:[[d,v]],color,name,right,invert}]
+  const W=640,H=260,L=46,R=o.right?46:12,T=12,B=26,all=lines.flatMap(l=>l.pts.map(p=>p[0])).sort();
+  const t0=Date.parse(all[0]),t1=Date.parse(all[all.length-1]),X=d=>L+(Date.parse(d)-t0)/(t1-t0||1)*(W-L-R);
+  const ax={};for(const side of["l","r"]){const v=lines.filter(l=>(l.right?"r":"l")===side).flatMap(l=>l.pts.map(p=>p[1]));if(!v.length)continue;let lo=Math.min(...v),hi=Math.max(...v),pad=(hi-lo)*.06||1;ax[side]={lo:lo-pad,hi:hi+pad,inv:lines.some(l=>(l.right?"r":"l")===side&&l.invert)};}
+  const Y=(v,s)=>{const a=ax[s];let f=(v-a.lo)/(a.hi-a.lo);if(a.inv)f=1-f;return T+(1-f)*(H-T-B);};
+  let g="";for(const s in ax){const a=ax[s];for(let i=0;i<=4;i++){const v=a.lo+(a.hi-a.lo)*i/4,y=Y(v,s);if(s==="l")g+=`<line x1="${L}" x2="${W-R}" y1="${y}" y2="${y}" class="g"/>`;g+=`<text x="${s==="l"?L-4:W-R+4}" y="${y+4}" text-anchor="${s==="l"?"end":"start"}">${v.toFixed(o.dec?.[s]??2)}</text>`;}}
+  for(let i=0;i<=4;i++){const t=t0+(t1-t0)*i/4;g+=`<text x="${L+(W-L-R)*i/4}" y="${H-8}" text-anchor="${i==0?"start":i==4?"end":"middle"}">${new Date(t).toLocaleDateString("en-GB",{month:"short",year:"2-digit"})}</text>`;}
+  for(const l of lines){const s=l.right?"r":"l";g+=`<polyline fill="none" stroke="${l.color}" stroke-width="1.8" points="${l.pts.map(p=>X(p[0]).toFixed(1)+","+Y(p[1],s).toFixed(1)).join(" ")}"/>`;}
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${o.title}">${g}</svg><div class="key">${lines.map(l=>`<span><i style="background:${l.color}"></i>${l.name}${l.right?" (right axis)":""}${l.invert?", inverted":""}</span>`).join("")}</div>`;
+}
+fetch("data.json",{cache:"no-store"}).then(r=>r.json()).then(D=>{
+ const S=D.series,dr=D.drivers,by=k=>dr.find(x=>x.key===k)||{};
+ const vd=dr.filter(x=>x.verdict!=="context"&&x.verdict!=="n/a"),sup=vd.filter(x=>x.verdict==="supportive"),hw=vd.filter(x=>x.verdict==="headwind");
+ const bal=sup.length>hw.length?"leaning supportive for gold":hw.length>sup.length?"leaning against gold":"balanced";
+ const c60=D.corr_gold_real_60d,c250=D.corr_gold_real_250d;
+ const regime=c60==null?"not enough data yet":c60<=-0.5?"the classic regime: gold is trading closely against real yields":c60<=-0.2?"a loose version of the classic regime: real yields still matter, but other buyers are blunting the effect":"the classic link is broken: gold is being driven mainly by other forces, such as central-bank buying and safe-haven demand, rather than by real yields";
+ const upd=new Date(D.generated_utc.replace(" ","T")+":00Z").toLocaleString("en-GB",{timeZone:"Asia/Singapore",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit",hour12:false});
+ let h=`<p class="meta"><a href="../">← Market Journal home</a> · <a href="../weekly/">Weekly Market Review</a></p>
+ <h1>Bonds → Gold</h1>
+ <p>Each U.S. trading day this page answers one question: are the forces in the bond market pushing gold up or holding it back? It is built for macro context, not trade timing; the figures are end-of-day and the Treasury yields arrive about one business day late.</p>
+ <p class="meta">Updated ${upd} SGT · Sources: Federal Reserve Economic Data (FRED), U.S. Treasury auction results, gold futures daily close.</p>
+ <div class="sum"><div class="big">Balance today: ${bal}</div>
+ <p style="margin:6px 0 0">${sup.length} supportive (${sup.map(x=>x.name).join(", ")||"none"}), ${hw.length} headwind${hw.length===1?"":"s"} (${hw.map(x=>x.name).join(", ")||"none"}), judged on each driver's change over the past month.</p>
+ <p style="margin:6px 0 0">Over the last 60 trading days the correlation between daily moves in gold and in the 10-year real yield is ${f2(c60)} (over 250 days: ${f2(c250)}). That points to ${regime}.</p></div>
+ <div class="kpis"><div><small>Gold futures close (${D.gold?dLong(D.gold.date):"–"})</small><b>${D.gold?Number(D.gold.value).toLocaleString("en-US",{minimumFractionDigits:2}):"–"}</b><small>1 week ${sg(D.gold?.w1,1,"%")} · 1 month ${sg(D.gold?.m1,1,"%")}</small></div>
+ <div><small>10-year real yield</small><b>${f2(by("DFII10").value)}%</b><small>1 month ${sg(by("DFII10").m1,2," pp")}</small></div>
+ <div><small>Broad dollar index</small><b>${f2(by("DTWEXBGS").value,1)}</b><small>1 month ${sg(by("DTWEXBGS").m1,1,"%")}</small></div>
+ <div><small>10-year term premium</small><b>${f2(by("THREEFYTP10").value)}%</b><small>1 month ${sg(by("THREEFYTP10").m1,2," pp")}</small></div></div>
+ <h2>The drivers</h2><div class="tw"><table><tr><th class="l">Driver</th><th>Latest</th><th>As of</th><th>1 day</th><th>1 week</th><th>1 month</th><th>For gold</th></tr>`;
+ for(const x of dr){const u=x.kind==="pct"?"%":" pp",fmt=v=>sg(v,2,u);h+=`<tr><td class="l">${x.name}<div class="note">${x.note}</div></td><td class="n">${f2(x.value,x.key==="DTWEXBGS"?1:2)}${x.unit==="%"?"%":x.unit==="pp"?" pp":""}</td><td>${dLong(x.date)}</td><td class="n">${fmt(x.d1)}</td><td class="n">${fmt(x.w1)}</td><td class="n">${fmt(x.m1)}</td><td><span class="pill v-${x.verdict}">${x.verdict==="context"?"context":x.verdict[0].toUpperCase()+x.verdict.slice(1)}</span></td></tr>`;}
+ h+=`</table></div><p class="note">pp = percentage points. A driver is called supportive or a headwind from its one-month change: real yield moves of 0.10 pp or more, dollar moves of 0.5% or more, breakeven moves of 0.05 pp or more, and term-premium moves of 0.10 pp or more. Smaller moves are neutral. The yields, curve and 2-year rows are context, read through the drivers above them.</p>
+ <h2>Gold against the real yield</h2><div class="card">${chart([{pts:S.GOLD,color:C.gold,name:"Gold futures"},{pts:S.DFII10,color:C.real,name:"10-year real yield, %",right:true,invert:true}],{title:"Gold versus inverted 10-year real yield",right:true,dec:{l:0,r:2}})}
+ <p class="note">The real-yield axis is flipped, so when the two lines move together the classic relationship is working (falling real yields, rising gold). When they drift apart, something other than real yields is driving gold.</p></div>
+ <h2>Yields and inflation expectations</h2><div class="card">${chart([{pts:S.DGS10,color:C.n10,name:"10-year yield"},{pts:S.DGS2,color:C.n2,name:"2-year yield"},{pts:S.DFII10,color:C.real,name:"10-year real yield"},{pts:S.T10YIE,color:C.be,name:"10-year breakeven"}],{title:"Treasury yields, real yield and breakeven inflation"})}</div>
+ <h2>Dollar and term premium</h2><div class="card">${chart([{pts:S.DTWEXBGS,color:C.usd,name:"Broad dollar index"},{pts:S.THREEFYTP10,color:C.tp,name:"10-year term premium, %",right:true}],{title:"Broad dollar index and 10-year term premium",right:true,dec:{l:0,r:2}})}</div>
+ <h2>Treasury auctions: is demand holding up?</h2>`;
+ if(D.auctions&&D.auctions.length){h+=`<div class="tw"><table><tr><th>Auction date</th><th class="l">Security</th><th>Winning yield</th><th>Bid-to-cover</th><th>Indirect bidders</th></tr>${D.auctions.map(a=>`<tr><td>${dLong(a.date)}</td><td class="l">${a.security}${a.reopening?" (reopening)":""}</td><td class="n">${f2(a.high_yield,3)}%</td><td class="n">${f2(a.bid_to_cover)}</td><td class="n">${a.indirect_pct==null?"–":f2(a.indirect_pct,1)+"%"}</td></tr>`).join("")}</table></div>`;}else h+=`<p>Auction data is unavailable today.</p>`;
+ h+=`<p class="note">Bid-to-cover = total bids ÷ amount sold; a falling ratio means fewer buyers per bond. Indirect bidders = the share of the competitive auction taken by bids placed through dealers on behalf of others, a group that includes foreign central banks, so it is the closest public proxy for foreign official demand. Weak auctions (lower bid-to-cover, lower indirect share, higher yields) support the fiscal-risk case for gold.</p>
+ <h2>Scheduled releases to watch</h2><ul><li>Foreign holdings of U.S. Treasuries (Treasury International Capital report, August data): Friday 16 October 2026. <a href="https://home.treasury.gov/news/press-releases/sb0631">Previous release</a>.</li><li>Central-bank gold buying: the World Gold Council's quarterly Gold Demand Trends report.</li><li>10-year and 30-year Treasury auctions: the table above updates automatically after each one.</li></ul>
+ <h2>How bonds move gold</h2>
+ <h3>1. Real yields: the cost of holding gold</h3>
+ <p>Gold pays no interest. When safe government bonds pay a high return after inflation, holding gold means giving that return up, so demand for gold tends to fall. The return after inflation is the real yield.</p>
+ <div class="f">i = r + π<sup>e</sup></div><dl class="k"><dt>i</dt><dd> = the nominal 10-year Treasury yield, the yield you see quoted.</dd><dt>r</dt><dd> = the real yield, measured by the 10-year inflation-protected Treasury (TIPS) yield.</dd><dt>π<sup>e</sup></dt><dd> = the inflation the market expects, measured by the 10-year breakeven rate.</dd></dl>
+ <p>This is why the nominal yield alone can mislead: a rise in the 10-year yield caused by higher inflation expectations is usually fine for gold, while the same rise caused by a higher real yield is not.</p>
+ <h3>2. The dollar</h3><p>Gold is priced in dollars worldwide. When the dollar strengthens, gold becomes more expensive for buyers paying in other currencies, which tends to weigh on its dollar price.</p>
+ <h3>3. The term premium: the fiscal-risk channel</h3><p>The term premium is the extra yield investors demand to lock money into a 10-year bond instead of rolling over short-term ones. It rises when investors worry about the supply of Treasuries, government debt and long-run inflation, which is the argument behind the "bond crisis, buy gold" commentary.</p>
+ <div class="f">i<sub>10</sub> = average expected short rate over 10 years + TP</div><dl class="k"><dt>i<sub>10</sub></dt><dd> = the 10-year yield.</dd><dt>TP</dt><dd> = the term premium. This page uses the Federal Reserve Board's Kim-Wright estimate, a model output rather than a traded price.</dd></dl>
+ <h3>4. Correlation: is the relationship working?</h3>
+ <div class="f">ρ = cov(Δg, Δr) ÷ (σ<sub>Δg</sub> × σ<sub>Δr</sub>)</div><dl class="k"><dt>ρ</dt><dd> = the correlation, from −1 (always move opposite) to +1 (always move together).</dd><dt>Δg</dt><dd> = the daily change in the gold price.</dd><dt>Δr</dt><dd> = the daily change in the 10-year real yield.</dd><dt>cov</dt><dd> = covariance, how the two changes move together.</dd><dt>σ</dt><dd> = standard deviation, how much each one moves on its own.</dd></dl>
+ <p>In the classic regime ρ is clearly negative. From about 2022, central banks bought gold heavily even while real yields rose, and the link weakened. This page tracks whether it is returning.</p>
+ <p class="note">Caveats: the verdict thresholds are rules of thumb, not a forecast; the term premium is a model estimate; and FRED's yields run about one business day behind the market.</p>`;
+ document.getElementById("m").innerHTML=h;document.title="Bonds → Gold — Market Journal";ReadAloud.init();
+}).catch(e=>{document.getElementById("m").innerHTML=`<h1>Bonds → Gold</h1><p>The data file could not be loaded (${e}). It refreshes after each U.S. trading day.</p>`;});
+</script></body></html>
