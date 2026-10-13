@@ -70,14 +70,14 @@ def auctions():
     for term, label in (("10-Year", "10-year note"), ("30-Year", "30-year bond")):
         typ = "Note" if term == "10-Year" else "Bond"
         rows = None
-        for url in (f"https://www.treasurydirect.gov/TA_WS/securities/auctioned?format=json&type={typ}&days=200",
+        for url in (f"https://www.treasurydirect.gov/TA_WS/securities/auctioned?format=json&type={typ}&days=400",
                     f"https://www.treasurydirect.gov/TA_WS/securities/search?type={typ}&format=json&dateFieldName=auctionDate&startDate={(dt.date.today()-dt.timedelta(days=200)).isoformat()}"):
             try:
                 rows = json.loads(get(url)); log.append(f"auction url ok: {url} ({len(rows)} rows)"); break
             except Exception as e:
                 log.append(f"auction url failed: {url}: {e}")
         for a in rows or []:
-            if a.get("securityTerm") != term or not a.get("highYield"):
+            if (a.get("originalSecurityTerm") or a.get("securityTerm")) != term or not a.get("highYield"):
                 continue
             tot = float(a.get("competitiveAccepted") or 0) or None
             ind = float(a.get("indirectBidderAccepted") or 0)
@@ -87,7 +87,7 @@ def auctions():
                 "indirect_pct": round(ind / tot * 100, 1) if tot else None,
             })
     out.sort(key=lambda x: x["date"], reverse=True)
-    return out[:8]
+    return out[:12]
 
 
 def change(series, days):
