@@ -1,0 +1,29 @@
+name: Bonds -> Gold daily data
+
+on:
+  schedule:
+    - cron: '30 23 * * 1-5'   # 23:30 UTC = 07:30 SGT, after the US close
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Build bonds-gold data
+        run: python bonds_gold.py
+      - name: Commit data
+        run: |
+          git config user.name "bonds-gold-bot"
+          git config user.email "actions@github.com"
+          git add docs/bonds-gold/data.json
+          git diff --staged --quiet && exit 0
+          git commit -m "Bonds->Gold data $(date -u +%F)"
+          for i in 1 2 3; do git pull --rebase && git push && exit 0; sleep 5; done
+          exit 1
