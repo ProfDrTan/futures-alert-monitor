@@ -170,6 +170,16 @@
     "day": "Wed 14",
     "text": "Stock futures flat overnight as traders wait for September CPI (8:30 a.m. New York, 20:30 Singapore), the week's biggest release; the S&P 500 and Nasdaq-100 had slipped for a second straight session",
     "source": "CNBC"
+   },
+   {
+    "day": "Wed 14",
+    "text": "Hot September CPI: prices rose 3.7% from a year earlier versus 3.6% expected, up from 3.4% in August and the highest since May (0.6% on the month, as expected); core inflation also came in above forecasts. Bets on another Fed hike jumped, with October hike odds briefly near 50% before fading",
+    "source": "CNBC, AFP, TheStreet"
+   },
+   {
+    "day": "Wed 14",
+    "text": "AI-led selloff: S&P 500 −1.11% to 7,718.94 and Nasdaq Composite −1.88%, both their worst day since July and the S&P's first 1% drop in 54 sessions. Debt-heavy AI infrastructure hit hardest (CoreWeave −15%+, Oracle about −9%, Nvidia and AMD lower; chip ETF down a 7th straight day) on worries that higher rates raise the cost of the data-center buildout. Money rotated into health care, staples and energy, keeping the Dow nearly flat",
+    "source": "CNN, AFP, TheStreet, Benzinga"
    }
   ],
   "instruments": []
