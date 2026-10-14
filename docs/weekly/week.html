@@ -10,7 +10,8 @@ fetch('weeks.json',{cache:'no-store'}).then(function(r){return r.json();}).then(
  var idx=W.indexOf(w),prev=W[idx+1],next=W[idx-1];
  var h='<p class="meta"><a href="./">← All weeks</a>'+(prev?' · <a href="?w='+prev.week_ending+'">Previous week</a>':'')+(next?' · <a href="?w='+next.week_ending+'">Next week</a>':'')+'</p>';
  h+='<h1>Week ending '+dlong(w.week_ending)+'</h1><p class="meta">Source: '+w.source+'</p>';
- h+='<h2>Ruling reasons</h2><ul class="rr">'+w.ruling_reasons.map(function(r){return '<li><b>'+r.day+'</b> '+r.text+'</li>';}).join('')+'</ul>';
+ h+='<h2>Ruling reasons</h2><ul class="rr">'+w.ruling_reasons.map(function(r){return '<li><b>'+r.day+'</b> '+r.text+(r.source?' <span class="meta">('+r.source+')</span>':'')+'</li>';}).join('')+'</ul>';
+ if(w.in_progress&&!w.instruments.length){h+='<h2>The week in review</h2><p class="meta">Week in progress. Ruling reasons are added each trading day; index, sector and macro figures are added after Friday\'s close.</p>';document.getElementById('m').innerHTML=h;document.title='Week ending '+w.week_ending+' — Weekly Market Review';ReadAloud.init();return;}
  h+='<h2>The week in review</h2>';
  ['Indices','Sectors','Macro'].forEach(function(g){
   var rows=w.instruments.filter(function(x){return x.group===g;});if(g==='Sectors')rows.sort(function(a,b){return b.pct-a.pct;});
