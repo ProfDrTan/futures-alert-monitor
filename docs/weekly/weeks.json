@@ -195,6 +195,11 @@
     "day": "Thu 15",
     "text": "Bitcoin fell about 3% to near $81,000 after briefly touching $80,000 in Asian trade: the hot CPI pushed October Fed-hike odds above 50%, about $483 million of leveraged Bitcoin and Ether futures positions were liquidated (mostly longs), and U.S. spot Bitcoin and Ether ETFs saw about $391 million of outflows on 14 Oct. $80,000 is the support level traders are watching",
     "source": "CoinDesk, CoinGlass, SoSoValue via crypto.news, CoinGape, CryptoTimes"
+   },
+   {
+    "day": "Thu 15",
+    "text": "Second hot inflation read: September wholesale prices (PPI) jumped 1.3% on the month versus 0.5% expected and 6.3% from a year earlier versus 5.3% expected, which CNBC called the biggest annual gain since 2022. Retail sales rose 0.8%, beating forecasts of about 0.3%, and jobless claims stayed low at 199,000. Together they strengthen the case for another Fed hike at the 27–28 October meeting; before the release, Treasury yields had fallen sharply and the dollar had given back its CPI gains",
+    "source": "CNBC, BLS data via ChainCatcher, Schwab, FXStreet"
    }
   ],
   "instruments": []
