@@ -180,6 +180,11 @@
     "day": "Wed 14",
     "text": "AI-led selloff: S&P 500 −1.11% to 7,718.94 and Nasdaq Composite −1.88%, both their worst day since July and the S&P's first 1% drop in 54 sessions. Debt-heavy AI infrastructure hit hardest (CoreWeave −15%+, Oracle about −9%, Nvidia and AMD lower; chip ETF down a 7th straight day) on worries that higher rates raise the cost of the data-center buildout. Money rotated into health care, staples and energy, keeping the Dow nearly flat",
     "source": "CNN, AFP, TheStreet, Benzinga"
+   },
+   {
+    "day": "Thu 15",
+    "text": "TSMC posted a record profit for a sixth straight quarter, beating estimates on AI demand (analysts had expected net profit up about 65% to roughly NT$746 billion); a key test for chip stocks after a seven-day slide, the CXMT scare and Wednesday's AI selloff",
+    "source": "CNBC, Reuters (LSEG estimate)"
    }
   ],
   "instruments": []
