@@ -1,9 +1,9 @@
 {
   "symbol": "NQ",
-  "rsi14": 44.68,
+  "rsi14": 42.46,
   "rsi_read": "neutral",
-  "ema8": 30794.77,
-  "ema21": 30611.63,
+  "ema8": 30621.49,
+  "ema21": 30557.35,
   "ema_cross_state": "bullish_bias",
-  "last_candle_pattern": null
+  "last_candle_pattern": "hammer"
 }
