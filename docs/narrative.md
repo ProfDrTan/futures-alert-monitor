@@ -7,6 +7,46 @@ alerts: the goal here is a running record of the *reasoning*, so a
 move like the Sept 1-2 NASDAQ swing doesn't happen without a clear
 account of what drove it.
 
+## 2026-10-16 (Friday) -- Nasdaq -2.1%, worst week since June: AI-debt fear, 9-day chip slide, Brent $110
+
+**Close:** S&P 500 -1.09% to 7,659.44; Nasdaq Composite -2.14% to 26,140.03;
+Dow -0.34% to 52,002.41; Russell 2000 -1.7% to 2,721.37.
+**Week:** Nasdaq -4.48% and S&P -1.95% (both worst since June), Russell -3.0%,
+Dow +0.67%. Sectors (IBKR ETF closes): Staples +5.0%, Energy +4.9%,
+Health care +3.5%, Materials +3.0% vs Technology -7.7%.
+
+**Why it happened -- three threads:**
+
+1. **AI-debt / neocloud credit stress.** CoreWeave -12% Friday (~-25% on the
+   week) after Thursday's Jensen Huang-led bounce faded. Its unsecured 2032
+   bonds trade below 80 cents on the dollar (a financial-strain threshold) and
+   total debt is above $51B. Nebius also -12%. The bond market, not the stock
+   market, is setting the tone for AI infrastructure.
+2. **Chips and memory.** Semis fell an 8th-9th straight day, the longest slide
+   since 2008 (Bloomberg); SOX -3.8% Friday, -11.4% on the week. CXMT's
+   memory-tech progress kept Micron, Seagate, Western Digital and Sandisk under
+   pressure. Selling spread to software and cybersecurity (Twilio, Okta).
+3. **Oil and the Fed.** Brent +3.7% to $109.86; WTI ~$99 (+8% on the week).
+   Warsh declined to rule out an October hike after hot CPI and PPI. Fed
+   blackout begins ahead of the 27-28 October FOMC.
+
+**Rotation, not panic:** the 10-year fell to 5.09% from 5.24% a week earlier
+and TLT rose 2.7%, yet tech still fell -- the selling was about AI financing
+and valuations, not rates. Equal-weight S&P had its best week vs tech since
+2009. VIX near 20 (from 14.8).
+
+**Oversold watch for the week of 19 Oct (IBKR daily bars):**
+- SOXX: RSI(14) 30.4, 2.7 SD below 20-day average, volume 2.4-2.6x normal --
+  capitulation-like, but closed at Friday's low (493.39 vs 492.83 low).
+- CoreWeave: RSI 28.9, volume 4-5x -- most stretched, but a credit story.
+- Micron: RSI 33.3, volume only modestly elevated -- grind, not flush.
+- Almanac: after an October pullback, the week after monthly options
+  expiration has tended to be bullish. Short-covering risk for MNQ shorts.
+
+Sources: [CNBC live updates](https://www.cnbc.com/2026/10/15/stock-market-today-live-updates.html)
+(shared by Prof Tan; CNBC blocked automated fetch, so figures were taken from
+AP, CNN, Bloomberg, TheStreet, Benzinga and TradingKey reports of the same session).
+
 ## 2026-10-07 (Wednesday) -- Pullback from Tuesday's records: 10Y hits 2002 high, oil +4% on Hormuz attacks
 
 **Close:** Nasdaq Composite -0.22% to 27,538.69; S&P 500 retreated from

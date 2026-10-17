@@ -138,8 +138,8 @@
  },
  {
   "week_ending": "2026-10-16",
-  "in_progress": true,
-  "source": "Daily ruling reasons compiled by Claude from same-day news reports (CNBC, Reuters, AP, TheStreet, Quartz); week-in-review figures added after Friday's close",
+  "in_progress": false,
+  "source": "Daily ruling reasons compiled by Claude from same-day news reports (CNBC, CNN, AP, Bloomberg, Reuters, TheStreet, Quartz, Benzinga). Week in review: index closes from AP; sector and bond (TLT) changes from IBKR weekly closes of the SPDR sector ETFs; gold, oil from Stock Rover; 10-year from AP; VIX and Bitcoin are late-day readings (Vistap Global) and approximate. Nasdaq Composite shown in place of the Nasdaq 100 this week because IBKR index data was unavailable and no verified Nasdaq 100 close was found",
   "ruling_reasons": [
    {
     "day": "Mon 12",
@@ -205,8 +205,153 @@
     "day": "Thu 15",
     "text": "U.S. open: the S&P 500 slid as tech shares fell for a second day, with the hot wholesale-inflation (PPI) reading adding to rate-hike worries; meanwhile the 10-year Treasury yield held near 5.05%, well below Tuesday's 5.22%, as bond buyers focused on equity and AI-credit stress (closing figures to follow)",
     "source": "CNBC live updates; yield from IBKR (CBOE TNX)"
+   },
+   {
+    "day": "Thu 15",
+    "text": "Close: stocks recovered from the early PPI scare as Treasury yields fell sharply. Dow +1.1% to 52,177.69, S&P 500 +0.3% to 7,744.06, Nasdaq +0.1% to 26,713.03; health care led and rate-sensitive financials and discretionary bounced. CoreWeave rebounded after Nvidia CEO Jensen Huang said its cost of capital is falling",
+    "source": "Zacks via Yahoo Finance, Schwab, CNN"
+   },
+   {
+    "day": "Fri 16",
+    "text": "Mixed open (S&P +0.19%, Nasdaq −0.24%, Russell 2000 +1.4%) turned into a tech rout: Fed Chair Warsh declined to rule out an October hike after the hot CPI and PPI, and the Fed enters its blackout period ahead of the 27–28 October FOMC",
+    "source": "TheStreet, Benzinga, TheStreet Pro"
+   },
+   {
+    "day": "Fri 16",
+    "text": "AI-debt fear returned: CoreWeave −12% (about −25% on the week) as its unsecured 2032 bonds trade below 80 cents and total debt tops $51B; peer Nebius also −12%. Chip stocks fell an 8th–9th straight day, the longest slide since 2008 per Bloomberg; the SOX index −3.8% Friday and −11.4% on the week, its worst since April 2025",
+    "source": "CNN, Bloomberg, AOL/TheStreet, Yahoo Finance"
+   },
+   {
+    "day": "Fri 16",
+    "text": "Memory names hit again on CXMT competition fears: Seagate −7.5%, Western Digital −6.9%, Sandisk −6.9%, Micron −5.6%; AMD −6.0%, Intel −5.8%. Selling spread to software and cybersecurity: Twilio −10.7%, Okta −8.9%, DigitalOcean −8.7%, software ETF IGV −4.8%",
+    "source": "TradingKey, Strategitz, Benzinga"
+   },
+   {
+    "day": "Fri 16",
+    "text": "Oil shock lifted energy: Brent +3.7% to $109.86 (touched $110, first time in months), WTI near $99 (+8% on the week). Energy (XLE +2.5%) led, with utilities and staples also up more than 1%, while tech (XLK −3.0%) and communications lagged",
+    "source": "CNN, The Market Breakdown, Strategitz"
+   },
+   {
+    "day": "Fri 16",
+    "text": "Close: S&P 500 −1.09% to 7,659.44, Nasdaq −2.14% to 26,140.03, Dow −0.34% to 52,002.41, Russell 2000 −1.7% to 2,721.37. Week: Nasdaq −4.48% and S&P −1.95% (both worst since June), Russell −3.0%, Dow +0.67%. A rotation, not a rout: the equal-weight S&P had its best week versus tech since 2009. VIX near 20; 10-year yield 5.09%, down from 5.24% a week earlier",
+    "source": "AP, Investrade, TheStreet Pro"
+   },
+   {
+    "day": "Week ahead",
+    "text": "Oversold read (Claude, from IBKR daily bars): SOXX RSI(14) 30.4, 2.7 SD below its 20-day average, volume 2.4–2.6× normal but closed at Friday's low (no reversal yet); CoreWeave RSI 28.9, volume 4–5× (a credit story, so it can stay oversold); Micron RSI 33.3 on only modestly higher volume. Stock Trader's Almanac: after an October pullback, the week after monthly options expiration has tended to be bullish. Risks: Brent above $105, Oct 27–28 hike odds, and short-covering against MNQ shorts",
+    "source": "IBKR, Stock Trader's Almanac"
    }
   ],
-  "instruments": []
+  "instruments": [
+   {
+    "group": "Indices",
+    "name": "S&P 500",
+    "level": "7,659.44",
+    "pct": -1.95
+   },
+   {
+    "group": "Indices",
+    "name": "Nasdaq Composite",
+    "level": "26,140.03",
+    "pct": -4.48
+   },
+   {
+    "group": "Indices",
+    "name": "Russell 2000",
+    "level": "2,721.37",
+    "pct": -3.0
+   },
+   {
+    "group": "Sectors",
+    "name": "Technology",
+    "pct": -7.7
+   },
+   {
+    "group": "Sectors",
+    "name": "Financials",
+    "pct": 1.44
+   },
+   {
+    "group": "Sectors",
+    "name": "Healthcare",
+    "pct": 3.45
+   },
+   {
+    "group": "Sectors",
+    "name": "Discretionary",
+    "pct": -0.35
+   },
+   {
+    "group": "Sectors",
+    "name": "Industrials",
+    "pct": -0.88
+   },
+   {
+    "group": "Sectors",
+    "name": "Communications",
+    "pct": -0.05
+   },
+   {
+    "group": "Sectors",
+    "name": "Staples",
+    "pct": 5.02
+   },
+   {
+    "group": "Sectors",
+    "name": "Energy",
+    "pct": 4.86
+   },
+   {
+    "group": "Sectors",
+    "name": "Utilities",
+    "pct": 1.93
+   },
+   {
+    "group": "Sectors",
+    "name": "Materials",
+    "pct": 3.01
+   },
+   {
+    "group": "Sectors",
+    "name": "Real Estate",
+    "pct": 1.32
+   },
+   {
+    "group": "Macro",
+    "name": "Bonds",
+    "level": "80.05",
+    "pct": 2.65
+   },
+   {
+    "group": "Macro",
+    "name": "10-year yield",
+    "level": "5.09%",
+    "pct": -2.86
+   },
+   {
+    "group": "Macro",
+    "name": "VIX",
+    "level": "≈19.99",
+    "pct": 35.34
+   },
+   {
+    "group": "Macro",
+    "name": "Gold",
+    "level": "4,190.50",
+    "pct": -0.72
+   },
+   {
+    "group": "Macro",
+    "name": "Oil",
+    "level": "99.02",
+    "pct": 8.09
+   },
+   {
+    "group": "Macro",
+    "name": "Bitcoin",
+    "level": "≈81,666",
+    "pct": -1.06
+   }
+  ]
  }
 ]
