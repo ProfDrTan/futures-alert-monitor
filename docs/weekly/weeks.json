@@ -353,5 +353,43 @@
     "pct": -1.06
    }
   ]
+ },
+ {
+  "week_ending": "2026-10-23",
+  "in_progress": true,
+  "source": "Weekend news and Claude's week-ahead prognosis built from the week ending 16 Oct data. Daily ruling reasons are added after each U.S. session; week-in-review figures after Friday's close.",
+  "ruling_reasons": [
+   {
+    "day": "Sat 17",
+    "text": "Bank of America named buy-rated tech stocks it expects to run into earnings (CNBC Pro screen): Spotify (reports Thu 22 Oct; analyst Jessica Reif Ehrlich says AI fears are overdone after a ~9% YTD drop), Box (target raised 19% to $50), Camtek ($200 target), Amphenol and Coupang. Context: this came the day after the Nasdaq's worst week since June, so read it as a selective 'buy the dip' call, not an all-clear",
+    "source": "CNBC, Traders Union"
+   },
+   {
+    "day": "Our call 1",
+    "text": "Week-ahead prognosis (Claude's read from last week's data, not a forecast). Ruling reason #1 is AI-capex validation. Lam Research (Wed 21) sells the tools that make chips, so its guidance is the cleanest test of whether the 8–9 day chip slide is overdone. Meta (Wed 21) tests the AI-debt fear: a capex raise backed by strong ad revenue would ease it; a capex raise funded with more borrowing would revive the CoreWeave-style credit worry. Also reporting: Netflix (Tue 20), Tesla, Texas Instruments, IBM (Wed 21), Spotify, P&G, Union Pacific (Thu 22)",
+    "source": "Newsquawk earnings calendar, CNBC"
+   },
+   {
+    "day": "Our call 2",
+    "text": "Ruling reason #2 is rates without the Fed. The Fed is in its blackout before the 27–28 Oct FOMC, so there are no Fed speakers, and the U.S. data calendar is light. Bond moves should come from oil and credit stress instead. Note last week: the 10-year fell from 5.24% to 5.09% despite hot CPI and PPI, meaning bonds acted as a safe haven from AI-credit stress rather than pricing a softer Fed",
+    "source": "Newsquawk week in focus; journal week ending 16 Oct"
+   },
+   {
+    "day": "Our call 3",
+    "text": "Ruling reason #3 is oil. Brent near $110 and WTI near $99 (+8% last week). If Brent holds above $105 it feeds inflation expectations straight into the October FOMC and keeps energy leading. Global calendar: China Q3 GDP and activity data plus Canada CPI (Mon), UK and Japan CPI mid-week, global flash PMIs (Fri)",
+    "source": "Newsquawk week in focus; journal week ending 16 Oct"
+   },
+   {
+    "day": "Our call 4",
+    "text": "Scenarios. Base case: an oversold bounce attempt in semiconductors early in the week (SOX RSI ~30, 2.7 SD below its 20-day average, heavy volume of 2.4–2.6× normal but no reversal candle yet; the week after monthly options expiry has tended to be firm), with the follow-through decided by Lam and Meta mid-week. Until tech regains leadership, expect the rotation into energy, staples and health care to continue. Bull case: strong AI-capex guidance plus easing oil sparks a sharp short-covering rally in the Nasdaq. Bear case: Brent above $110 plus disappointing or debt-funded capex brings a second leg down and VIX above 25. Tell-tale to watch: AI credit (CoreWeave bonds, Nebius); if those stabilise, the AI-debt fear is fading",
+    "source": "Claude analysis; IBKR daily bars; Stock Trader's Almanac"
+   },
+   {
+    "day": "Our call 5",
+    "text": "Gold check (bonds→gold): gold slipped 0.7% last week even though the 10-year yield fell about 15 basis points, so it did not get its usual lift from lower yields. A likely reason is that yields fell on fear while Fed-hike odds rose, which supports the dollar; this is an interpretation, not verified. Watch whether gold reconnects to falling yields this week or keeps trading off hike odds",
+    "source": "Claude analysis; journal week ending 16 Oct"
+   }
+  ],
+  "instruments": []
  }
 ]
