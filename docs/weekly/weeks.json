@@ -388,6 +388,31 @@
     "day": "Our call 5",
     "text": "Gold check (bonds→gold): gold slipped 0.7% last week even though the 10-year yield fell about 15 basis points, so it did not get its usual lift from lower yields. A likely reason is that yields fell on fear while Fed-hike odds rose, which supports the dollar; this is an interpretation, not verified. Watch whether gold reconnects to falling yields this week or keeps trading off hike odds",
     "source": "Claude analysis; journal week ending 16 Oct"
+   },
+   {
+    "day": "Technicals: verdict",
+    "text": "Is the decline over? Not confirmed. Tech is short-term oversold (RSI 31–35, about 3 standard deviations below the 20-day average), so a 1–3 day bounce is likely, but all four closed at or near Friday's low on rising volume (distribution, no reversal candle or capitulation yet). The S&P 500 is only 2% off its high with RSI 44, so it is not oversold and has room to fall further. Base case: an oversold bounce that fails at the broken moving averages, unless Lam Research and Meta (Wed 21) change the story",
+    "source": "IBKR daily bars to 16 Oct close; Claude calculations. SPX and NDX levels converted from SPY and QQQ and approximate"
+   },
+   {
+    "day": "Technicals: S&P 500",
+    "text": "Closed 7,659, below its 20- and 50-day averages. Resistance: about 7,712–7,740 (20/50-day averages and 21-day EMA cluster), then 7,818–7,843 (record high). Support: about 7,597–7,627 (100-day average plus late-September lows), then 7,522 (September swing low), then 7,316–7,386 (August lows). A daily close back above 7,740 negates the pullback; a close below 7,597 opens 7,522. Volume Friday about 1.3× the 50-day average: selling, but not panic",
+    "source": "IBKR daily bars to 16 Oct close; Claude calculations. SPX and NDX levels converted from SPY and QQQ and approximate"
+   },
+   {
+    "day": "Technicals: Nasdaq 100",
+    "text": "QQQ 709.80 (NDX about 29,180), −5.5% on the week and −6.6% from its high; it broke below its 50- and 100-day averages in one week. RSI 35, volume 1.5–1.8× average for three days. Support: about 700–704 on QQQ (September double low; NDX about 28,780–28,960), then about 686 (NDX about 28,200), then about 675 (200-day average; NDX about 27,750). Resistance: about 721 (100-day average), then 727–729 (50-day average plus Wed/Thu closes; NDX about 29,890)",
+    "source": "IBKR daily bars to 16 Oct close; Claude calculations. SPX and NDX levels converted from SPY and QQQ and approximate"
+   },
+   {
+    "day": "Technicals: XLK",
+    "text": "183.47, −7.7% on the week, −9.2% from its high; closed below its 100-day average (186.6), 50-day at 189.9. RSI 33, volume about 2.2× average Friday and rising each day. Support: about 182 (September low, already being tested), then 178.8–180.6, then 171–172. Resistance: 186.6, then 189.2–189.9, then 193.4 (21-day EMA)",
+    "source": "IBKR daily bars to 16 Oct close; Claude calculations. SPX and NDX levels converted from SPY and QQQ and approximate"
+   },
+   {
+    "day": "Technicals: SMH",
+    "text": "539.79, −10.5% on the week and −19.3% from its high close (668.91), one bad day from a 20% bear market. RSI 31, volume 2.4–2.6× average and accelerating: the heaviest selling of the four. Sitting exactly on September's low (537.7–540.5). Below that: 524–535 (August lows), then the 200-day average about 511 and the August low about 504. Resistance: about 556–560, then 579 (50-day average), then 587–588 (100-day average and 21-day EMA). SMH is the leader: if it holds 537 and bounces, the indices bounce; if it breaks, expect the Nasdaq to test 700 on QQQ",
+    "source": "IBKR daily bars to 16 Oct close; Claude calculations. SPX and NDX levels converted from SPY and QQQ and approximate"
    }
   ],
   "instruments": []
