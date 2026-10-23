@@ -413,6 +413,51 @@
     "day": "Technicals: SMH",
     "text": "539.79, −10.5% on the week and −19.3% from its high close (668.91), one bad day from a 20% bear market. RSI 31, volume 2.4–2.6× average and accelerating: the heaviest selling of the four. Sitting exactly on September's low (537.7–540.5). Below that: 524–535 (August lows), then the 200-day average about 511 and the August low about 504. Resistance: about 556–560, then 579 (50-day average), then 587–588 (100-day average and 21-day EMA). SMH is the leader: if it holds 537 and bounces, the indices bounce; if it breaks, expect the Nasdaq to test 700 on QQQ",
     "source": "IBKR daily bars to 16 Oct close; Claude calculations. SPX and NDX levels converted from SPY and QQQ and approximate"
+   },
+   {
+    "day": "Mon 19",
+    "text": "Tech-led rebound, but narrow: Nasdaq Composite +1.1% to 26,430.89 and S&P 500 +0.4% to 7,690.73 while the Dow slipped 0.1% to 51,966.03. The bounce came from AI and chip stocks; most other stocks and the equal-weight index fell. The 10-year was back above 5.1% and WTI above $100",
+    "source": "AP via Yahoo Finance; CappNotes closing recap"
+   },
+   {
+    "day": "Tue 20",
+    "text": "Dow +529.90 (+1.02%) to 52,495.90 on earnings optimism; S&P 500 +0.27% to 7,711.70; VIX −6.1% to 17.31. The Dow led while the S&P lagged, so gains were concentrated rather than broad",
+    "source": "IBKR closing quotes"
+   },
+   {
+    "day": "Wed 21",
+    "text": "Second up day: Dow +0.69% to 52,856.10, S&P 500 +0.58% to 7,757.22, VIX 16.68. Light U.S. data day (no major releases; FOMC blackout runs 17–29 Oct). Gold spent the day boxed between about 4,124 and 4,150",
+    "source": "IBKR closing quotes; Kiplinger economic calendar"
+   },
+   {
+    "day": "Thu 22",
+    "text": "Middle East shock. A drone strike on a Saudi Aramco oil field killed two people and the U.S. State Department ordered non-emergency staff out of Saudi Arabia. Later, a New York Times report said the U.S. and Israel are weighing renewed strikes on Iran after the 3 Nov midterms. Brent jumped 4% to $113.17 and WTI rose 2.39% to $99.47",
+    "source": "Investing.com; CNBC"
+   },
+   {
+    "day": "Thu 22",
+    "text": "Treasuries, not gold, were the safe haven. The 10-year yield fell more than 17 basis points to 4.972%, its first close below 5% since 23 Sept and its biggest one-day drop since March 2023, as stocks sold off on AI-spending worries. Nasdaq 100 futures fell about 2.4% on the day. Initial jobless claims came in at 194K vs 200K expected (continuing claims up 25K to 1.728M)",
+    "source": "CNBC; FXStreet; ActionForex; IBKR MNQ bars"
+   },
+   {
+    "day": "Thu 22",
+    "text": "Gold fell about 110 points despite the yield plunge. It broke this month's low near 4,091 in Asian hours, then the 4,070–4,076 summer support at the New York open, and slid overnight toward 4,037. Gold has now fallen on the one setup that normally helps it (stocks down, yields down)",
+    "source": "IBKR MGC 30-minute bars"
+   },
+   {
+    "day": "Fri 23",
+    "text": "Asian session: gold swept to 4,000.9, below the June–July floor near 4,015 (the lowest level on the 6-month chart), then snapped back above 4,030. A sweep-and-reclaim of a major floor; whether it holds is the test for the rest of the day. Flash PMIs (21:45 SGT) are the week's last data",
+    "source": "IBKR MGC quotes; Investing.com economic calendar"
+   },
+   {
+    "day": "Our call 5: result",
+    "text": "Gold did not reconnect to falling yields. Thursday is the clearest case yet: the biggest bond rally since 2023 and gold still fell. Possible reasons (interpretation, not verified): with yields near 5%, Treasuries now pay investors to hide in them while gold pays nothing; funds sold liquid winners to cover losses elsewhere; and higher oil keeps Fed-hike fears alive. Until gold rises on a day like this, treat the safe-haven case for gold as unproven",
+    "source": "Claude analysis; CNBC; IBKR"
+   },
+   {
+    "day": "Research: gold at 09:00 SGT",
+    "text": "From 21 sessions of IBKR hourly MGC bars (22 Sept–21 Oct). Gold's typical 1-hour range is largest at 21:00 SGT (about 23 points, U.S. data and the New York open) and in the Asian session at 09:00 SGT (about 20 points, roughly 1.5× a normal hour); 03:00–04:00 and 07:00 SGT are the quietest (8–9 points). The 09:00 hour took out the 06:00–09:00 pre-open high or low in 20 of 21 sessions. From 22 Sept to 9 Oct most of those breaks held (8 of 10); from 12 Oct to 21 Oct every one-sided break failed and closed back inside within the hour (6 of 6). The run ended on 22 Oct, when the failed break down at 09:00 was followed by a real breakdown on the Saudi news. Small sample, hourly bars: a lead to keep testing, not a rule",
+    "source": "Claude analysis of IBKR MGC hourly bars"
    }
   ],
   "instruments": []
