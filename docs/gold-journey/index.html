@@ -1,0 +1,55 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Gold Journey — Market Journal</title><link rel="stylesheet" href="../assets/weekly.css">
+<style>
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px 16px;margin:10px 0}
+.kv{display:grid;grid-template-columns:minmax(120px,30%) 1fr;gap:4px 14px;font-size:.95rem}.kv b{color:var(--mut);font-weight:600}
+.sc{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}.sc div{flex:1 1 90px;background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:8px 12px;text-align:center}
+.sc span{display:block;font-size:1.6rem;font-weight:700}
+.ev{background:var(--card);border:1px solid var(--bd);border-left:5px solid var(--bd);border-radius:10px;padding:10px 14px;margin:10px 0;scroll-margin-top:16px}
+.ev h3{margin:0 0 .3em;color:var(--fg);font-size:1rem}.ev p{margin:.25em 0}.ev .lbl{color:var(--mut);font-size:.85rem;font-weight:600;text-transform:uppercase;letter-spacing:.03em;margin-right:.4em}
+.bd{display:inline-block;font-size:.78rem;font-weight:700;border-radius:999px;padding:1px 9px;margin-left:6px;vertical-align:2px;color:#fff}
+.Hit{border-left-color:#16a34a}.Hit .bd{background:#16a34a}.Miss{border-left-color:#dc2626}.Miss .bd{background:#dc2626}
+.Partial{border-left-color:#d97706}.Partial .bd{background:#d97706}.Decision{border-left-color:#2563eb}.Decision .bd{background:#2563eb}
+.Lesson{border-left-color:#7c3aed}.Lesson .bd{background:#7c3aed}.news{border-left-color:#6b7280}
+.num{display:inline-block;min-width:1.6em;height:1.6em;line-height:1.6em;text-align:center;border-radius:50%;background:var(--fg);color:var(--bg);font-size:.8rem;font-weight:700;margin-right:6px}
+.cw{overflow-x:auto;background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:6px}
+svg text{font-family:inherit}
+</style></head><body><main id="m"><p class="meta">Loading…</p></main>
+<div class="bar" id="ra-bar"><button class="p" id="ra-all">▶ Read to the end</button><button id="ra-pause">❚❚ Pause</button><button id="ra-stop">■ Stop</button></div>
+<script src="../assets/readaloud.js"></script><script>
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+function when(t){var d=new Date(t+':00');return d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'})+' · '+t.slice(11,16)+' SGT';}
+function chart(J){
+ var B=J.bars,W=1000,Hh=380,L=58,R=14,T=14,Bm=46,n=B.length,lo=Infinity,hi=-Infinity;
+ B.forEach(function(b){lo=Math.min(lo,b[2]);hi=Math.max(hi,b[1]);});lo=Math.floor((lo-10)/25)*25;hi=Math.ceil((hi+10)/25)*25;
+ var X=function(i){return L+(W-L-R)*i/(n-1);},Y=function(v){return T+(Hh-T-Bm)*(hi-v)/(hi-lo);};
+ var s='<svg viewBox="0 0 '+W+' '+Hh+'" width="'+W+'" style="max-width:none;display:block" role="img" aria-label="Gold hourly price, 19 to 24 October 2026, with numbered events">';
+ for(var v=lo;v<=hi;v+=25){s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="var(--bd)"/><text x="'+(L-6)+'" y="'+(Y(v)+4)+'" font-size="11" text-anchor="end" fill="var(--mut)">'+v.toLocaleString('en-US')+'</text>';}
+ B.forEach(function(b,i){var h=b[0].slice(11,13);if(h==='06'){s+='<line x1="'+X(i)+'" x2="'+X(i)+'" y1="'+T+'" y2="'+(Hh-Bm)+'" stroke="var(--bd)" stroke-width="1.5"/>';
+   s+='<text x="'+(X(i)+3)+'" y="'+(Hh-Bm+30)+'" font-size="12" font-weight="700" fill="var(--fg)">'+new Date(b[0]+':00').toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'})+'</text>';}
+   if(h==='06'||h==='12'||h==='18'||h==='00')s+='<text x="'+X(i)+'" y="'+(Hh-Bm+14)+'" font-size="10" text-anchor="middle" fill="var(--mut)">'+h+':00</text>';});
+ var band='',up=B.map(function(b,i){return X(i)+','+Y(b[1]);}),dn=B.map(function(b,i){return X(i)+','+Y(b[2]);}).reverse();
+ s+='<polygon points="'+up.concat(dn).join(' ')+'" fill="#d4a017" fill-opacity=".18"/>';
+ s+='<polyline points="'+B.map(function(b,i){return X(i)+','+Y(b[3]);}).join(' ')+'" fill="none" stroke="#b8860b" stroke-width="2"/>';
+ J.lines.forEach(function(l){var y=Y(l[0]);s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y+'" y2="'+y+'" stroke="#2563eb" stroke-dasharray="6 4" stroke-width="1.5"/><text x="'+(W-R-4)+'" y="'+(y-4)+'" font-size="11" text-anchor="end" fill="#2563eb" font-weight="700">'+l[1]+'</text>';});
+ var col={Hit:'#16a34a',Miss:'#dc2626',Partial:'#d97706',Decision:'#2563eb',Lesson:'#7c3aed'};
+ J.events.forEach(function(e,k){var i=0,best=1e15;B.forEach(function(b,j){var d=Math.abs(new Date(b[0]+':00')-new Date(e.t+':00'));if(d<best){best=d;i=j;}});
+  var x=X(i),y=Y(e.price),c=col[e.verdict]||'#6b7280';
+  s+='<a href="#e'+(k+1)+'"><circle cx="'+x+'" cy="'+y+'" r="9" fill="'+c+'" stroke="var(--card)" stroke-width="2"/><text x="'+x+'" y="'+(y+3.5)+'" font-size="10" font-weight="700" text-anchor="middle" fill="#fff">'+(k+1)+'</text></a>';});
+ return s+'</svg>';}
+fetch('journey.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(J){
+ var c={Hit:0,Miss:0,Partial:0};J.events.forEach(function(e){if(e.verdict in c)c[e.verdict]++;});
+ var h='<p class="meta"><a href="../">← Market Journal</a> · <a href="../weekly/">Weekly Market Review</a></p>';
+ h+='<h1>'+esc(J.title)+'</h1><p class="meta">'+esc(J.subtitle)+'. Status: <b>'+esc(J.status)+'</b> · updated '+esc(J.updated)+'. All times Singapore (SGT). Prices: COMEX gold, Dec 2026 contract (IBKR).</p>';
+ h+='<h2>The position</h2><div class="card kv">'+J.position.map(function(p){return '<b>'+esc(p[0])+'</b><span>'+esc(p[1])+'</span>';}).join('')+'</div>';
+ h+='<h2>Claude\u2019s scorecard so far</h2><div class="sc"><div><span class="pos">'+c.Hit+'</span>Hits</div><div><span class="neg">'+c.Miss+'</span>Misses</div><div><span>'+c.Partial+'</span>Partial</div></div><p class="meta">Only calls Claude made are scored. Decisions and news are logged but not scored.</p>';
+ h+='<h2>The map</h2><p class="meta">Hourly gold (line = close, shaded = high–low). Numbered dots are the events below; tap one to jump to it. Scroll sideways on a phone.</p><div class="cw">'+chart(J)+'</div>';
+ h+='<h2>The journey, event by event</h2>'+J.events.map(function(e,k){var cls=e.verdict||(e.kind==='news'?'news':'');
+  return '<div class="ev '+cls+'" id="e'+(k+1)+'"><p class="meta"><span class="num">'+(k+1)+'</span>'+when(e.t)+'</p><h3>'+esc(e.title)+(e.verdict?'<span class="bd">'+e.verdict+'</span>':'')+'</h3>'+
+  '<p><span class="lbl">'+(e.kind==='news'?'What happened':e.verdict==='Decision'?'The situation':'The call')+'</span>'+esc(e.call)+'</p>'+(e.outcome?'<p><span class="lbl">Outcome</span>'+esc(e.outcome)+'</p>':'')+(e.lesson?'<p><span class="lbl">Lesson</span>'+esc(e.lesson)+'</p>':'')+'</div>';}).join('');
+ h+='<h2>Key levels now</h2><div class="card kv">'+J.levels.map(function(p){return '<b>'+esc(p[0])+'</b><span>'+esc(p[1])+'</span>';}).join('')+'</div>';
+ h+='<h2>Lessons so far</h2><ul class="rr">'+J.lessons.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul>';
+ h+='<h2>What\u2019s next</h2><ul class="rr">'+J.next.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul>';
+ document.getElementById('m').innerHTML=h;if(window.ReadAloud)ReadAloud.init();
+}).catch(function(e){document.getElementById('m').innerHTML='<p class="meta">Could not load the journal: '+esc(e.message)+'</p>';});
+</script></body></html>
