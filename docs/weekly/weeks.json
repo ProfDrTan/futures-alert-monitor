@@ -503,6 +503,11 @@
     "source": "Investing.com; Benzinga/Asianet; IBKR MNQ, MES and MGC quotes"
    },
    {
+    "day": "Fri 30 (U.S.)",
+    "text": "Gold's worst day of the month. December gold broke the 3,989–3,997 floor in Asian hours, then fell 63 points in the first two hours after the New York open on the day's heaviest volume. It held 3,900.9 for about two hours, broke 3,900 at 01:00 SGT and reached 3,879.3, almost exactly the ~3,881 measured-move target (the 108-point 3,989–4,097 range projected down from the break). It closed the week at 3,884.9, down 124.6 points (3.1%) on the week and about 146 points on the day. Nasdaq 100 futures were down about 2.7% around the open as the AI-earnings selloff spread; stocks and gold fell together again",
+    "source": "IBKR GC Dec '26 hourly bars; TOS watchlist"
+   },
+   {
     "day": "Our read: gold vs the trend line",
     "text": "Wednesday's read said the falling trend line from the 25 Aug high (≈4,097 on Thursday) and the 4,075–4,106 broken base converge near the 2-GC breakeven, and that the rebound off 3,989 lacked volume. Result: the Fed-night spike stopped at 4,097.3 (the high falls in Wednesday's session, when the line was ≈4,111), short of both the line and the breakeven, and gold has since given back about 100 points. The trend line remains the level to beat (≈4,083 Friday, falling about 14 points a day)",
     "source": "Claude analysis of IBKR GC/MGC Dec '26 bars"
