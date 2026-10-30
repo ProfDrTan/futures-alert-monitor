@@ -1,0 +1,49 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Gold Trap — a book in progress</title><link rel="stylesheet" href="../assets/weekly.css">
+<style>
+.hero{padding:22px 0 8px;border-bottom:3px solid #b8860b;margin-bottom:10px}
+.hero h1{font-size:2.1rem;margin:0;line-height:1.15}.hero .sub{font-size:1.15rem;margin:.4em 0;color:var(--fg)}
+.by{color:var(--mut);font-size:.95rem}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px 16px;margin:12px 0}
+.parts{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+.parts .card h3{margin:0 0 .3em;font-size:1rem;color:#b8860b}.parts .card p{margin:0;font-size:.93rem}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{border-bottom:1px solid var(--bd);padding:7px 8px;text-align:left;vertical-align:top}th{color:var(--mut);font-weight:600}
+.st{display:inline-block;font-size:.75rem;font-weight:700;border-radius:999px;padding:1px 8px;color:#fff;white-space:nowrap}
+.rec{background:#16a34a}.live{background:#d97706}.todo{background:#6b7280}
+.pat{font-size:1.05rem;font-weight:700;text-align:center;padding:10px;border:1px dashed #b8860b;border-radius:10px}
+</style></head><body><main>
+<p class="meta"><a href="../">← Market Journal</a></p>
+<div class="hero">
+<h1>The Gold Trap</h1>
+<p class="sub">One Trade, One Week, and the Rules That Stop You Losing It All</p>
+<p class="by">Prof. Dr. Tan Teik Kheong, Adjunct Professor, Stanford University · a book in progress, written live</p>
+</div>
+
+<p><b>A live futures trade, told hour by hour, with an AI co-pilot that kept score of its own calls.</b> Almost every trading book is written in hindsight by a winner. This one is written as it happened: the entries, the averaging down, the stress, a drawdown past $40,000, and every call the AI got right or wrong, timestamped and graded. Each moment becomes a rule, and each rule becomes a tool you can use before your next order.</p>
+
+<div class="pat">moment → mistake → rule → tool</div>
+
+<h2>The four parts</h2>
+<div class="parts">
+<div class="card"><h3>Part I · The Week</h3><p>The trade, day by day, from the missed 09:00 rally on 20 Oct 2026 to the close of the position. Each chapter opens with a timestamp and ends with the P/L.</p></div>
+<div class="card"><h3>Part II · The Rules</h3><p>Eight rules, each tied to the exact moment it would have changed, with the dollar difference.</p></div>
+<div class="card"><h3>Part III · The Co-Pilot</h3><p>Trading with an AI: the scorecard, what it got right (timing) and wrong (direction, stale data, the wrong multiplier), and how to keep your own judgement.</p></div>
+<div class="card"><h3>Part IV · The Toolkit</h3><p>Pre-trade checklist, position-size calculator, journal template and the 09:00 SGT volatility research.</p></div>
+</div>
+
+<h2>Chapters</h2>
+<p class="meta"><span class="st rec">Recorded</span> the story is captured on the journal and ready to draft · <span class="st live">Live</span> still unfolding · <span class="st todo">To write</span></p>
+<div class="tw"><table><thead><tr><th>#</th><th>Chapter</th><th>The moment</th><th>Status</th></tr></thead><tbody id="ch"></tbody></table></div>
+
+<h2>Read the raw material</h2>
+<div class="card"><p><a href="../gold-journey/"><b>The Gold Journey</b></a>: the full timestamped record, the AI's calls against the outcomes, the hourly chart and the P/L.<br>
+<a href="../futures-rules/"><b>Futures Trading Rules</b></a>: the eight rules, the checklist and the calculator from Parts II and IV.<br>
+<a href="../weekly/"><b>Weekly Market Review</b></a>: the news behind each move.</p></div>
+<p class="meta">Updated 30 Oct 2026. The ending is written when the position closes.</p>
+</main>
+<script>
+var C=[["The Rally I Missed","20 Oct, 09:00 SGT: gold jumps 30 points without me","rec"],["Twenty Points at Nine O'Clock","21 Oct: the data says 09:00 is special","rec"],["Filled at the Low","22 Oct, 03:00: the 4,124 buy fills on a flush","rec"],["The Gain I Didn't Take","22 Oct, 07:27: the trade is up, with no stop","rec"],["Saudi Arabia, 08:52","The Aramco strike; gold breaks 4,122","rec"],["Averaging Down","4,102, then $210 a point","rec"],["$900 or $9,000?","The contract-multiplier error","rec"],["The Safe Haven That Wasn't","Yields fall 17 bp; gold falls 110","rec"],["Ten Points From Breakeven","Fed night, 4,097","rec"],["The Floor Breaks","30 Oct: 3,989, then 3,900","rec"],["The Ending","The position closes","live"],["The Eight Rules","Part II","rec"],["The Co-Pilot's Scorecard","Part III","live"],["Working With an AI Without Losing Your Judgement","Part III","todo"],["Loss Aversion, Live","Part III","rec"],["The Toolkit","Part IV","rec"]];
+var L={rec:'Recorded',live:'Live',todo:'To write'};
+document.getElementById('ch').innerHTML=C.map(function(c,i){return '<tr><td>'+(i+1)+'</td><td><b>'+c[0]+'</b></td><td>'+c[1]+'</td><td><span class="st '+c[2]+'">'+L[c[2]]+'</span></td></tr>';}).join('');
+</script></body></html>
