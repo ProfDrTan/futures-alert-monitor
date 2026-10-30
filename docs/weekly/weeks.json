@@ -489,7 +489,7 @@
    },
    {
     "day": "Wed 28: the Fed",
-    "text": "The Fed held the funds rate at 3.75–4.00% in a 10–2 vote. Governor Lisa Cook and Cleveland Fed President Beth Hammack dissented in favour of a quarter-point hike. The statement said inflation remains elevated and left the door open to further increases; the Fed also said it will hold fewer policy meetings from 2027. Chair Kevin Warsh said politics played no role. December hike odds rose to about 83% (CME FedWatch). The 10-year yield rose about 5 bp to 5.04%. Gold whipsawed 44 points in the decision hour, then rallied during the press conference to 4,097.3, touching the descending trend line flagged in our Wednesday read, and turned down",
+    "text": "The Fed held the funds rate at 3.75–4.00% in a 10–2 vote. Governor Lisa Cook and Cleveland Fed President Beth Hammack dissented in favour of a quarter-point hike. The statement said inflation remains elevated and left the door open to further increases; the Fed also said it will hold fewer policy meetings from 2027. Chair Kevin Warsh said politics played no role. December hike odds rose to about 83% (CME FedWatch). The 10-year yield rose about 5 bp to 5.04%. Gold whipsawed 44 points in the decision hour, then rallied during the press conference to 4,097.3, then turned down about 14 points below the descending trend line flagged in our Wednesday read (≈4,111 for that session)",
     "source": "Federal Reserve statement; Fox Business; The Nation; XTB; IBKR MGC bars"
    },
    {
@@ -504,7 +504,7 @@
    },
    {
     "day": "Our read: gold vs the trend line",
-    "text": "Wednesday's read said the falling trend line from the 25 Aug high (≈4,097 on Thursday) and the 4,075–4,106 broken base converge near the 2-GC breakeven, and that the rebound off 3,989 lacked volume. Result: the Fed-night spike stopped at 4,097.3, essentially on the line, and gold has since given back about 100 points. The trend line remains the level to beat (≈4,083 Friday, falling about 14 points a day)",
+    "text": "Wednesday's read said the falling trend line from the 25 Aug high (≈4,097 on Thursday) and the 4,075–4,106 broken base converge near the 2-GC breakeven, and that the rebound off 3,989 lacked volume. Result: the Fed-night spike stopped at 4,097.3 (the high falls in Wednesday's session, when the line was ≈4,111), short of both the line and the breakeven, and gold has since given back about 100 points. The trend line remains the level to beat (≈4,083 Friday, falling about 14 points a day)",
     "source": "Claude analysis of IBKR GC/MGC Dec '26 bars"
    }
   ],
