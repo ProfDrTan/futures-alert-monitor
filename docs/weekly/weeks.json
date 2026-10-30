@@ -468,16 +468,6 @@
   "source": "Daily ruling reasons added during the week; week-in-review figures after Friday's close.",
   "ruling_reasons": [
    {
-    "day": "Wed 28",
-    "text": "Gold: the bounce needs two things (Razaqzada). (1) A Fed catalyst: tonight's FOMC (02:00 SGT Thu) is expected to hold; the question is the signal on the next move. Hot September CPI briefly priced a >50% hike chance before Jefferson, Bowman and Waller talked it down. Oil above $100 keeps inflation risk alive and yields high, which raises the cost of holding gold. Central-bank buying (China among others) is a structural floor but not a stop to further falls. (2) A technical breakout: gold must reclaim 4,075–4,106, the broken base of the early-August rally, and then break the descending trend line off the recent highs. Failure exposes the summer low he cites near 3,942. Context: gold is down nearly 30% from its January peak, silver about 55%, and gold has managed only two up weeks in nine",
-    "source": "Investing.com, Fawad Razaqzada"
-   },
-   {
-    "day": "Wed 28: our read",
-    "text": "On IBKR GC Dec '26 daily bars, the descending trend line from the 25 Aug high (4,755.0) through the 19 Oct high (4,211.2) falls about 14 points a day: ≈4,111 today, ≈4,097 Thu, ≈4,083 Fri. So the article's 4,075–4,106 zone and the trend line converge this week, around the 2-GC breakeven (≈4,107.5). Today's high of 4,084.1 was rejected inside that zone on light pre-FOMC volume, and the rebound from the 3,989 low since Friday has come on falling volume (184k Thu 22, 151k Fri, then 108–121k), so buyers have not yet confirmed it. Note his 3,942 summer low is not on the Dec contract, whose summer low was 4,015.6 (30 Jun); his levels are probably spot or front-month",
-    "source": "Investing.com, Fawad Razaqzada, 28 Oct 2026; Claude analysis of IBKR GC Dec '26 daily bars"
-   },
-   {
     "day": "Mon 26",
     "text": "Quiet macro day with no major U.S. releases. Stocks rose and the 10-year stayed below 5%. Gold reopened without a weekend gap (4,012 vs Friday's 4,009.5), swept to 3,991.1 at the 09:00 SGT open (just above Friday's 3,989 low) and held, then rallied into the 4,037–4,050 sellers (high 4,044.3). Nasdaq 100 futures gained about 0.9%",
     "source": "Trading Economics headlines; IBKR MGC and MNQ bars"
@@ -486,6 +476,16 @@
     "day": "Tue 27",
     "text": "Upside data surprises. Durable goods orders rose 1.8% in September (core capital goods +0.5%). The Conference Board's consumer confidence index jumped 7.5 points to 91.7, against forecasts near 81, the first rise in four months, helped by easing gasoline prices; consumers' 12-month inflation expectations eased but stayed high at 5.8%, and they planned to spend less on durable goods. Gold broke above 4,050 within an hour of the release and reached 4,079.5. The FOMC's two-day meeting began; Israel held a general election",
     "source": "The Conference Board; Kitco; FXEmpire; IBKR MGC bars"
+   },
+   {
+    "day": "Wed 28",
+    "text": "Gold: the bounce needs two things (Razaqzada). (1) A Fed catalyst: tonight's FOMC (02:00 SGT Thu) is expected to hold; the question is the signal on the next move. Hot September CPI briefly priced a >50% hike chance before Jefferson, Bowman and Waller talked it down. Oil above $100 keeps inflation risk alive and yields high, which raises the cost of holding gold. Central-bank buying (China among others) is a structural floor but not a stop to further falls. (2) A technical breakout: gold must reclaim 4,075–4,106, the broken base of the early-August rally, and then break the descending trend line off the recent highs. Failure exposes the summer low he cites near 3,942. Context: gold is down nearly 30% from its January peak, silver about 55%, and gold has managed only two up weeks in nine",
+    "source": "Investing.com, Fawad Razaqzada"
+   },
+   {
+    "day": "Wed 28: our read",
+    "text": "On IBKR GC Dec '26 daily bars, the descending trend line from the 25 Aug high (4,755.0) through the 19 Oct high (4,211.2) falls about 14 points a day: ≈4,111 today, ≈4,097 Thu, ≈4,083 Fri. So the article's 4,075–4,106 zone and the trend line converge this week, around the 2-GC breakeven (≈4,107.5). Today's high of 4,084.1 was rejected inside that zone on light pre-FOMC volume, and the rebound from the 3,989 low since Friday has come on falling volume (184k Thu 22, 151k Fri, then 108–121k), so buyers have not yet confirmed it. Note his 3,942 summer low is not on the Dec contract, whose summer low was 4,015.6 (30 Jun); his levels are probably spot or front-month",
+    "source": "Investing.com, Fawad Razaqzada, 28 Oct 2026; Claude analysis of IBKR GC Dec '26 daily bars"
    },
    {
     "day": "Wed 28: the Fed",
