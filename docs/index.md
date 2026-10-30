@@ -6,6 +6,8 @@
   dollar index, and oil/gold trend charts, updated daily.
 - [**The Gold Journey**](gold-journey/) -- a live trade journal: the Oct 2026
   gold position, Claude's calls, and how each one played out.
+- [**Futures Trading Rules**](futures-rules/) -- eight rules, a pre-trade
+  checklist and a position-size calculator, learned from the gold trade.
 - [**Weekly Market Review**](weekly/) -- each week's ruling reasons, plus how
   the indices, S&P sectors, bonds, yields, VIX, gold, oil and bitcoin moved,
   compared week by week.
