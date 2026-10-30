@@ -1,0 +1,70 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Futures Trading Rules — Market Journal</title><link rel="stylesheet" href="../assets/weekly.css">
+<style>
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px 16px;margin:12px 0}
+.rule h3{margin:0 0 .3em;font-size:1.05rem}.rule p{margin:.3em 0}.why{color:var(--mut);font-size:.92rem}
+.n{display:inline-block;min-width:1.7em;height:1.7em;line-height:1.7em;text-align:center;border-radius:50%;background:#b8860b;color:#fff;font-weight:700;font-size:.85rem;margin-right:8px}
+label.ck{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--bd);cursor:pointer}label.ck input{width:20px;height:20px;margin-top:2px;flex:none}
+.calc{display:grid;grid-template-columns:1fr 1fr;gap:10px}.calc label{font-size:.85rem;color:var(--mut);display:block}
+.calc input,.calc select{width:100%;box-sizing:border-box;padding:8px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--fg);font-size:1rem}
+.out{font-size:1.05rem;margin-top:10px}.big{font-size:1.6rem;font-weight:800}
+#go{font-weight:800;font-size:1.1rem;padding:10px;border-radius:10px;text-align:center;margin-top:10px}
+.ok{background:#16a34a;color:#fff}.no{background:#dc2626;color:#fff}
+@media(max-width:520px){.calc{grid-template-columns:1fr}}
+</style></head><body><main>
+<p class="meta"><a href="../">← Market Journal</a> · <a href="../gold-journey/">The Gold Journey</a></p>
+<h1>Futures Trading Rules</h1>
+<p class="meta">Written after the October 2026 gold trade (see <a href="../gold-journey/">The Gold Journey</a>). Each rule names the moment it would have changed. Purpose: let the calm self set the limits, so the stressed self cannot override them.</p>
+
+<h2>Before every order</h2>
+<div class="card">
+<p class="meta">Tick every box. If one stays empty, no trade.</p>
+<div id="cl"></div>
+<div id="go" class="no">Not ready: complete the checklist</div>
+</div>
+
+<h2>Position-size calculator</h2>
+<div class="card">
+<div class="calc">
+<div><label>Account value (USD)</label><input id="acct" type="number" value="100000"></div>
+<div><label>Risk per trade (% of account)</label><input id="rp" type="number" value="1" step="0.25"></div>
+<div><label>Contract</label><select id="ct">
+<option value="10">MGC micro gold ($10/pt)</option><option value="100">GC gold ($100/pt)</option>
+<option value="5">MES micro S&amp;P ($5/pt)</option><option value="50">ES S&amp;P ($50/pt)</option>
+<option value="2">MNQ micro Nasdaq ($2/pt)</option><option value="20">NQ Nasdaq ($20/pt)</option></select></div>
+<div><label>Stop distance (points)</label><input id="sd" type="number" value="15"></div>
+<div><label>Typical daily range (points)</label><input id="dr" type="number" value="50"></div>
+<div><label>Available funds (USD)</label><input id="af" type="number" value="30000"></div>
+</div>
+<div class="out" id="res"></div>
+</div>
+
+<h2>The eight rules</h2>
+<div id="rules"></div>
+</main>
+<script>
+var R=[
+["Size comes from the stop, not the idea","Risk at most 1% of the account on any one trade. Contracts = (account × 1%) ÷ (stop distance × dollars per point). If that number is below one, trade the micro or skip the trade.","Gold Journey: the position reached $210 a point with no stop, so there was no limit to the loss."],
+["The stop goes in with the entry","Use a bracket (OCO) order: entry, stop and target placed together. Never 'I'll add the stop later'.","Every stop level discussed was later hit: 4,127, then 4,068, then 4,008."],
+["Never add to a loser","Add only to a winning position, or after a confirmed reclaim of a broken level (a 15-minute close back above it).","The 4,102 add on 22 Oct and the 3,974 add idea on 30 Oct were both into breakdowns."],
+["Daily loss limit: 2%","When the day's loss reaches 2% of the account, close the platform. No new trades until the next day.","On 30 Oct the day's loss reached −$21,800. The limit would have stopped it near −$2,000."],
+["Know the multiplier and the margin","Write the dollars per point on the ticket. Before entering, check that a move of three normal days against you still leaves margin.","Mid-trade, the risk was priced at $10 a point when the position was $100 a point; on 30 Oct available funds fell near $10,000."],
+["Match the instrument to the reason","Long-term themes (central-bank buying, de-dollarisation) belong in unleveraged holdings such as a gold ETF or physical gold. Futures are for short-term trades with a defined exit.","The long-term thesis was held in leveraged futures that had to survive each day's news, and expire in December."],
+["Check the calendar first","No new position into a Fed decision, CPI or PCE, or a weekend with headline risk, unless the size is halved.","The Saudi strike, the Fed, PCE and the AI earnings all moved gold 40–110 points in hours."],
+["Cooling-off after a loss","After a loss above 1%, no new trade for 24 hours. The urge to win it back fast is loss aversion speaking.","Averaging-down decisions came within hours of painful drops, under stress."]];
+var CK=["I know the dollars per point for this contract","My stop price is decided and goes in with the entry (bracket/OCO)","The calculator says this size risks no more than 1% of the account","I am not adding to a losing position","Today's loss is below my 2% daily limit","No Fed, CPI, PCE or weekend headline risk in the next few hours (or size is halved)","I can afford a move of three normal days against me and still have margin","I have not had a loss above 1% in the last 24 hours"];
+document.getElementById('rules').innerHTML=R.map(function(r,i){return '<div class="card rule"><h3><span class="n">'+(i+1)+'</span>'+r[0]+'</h3><p>'+r[1]+'</p><p class="why"><b>Why:</b> '+r[2]+'</p></div>';}).join('');
+document.getElementById('cl').innerHTML=CK.map(function(c,i){return '<label class="ck"><input type="checkbox" data-i="'+i+'"><span>'+c+'</span></label>';}).join('');
+function upd(){var n=document.querySelectorAll('#cl input:checked').length,g=document.getElementById('go');
+ if(n===CK.length){g.className='ok';g.textContent='Ready: place the bracket order';}else{g.className='no';g.textContent='Not ready: '+(CK.length-n)+' item'+(CK.length-n>1?'s':'')+' left';}}
+document.getElementById('cl').addEventListener('change',upd);
+function v(id){return parseFloat(document.getElementById(id).value)||0;}
+function f(x){return '$'+Math.round(x).toLocaleString('en-US');}
+function calc(){var a=v('acct'),rp=v('rp')/100,m=v('ct'),s=v('sd'),dr=v('dr'),af=v('af');
+ var budget=a*rp,per=s*m,n=per>0?Math.floor(budget/per):0,adv=3*dr*m*Math.max(n,1);
+ var h='Risk budget: <b>'+f(budget)+'</b> · risk per contract: <b>'+f(per)+'</b><br>Maximum contracts: <span class="big">'+n+'</span>';
+ if(n<1)h+='<br><b class="neg">One contract risks more than the budget: use the micro, tighten the stop, or skip.</b>';
+ else h+='<br>Exposure: '+f(n*m)+' per point · loss at stop: '+f(n*per)+'<br>Three-day adverse move ('+(3*dr)+' pts): '+f(adv)+' vs available funds '+f(af)+' → '+(adv<af?'<b class="pos">OK</b>':'<b class="neg">Too big for the margin: reduce size</b>');
+ document.getElementById('res').innerHTML=h;}
+['acct','rp','ct','sd','dr','af'].forEach(function(id){document.getElementById(id).addEventListener('input',calc);});calc();
+</script></body></html>
