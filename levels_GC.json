@@ -1,10 +1,10 @@
 {
   "symbol": "GC",
-  "current_price_at_calc": 3889.0,
+  "current_price_at_calc": 3956.6,
   "support": null,
-  "resistance": 4303.51,
-  "poc": 4404.61,
-  "vah": 4687.69,
-  "val": 4161.97,
+  "resistance": 4148.56,
+  "poc": 4408.2,
+  "vah": 4488.09,
+  "val": 4108.61,
   "note": "Auto-calculated from 3mo swing points confirmed against volume profile. POC/VAH/VAL from the same volume profile (70% value area around point of control). Edit by hand if needed."
 }
