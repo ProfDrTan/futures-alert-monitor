@@ -514,5 +514,18 @@
    }
   ],
   "instruments": []
+ },
+ {
+  "week_ending": "2026-11-06",
+  "in_progress": true,
+  "source": "",
+  "ruling_reasons": [
+   {
+    "day": "Mon 2",
+    "text": "First session after U.S. clocks changed (gold now reopens at 07:00 SGT; 8:30 ET data is 21:30 SGT). No weekend gap: December gold reopened at 3,890, five points above Friday's 3,884.9 close, swept 3,900.0 at the 09:00 SGT open and reclaimed it, and stalled at 3,928.1 in the 3,925–3,933 zone. Ahead: ISM manufacturing PMI at 23:00 SGT (September 54.5); U.S. midterm elections on Tuesday; ISM services on Wednesday",
+    "source": "IBKR GC Dec '26 hourly bars; ISM release schedule via therighttrader.com and thriveinmarkets.com"
+   }
+  ],
+  "instruments": []
  }
 ]
