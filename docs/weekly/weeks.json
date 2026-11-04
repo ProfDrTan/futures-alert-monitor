@@ -524,6 +524,16 @@
     "day": "Mon 2",
     "text": "First session after U.S. clocks changed (gold now reopens at 07:00 SGT; 8:30 ET data is 21:30 SGT). No weekend gap: December gold reopened at 3,890, its lowest open since October 2025, swept 3,900.0 at the 09:00 SGT open and reclaimed it, and stalled at 3,928.1 in Asia. At 08:00 New York it jumped 40 points in an hour on the day's heaviest volume (trigger not confirmed), held through the ISM manufacturing release and peaked at 3,980.8, then closed at 3,956.6, up about 72 points. U.S. midterm elections are on Tuesday; ISM services on Wednesday",
     "source": "IBKR GC Dec '26 hourly bars; Yahoo Finance; ISM release schedule"
+   },
+   {
+    "day": "Tue 3",
+    "text": "Election day in the U.S. Oil fell more than 7% on reports of U.S.–Iran talks, easing inflation worries; the Nasdaq fell about 1.1%. September JOLTS showed hiring holding steady, keeping December hike odds near 80%. December gold dipped to 3,904 in European hours, jumped 29 points to 3,981.7 in the first New York hour, and was capped in the 3,976–3,981 zone",
+    "source": "Mitrade/FXStreet market summaries; IBKR GC Dec '26 hourly bars"
+   },
+   {
+    "day": "Wed 4 (Asia)",
+    "text": "Early midterm results pointed to Democrats gaining in both houses of Congress (FXStreet reported Democrats winning the House). The dollar fell sharply, Treasuries rallied, U.S. stock futures slid, and gold broke above $4,000: December gold rose 46 points in the 13:00 SGT hour to 4,020.3. Strategists cited a weaker dollar, falling nominal and real yields, and demand for protection against a more confrontational administration; markets read a divided Congress as reducing the chance of deficit-expanding policy. Ahead: ADP (21:15 SGT), ISM services (23:00 SGT) and Friday's payrolls",
+    "source": "Bloomberg; Reuters via MarketScreener and CNBC; FXStreet; IBKR GC Dec '26 hourly bars"
    }
   ],
   "instruments": []
