@@ -6,6 +6,8 @@
   dollar index, and oil/gold trend charts, updated daily.
 - [**The Gold Trap**](gold-trap/) -- the book in progress: one trade, one
   week, and the rules that stop you losing it all.
+- [**Case Study 2: The Nasdaq Waterfall**](nq-waterfall/) -- 5 Nov 2026: a
+  dip-buy into a 1,300-point Nasdaq drop, and loss aversion in real time.
 - [**The Gold Journey**](gold-journey/) -- a live trade journal: the Oct 2026
   gold position, Claude's calls, and how each one played out.
 - [**Futures Trading Rules**](futures-rules/) -- eight rules, a pre-trade
