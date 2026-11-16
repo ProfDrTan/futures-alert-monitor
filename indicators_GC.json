@@ -1,9 +1,9 @@
 {
   "symbol": "GC",
-  "rsi14": 35.54,
+  "rsi14": 34.46,
   "rsi_read": "neutral",
-  "ema8": 3979.03,
-  "ema21": 4042.73,
+  "ema8": 3953.63,
+  "ema21": 4026.74,
   "ema_cross_state": "bearish_bias",
-  "last_candle_pattern": "doji"
+  "last_candle_pattern": null
 }
