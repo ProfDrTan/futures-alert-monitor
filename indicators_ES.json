@@ -1,9 +1,9 @@
 {
   "symbol": "ES",
-  "rsi14": 39.56,
+  "rsi14": 37.28,
   "rsi_read": "neutral",
-  "ema8": 7553.86,
-  "ema21": 7617.23,
+  "ema8": 7515.36,
+  "ema21": 7595.72,
   "ema_cross_state": "bearish_bias",
   "last_candle_pattern": null
 }
