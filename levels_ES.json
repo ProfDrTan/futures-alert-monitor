@@ -1,7 +1,7 @@
 {
   "symbol": "ES",
-  "current_price_at_calc": 7210.75,
-  "support": null,
+  "current_price_at_calc": 7187.5,
+  "support": 7580.56,
   "resistance": 7697.94,
   "poc": 7721.41,
   "vah": 7862.26,
